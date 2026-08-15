@@ -2,18 +2,16 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { Navbar } from './components/layout/Navbar';
 import { Footer } from './components/layout/Footer';
-import { ShaderBackground } from './components/visualizations/ShaderBackground';
 import { CustomCursor } from './components/shared/CustomCursor';
 import { useLenis } from './hooks/useLenis';
 import { useThreatStore } from './features/threat-state-machine/useThreatStore';
 
-import { LandingPage } from './pages/LandingPage';
+import { IntroPage } from './pages/IntroPage';
 import { LoginPage } from './pages/LoginPage';
 import { MonitoringDashboard } from './pages/MonitoringDashboard';
 import { AttackLabPage } from './pages/AttackLabPage';
 import { AboutPage } from './pages/AboutPage';
 import { DevStateMachinePage } from './pages/DevStateMachinePage';
-import { DevComponentsPage } from './pages/DevComponentsPage';
 
 export const App: React.FC = () => {
   useLenis();
@@ -25,16 +23,13 @@ export const App: React.FC = () => {
         {/* Custom Cursor */}
         <CustomCursor />
 
-        {/* WebGL Shader & Particle Background */}
-        <ShaderBackground />
-
         {/* Global Navbar */}
         <Navbar />
 
         {/* Main Content Area */}
         <main className="flex-1 relative z-10 flex flex-col">
           <Routes>
-            <Route path="/" element={<LandingPage />} />
+            <Route path="/" element={<IntroPage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route
               path="/monitoring"
@@ -46,7 +41,6 @@ export const App: React.FC = () => {
             />
             <Route path="/about" element={<AboutPage />} />
             <Route path="/dev/state-machine" element={<DevStateMachinePage />} />
-            <Route path="/dev/components" element={<DevComponentsPage />} />
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </main>

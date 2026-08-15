@@ -4,7 +4,8 @@ import { Link, useLocation } from 'react-router-dom';
 export const Navbar: React.FC = () => {
   const location = useLocation();
 
-  const isSocActive = location.pathname === '/' || location.pathname === '/monitoring';
+  const isIntroActive = location.pathname === '/';
+  const isSocActive = location.pathname === '/monitoring';
   const isAttackLabActive = location.pathname === '/attack-lab';
   const isAboutActive = location.pathname === '/about';
 
@@ -21,10 +22,20 @@ export const Navbar: React.FC = () => {
       {/* Navigation Links */}
       <div className="hidden md:flex items-center gap-gutter h-full font-body-md text-body-md">
         <Link
+          to="/"
+          className={`flex items-center h-full transition-colors duration-200 cursor-pointer active:opacity-80 px-1 ${
+            isIntroActive
+              ? 'text-primary border-b-2 border-primary pb-1 font-semibold'
+              : 'text-on-surface-variant hover:text-primary'
+          }`}
+        >
+          Introduction
+        </Link>
+        <Link
           to="/monitoring"
-          className={`flex items-center h-full transition-colors duration-200 cursor-pointer active:opacity-80 ${
+          className={`flex items-center h-full transition-colors duration-200 cursor-pointer active:opacity-80 px-1 ${
             isSocActive
-              ? 'text-primary border-b-2 border-primary pb-1'
+              ? 'text-primary border-b-2 border-primary pb-1 font-semibold'
               : 'text-on-surface-variant hover:text-primary'
           }`}
         >
@@ -32,9 +43,9 @@ export const Navbar: React.FC = () => {
         </Link>
         <Link
           to="/attack-lab"
-          className={`flex items-center h-full transition-colors duration-200 cursor-pointer active:opacity-80 ${
+          className={`flex items-center h-full transition-colors duration-200 cursor-pointer active:opacity-80 px-1 ${
             isAttackLabActive
-              ? 'text-primary border-b-2 border-primary pb-1'
+              ? 'text-primary border-b-2 border-primary pb-1 font-semibold'
               : 'text-on-surface-variant hover:text-primary'
           }`}
         >
@@ -42,9 +53,9 @@ export const Navbar: React.FC = () => {
         </Link>
         <Link
           to="/about"
-          className={`flex items-center h-full transition-colors duration-200 cursor-pointer active:opacity-80 ${
+          className={`flex items-center h-full transition-colors duration-200 cursor-pointer active:opacity-80 px-1 ${
             isAboutActive
-              ? 'text-primary border-b-2 border-primary pb-1'
+              ? 'text-primary border-b-2 border-primary pb-1 font-semibold'
               : 'text-on-surface-variant hover:text-primary'
           }`}
         >
@@ -60,13 +71,13 @@ export const Navbar: React.FC = () => {
           <span className="text-primary">SYS_OPT_01</span>
         </div>
 
-        {/* Settings Icon */}
+        {/* Login Button / Controller */}
         <Link
-          to="/dev/state-machine"
+          to="/login"
           className="text-on-surface-variant hover:text-primary transition-colors duration-200 cursor-pointer active:opacity-80 p-unit rounded-full hover:bg-white/10 flex items-center justify-center"
-          title="State Controller Settings"
+          title="Terminal Login"
         >
-          <span className="material-symbols-outlined">settings</span>
+          <span className="material-symbols-outlined">account_circle</span>
         </Link>
       </div>
     </nav>
