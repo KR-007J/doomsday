@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -11,14 +11,14 @@
 body {
   margin: 0;
   padding: 0;
-  background-color: #030712;
+  background-color: #070a11;
   color: #f8fafc;
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
 }
 
-/* Subtle background grid & radial glow overlay */
+/* Subtle background grid */
 body::before {
   content: '';
   position: fixed;
@@ -27,50 +27,31 @@ body::before {
   width: 100vw;
   height: 100vh;
   background-image: 
-    radial-gradient(ellipse at 50% 0%, rgba(99, 102, 241, 0.12) 0%, transparent 60%),
-    radial-gradient(circle at 80% 80%, rgba(6, 182, 212, 0.08) 0%, transparent 50%),
-    radial-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 0);
-  background-size: 100% 100%, 100% 100%, 32px 32px;
+    radial-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 0);
+  background-size: 28px 28px;
   pointer-events: none;
   z-index: 1;
 }
 
-/* Glassmorphic border glow class */
-.glass-panel {
-  background: rgba(11, 15, 25, 0.7);
+/* Restrained Linear-style card panels */
+.panel-monochrome {
+  background: rgba(13, 18, 28, 0.75);
   backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.5);
 }
 
-.glass-panel-glow {
-  background: rgba(17, 23, 38, 0.8);
-  backdrop-filter: blur(20px);
-  border: 1px solid rgba(6, 182, 212, 0.2);
-  box-shadow: 0 10px 40px -10px rgba(6, 182, 212, 0.25);
+.panel-monochrome:hover {
+  border-color: rgba(255, 255, 255, 0.16);
 }
 
-/* Kinetic typography gradient sweep */
-@keyframes gradientSweep {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
-.animate-kinetic-text {
-  background: linear-gradient(90deg, #38bdf8 0%, #818cf8 35%, #ffffff 50%, #818cf8 65%, #38bdf8 100%);
-  background-size: 200% auto;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: gradientSweep 6s ease infinite;
-}
+/* Custom scrollbars */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 5px;
+  height: 5px;
 }
 ::-webkit-scrollbar-track {
-  background: #030712;
+  background: #070a11;
 }
 ::-webkit-scrollbar-thumb {
   background: #1e293b;

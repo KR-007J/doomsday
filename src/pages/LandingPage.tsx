@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Shield, Radio, Terminal, Activity, ArrowRight, Cpu, Layers, Zap, Sliders, CheckCircle2 } from 'lucide-react';
+import { Shield, Radio, Terminal, Activity, ArrowRight, Cpu, Sliders, Zap, CheckCircle2 } from 'lucide-react';
 import { Button } from '../components/ui/Button';
 import { Card } from '../components/ui/Card';
 import { TiltCard } from '../components/shared/TiltCard';
@@ -18,8 +18,8 @@ export const LandingPage: React.FC = () => {
 
   const config = THREAT_STATE_CONFIGS[currentState];
 
-  const btnMonitoringRef = useMagnetic<HTMLButtonElement>(0.35);
-  const btnAttackLabRef = useMagnetic<HTMLButtonElement>(0.35);
+  const btnMonitoringRef = useMagnetic<HTMLButtonElement>(0.3);
+  const btnAttackLabRef = useMagnetic<HTMLButtonElement>(0.3);
 
   const states: ThreatStateType[] = [
     'SAFE',
@@ -33,16 +33,16 @@ export const LandingPage: React.FC = () => {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: { staggerChildren: 0.12, delayChildren: 0.05 },
+      transition: { staggerChildren: 0.1, delayChildren: 0.05 },
     },
   };
 
   const itemVariants = {
-    hidden: { opacity: 0, y: 24 },
+    hidden: { opacity: 0, y: 16 },
     visible: {
       opacity: 1,
       y: 0,
-      transition: { type: 'spring', stiffness: 240, damping: 22 },
+      transition: { duration: 0.3, ease: 'easeOut' },
     },
   };
 
@@ -51,38 +51,35 @@ export const LandingPage: React.FC = () => {
       variants={containerVariants}
       initial="hidden"
       animate="visible"
-      className="min-h-screen py-10 px-4 sm:px-6 max-w-7xl mx-auto space-y-12 relative z-10"
+      className="min-h-screen py-10 px-4 sm:px-6 max-w-7xl mx-auto space-y-10 relative z-10"
     >
       {/* Hero Header */}
-      <div className="text-center space-y-5 max-w-3xl mx-auto pt-4">
-        {/* Badge */}
+      <div className="text-center space-y-4 max-w-3xl mx-auto pt-4">
+        {/* Category Label */}
         <motion.div variants={itemVariants} className="inline-block">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-cyan-950/60 text-cyan-300 border border-cyan-500/30 text-xs font-mono mb-2 shadow-lg shadow-cyan-950/40 backdrop-blur-md">
-            <Shield className="w-3.5 h-3.5 text-cyan-400" />
-            ACOUSTIC AIR-GAP THREAT ENGINE (16kHz — 24kHz)
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-mono-900 text-slate-300 border border-white/10 text-xs font-mono mb-1">
+            <Shield className="w-3.5 h-3.5 text-slate-400" />
+            NEAR-ULTRASONIC THREAT ENGINE (16kHz — 24kHz)
           </div>
         </motion.div>
 
-        {/* Kinetic Headline */}
+        {/* Solid Off-White Headline (No gradient text, no rainbow per word) */}
         <motion.h1
           variants={itemVariants}
-          className="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight uppercase font-sans leading-none"
+          className="text-4xl sm:text-6xl font-extrabold tracking-tight text-slate-100 uppercase font-sans leading-none"
         >
-          <span className="animate-kinetic-text">ACOUSTICSHIELD</span>
+          ACOUSTIC SHIELD
         </motion.h1>
 
-        {/* Subtext with focus blur-in */}
+        {/* Clear Subtext */}
         <motion.p
           variants={itemVariants}
-          initial={{ opacity: 0, filter: 'blur(8px)' }}
-          animate={{ opacity: 1, filter: 'blur(0px)' }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="text-sm sm:text-base font-mono text-slate-400 leading-relaxed max-w-2xl mx-auto"
+          className="text-sm sm:text-base font-sans text-slate-400 leading-relaxed max-w-2xl mx-auto"
         >
-          Real-time signal analysis, subcarrier constellation detection, and security incident logging for covert acoustic communication channels.
+          Real-time signal analysis, subcarrier constellation detection, and security incident logging for covert acoustic air-gap communication channels.
         </motion.p>
 
-        {/* Bug Fix #0: Flex/Grid CTA buttons with guaranteed non-overlapping gap */}
+        {/* Bug Fix #0: CTA Buttons flex layout gap (never overlap) */}
         <motion.div
           variants={itemVariants}
           className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 w-full max-w-lg mx-auto"
@@ -90,7 +87,7 @@ export const LandingPage: React.FC = () => {
           <Link to="/monitoring" className="w-full sm:w-auto">
             <Button
               ref={btnMonitoringRef}
-              variant="glow"
+              variant="primary"
               size="lg"
               icon={<Radio className="w-5 h-5" />}
               className="w-full sm:w-auto"
@@ -113,25 +110,22 @@ export const LandingPage: React.FC = () => {
         </motion.div>
       </div>
 
-      {/* Main Stat Card with Selective Liquid Glass */}
+      {/* Live Engine State Card (Restrained Monochrome Panel) */}
       <motion.div variants={itemVariants} className="max-w-4xl mx-auto">
-        <Card variant="liquid" className="p-6 border-cyan-500/30 relative">
+        <Card variant="glass" className="p-6 border-white/10 relative">
           <div className="flex flex-col md:flex-row items-center justify-between gap-6 mb-6">
             <div className="flex items-center gap-4">
-              <div
-                className="p-3.5 rounded-xl bg-obsidian-950/80 border border-white/10 shadow-inner"
-                style={{ color: config.colorHex }}
-              >
-                <Activity className="w-8 h-8 animate-pulse" />
+              <div className="p-3 rounded-xl bg-mono-950 border border-white/10 text-slate-300">
+                <Activity className="w-7 h-7" style={{ color: config.colorHex }} />
               </div>
               <div>
                 <span className="text-xs font-mono text-slate-400 uppercase tracking-wider">
                   LIVE ENGINE STATE
                 </span>
-                <div className="text-2xl font-mono font-extrabold uppercase flex items-center gap-2">
+                <div className="text-xl font-mono font-bold uppercase flex items-center gap-2 mt-0.5">
                   <span style={{ color: config.colorHex }}>{config.label}</span>
                 </div>
-                <p className="text-xs font-mono text-slate-300 mt-1 max-w-md">
+                <p className="text-xs font-mono text-slate-400 mt-1 max-w-md">
                   {config.subText}
                 </p>
               </div>
@@ -146,23 +140,23 @@ export const LandingPage: React.FC = () => {
               </div>
               <div>
                 <span className="text-slate-400 block">RISK LEVEL</span>
-                <span className="text-lg font-bold text-slate-100">{config.risk}</span>
+                <span className="text-lg font-bold text-slate-200">{config.risk}</span>
               </div>
             </div>
           </div>
 
-          {/* Interactive State Jumper Controls */}
+          {/* Interactive State Machine Controller */}
           <div className="pt-4 border-t border-white/10">
             <div className="flex items-center justify-between mb-2.5">
               <span className="text-xs font-mono font-bold text-slate-300 uppercase tracking-wider flex items-center gap-1.5">
-                <Sliders className="w-3.5 h-3.5 text-cyan-400" />
-                INTERACTIVE THREAT STATE CONTROLLER
+                <Sliders className="w-3.5 h-3.5 text-slate-400" />
+                THREAT STATE CONTROLLER
               </span>
               <button
                 onClick={() => triggerSimulatedAttack({ frequencyMin: 20000, frequencyMax: 22000, duration: 4 })}
-                className="text-xs font-mono text-cyan-400 hover:text-cyan-300 flex items-center gap-1 font-bold"
+                className="text-xs font-mono text-slate-300 hover:text-slate-100 flex items-center gap-1 font-semibold"
               >
-                <Zap className="w-3.5 h-3.5" /> AUTO SIMULATED ATTACK
+                <Zap className="w-3.5 h-3.5 text-amber-400" /> AUTO ATTACK SEQUENCE
               </button>
             </div>
 
@@ -174,12 +168,11 @@ export const LandingPage: React.FC = () => {
                   <button
                     key={st}
                     onClick={() => setThreatState(st)}
-                    className={`p-2.5 rounded-xl border text-left font-mono text-xs transition-all duration-300 ${
+                    className={`p-2.5 rounded-lg border text-left font-mono text-xs transition-colors ${
                       isActive
-                        ? 'bg-obsidian-950 border-2 shadow-lg scale-105 font-bold'
-                        : 'bg-obsidian-950/60 border-white/10 hover:border-white/20 opacity-70 hover:opacity-100'
+                        ? 'bg-mono-950 border-white/30 font-bold'
+                        : 'bg-mono-900/60 border-white/10 hover:border-white/20 text-slate-400'
                     }`}
-                    style={{ borderColor: isActive ? stateConfig.colorHex : undefined }}
                   >
                     <div
                       className="w-2 h-2 rounded-full mb-1.5"
@@ -194,84 +187,84 @@ export const LandingPage: React.FC = () => {
         </Card>
       </motion.div>
 
-      {/* Item 4: Asymmetric Bento Grid Restructure */}
+      {/* Bento Grid Architecture */}
       <motion.div variants={itemVariants} className="max-w-5xl mx-auto space-y-4">
         <h2 className="text-xs font-mono font-bold text-slate-400 uppercase tracking-widest text-center mb-2">
           SYSTEM ARCHITECTURE BENTO GRID
         </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-          {/* Main Spanner Bento Card: Core 5-State Threat Engine (Spans 2 columns) */}
-          <TiltCard variant="liquid" className="md:col-span-2 p-6 flex flex-col justify-between h-full">
+          {/* Bento Card 1: 5-State Threat Engine (Spans 2 columns) */}
+          <TiltCard variant="glass" className="md:col-span-2 p-6 flex flex-col justify-between h-full">
             <div>
               <div className="flex items-center justify-between mb-4">
-                <div className="p-3 rounded-xl bg-indigo-950/80 border border-indigo-800/60 text-indigo-400">
-                  <Cpu className="w-6 h-6" />
+                <div className="p-2.5 rounded-lg bg-mono-950 border border-white/10 text-slate-300">
+                  <Cpu className="w-5 h-5" />
                 </div>
-                <span className="text-[10px] font-mono font-bold uppercase px-2.5 py-1 rounded bg-indigo-950 text-indigo-300 border border-indigo-800">
+                <span className="text-[10px] font-mono font-semibold uppercase px-2 py-0.5 rounded bg-mono-950 text-slate-300 border border-white/10">
                   CORE MECHANIC
                 </span>
               </div>
 
-              <h3 className="text-lg font-mono font-bold text-slate-100 uppercase mb-2">
+              <h3 className="text-base font-mono font-bold text-slate-100 uppercase mb-2">
                 5-STATE FORMAL THREAT ENGINE
               </h3>
-              <p className="text-xs font-mono text-slate-300 leading-relaxed max-w-lg mb-4">
-                Models acoustic exfiltration sequence from initial wave envelope anomaly through constellation verification to immutable security ledger registration.
+              <p className="text-xs font-sans text-slate-400 leading-relaxed max-w-lg mb-4">
+                Models acoustic exfiltration sequence from wave envelope anomaly detection through constellation verification to immutable security ledger registration.
               </p>
             </div>
 
-            <div className="bg-obsidian-950/90 p-3 rounded-xl border border-white/10 flex flex-wrap items-center justify-between gap-2 font-mono text-xs">
-              <span className="text-emerald-400 flex items-center gap-1">
-                <CheckCircle2 className="w-3.5 h-3.5" /> Typed State Reducer
+            <div className="bg-mono-950 p-3 rounded-lg border border-white/10 flex flex-wrap items-center justify-between gap-2 font-mono text-xs text-slate-300">
+              <span className="flex items-center gap-1.5">
+                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" /> Typed State Reducer
               </span>
-              <span className="text-cyan-400 flex items-center gap-1">
-                <CheckCircle2 className="w-3.5 h-3.5" /> Shared Morph Pill
+              <span className="flex items-center gap-1.5">
+                <CheckCircle2 className="w-3.5 h-3.5 text-cyan-400" /> Shared Morph Pill
               </span>
-              <span className="text-indigo-400 flex items-center gap-1">
-                <CheckCircle2 className="w-3.5 h-3.5" /> Zero False Positives
+              <span className="flex items-center gap-1.5">
+                <CheckCircle2 className="w-3.5 h-3.5 text-slate-400" /> State Machine Validated
               </span>
             </div>
           </TiltCard>
 
           {/* Bento Card 2: Real-Time Spectrogram */}
-          <TiltCard variant="liquid" className="p-6 flex flex-col justify-between h-full">
+          <TiltCard variant="glass" className="p-6 flex flex-col justify-between h-full">
             <div>
-              <div className="p-3 w-fit rounded-xl bg-cyan-950/80 border border-cyan-800/60 text-cyan-400 mb-4">
-                <Radio className="w-6 h-6" />
+              <div className="p-2.5 w-fit rounded-lg bg-mono-950 border border-white/10 text-slate-300 mb-4">
+                <Radio className="w-5 h-5" />
               </div>
               <h3 className="text-base font-mono font-bold text-slate-100 uppercase mb-2">
                 REAL-TIME SPECTROGRAM
               </h3>
-              <p className="text-xs font-mono text-slate-400 leading-relaxed">
+              <p className="text-xs font-sans text-slate-400 leading-relaxed">
                 HTML Canvas waterfall matrix rendering 24-bit 96kHz PCM acoustic spectral density.
               </p>
             </div>
-            <div className="mt-4 pt-3 border-t border-white/10 text-[10px] font-mono text-cyan-400 font-bold">
+            <div className="mt-4 pt-3 border-t border-white/10 text-[10px] font-mono text-slate-400 font-medium">
               16.0 kHz — 24.0 kHz Waterfall
             </div>
           </TiltCard>
 
           {/* Bento Card 3: Attack Lab Simulator (Spans full width bottom row) */}
-          <TiltCard variant="liquid" className="md:col-span-3 p-6">
+          <TiltCard variant="glass" className="md:col-span-3 p-6">
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
               <div className="flex items-center gap-4">
-                <div className="p-3 rounded-xl bg-rose-950/80 border border-rose-800/60 text-rose-400">
-                  <Terminal className="w-6 h-6" />
+                <div className="p-2.5 rounded-lg bg-mono-950 border border-white/10 text-slate-300">
+                  <Terminal className="w-5 h-5" />
                 </div>
                 <div>
                   <h3 className="text-base font-mono font-bold text-slate-100 uppercase">
                     ATTACK LABORATORY TRANSMITTER SUITE
                   </h3>
-                  <p className="text-xs font-mono text-slate-400 mt-0.5">
-                    Member 2's acoustic payload synthesizer for testing FSK subcarrier exfiltration vectors
+                  <p className="text-xs font-sans text-slate-400 mt-0.5">
+                    Acoustic payload synthesizer for testing FSK subcarrier exfiltration vectors
                   </p>
                 </div>
               </div>
 
               <Link to="/attack-lab">
-                <Button variant="glow" size="md" icon={<ArrowRight className="w-4 h-4" />}>
-                  OPEN SIMULATOR SUITE
+                <Button variant="secondary" size="md" icon={<ArrowRight className="w-4 h-4" />}>
+                  OPEN TRANSMITTER SUITE
                 </Button>
               </Link>
             </div>

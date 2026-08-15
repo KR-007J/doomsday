@@ -8,53 +8,25 @@ export default {
   theme: {
     extend: {
       colors: {
-        obsidian: {
-          950: '#030712',
-          900: '#0B0F19',
-          850: '#111726',
-          800: '#172033',
-          700: '#1E293B',
-          600: '#334155',
-        },
-        brand: {
-          cyan: '#06B6D4',
-          purple: '#8B5CF6',
-          violet: '#6366F1',
-          emerald: '#10B981',
-          amber: '#F59E0B',
-          rose: '#F43F5E',
+        mono: {
+          950: '#070A11',
+          900: '#0D121C',
+          850: '#131A28',
+          800: '#1A2336',
+          700: '#26334D',
+          600: '#475569',
         },
         threat: {
           safe: '#10B981',
           detected: '#F59E0B',
-          analyzing: '#8B5CF6',
+          analyzing: '#6366F1',
           potential: '#F97316',
-          logged: '#F43F5E',
+          logged: '#EF4444',
         },
       },
       fontFamily: {
         mono: ['"JetBrains Mono"', 'monospace'],
-        sans: ['"Plus Jakarta Sans"', 'Inter', 'sans-serif'],
-      },
-      animation: {
-        'border-beam': 'borderBeam 6s linear infinite',
-        'pulse-glow': 'pulseGlow 2s ease-in-out infinite alternate',
-        'wave-flow': 'waveFlow 4s linear infinite',
-        'float-slow': 'floatSlow 6s ease-in-out infinite',
-      },
-      keyframes: {
-        borderBeam: {
-          '0%': { offsetDistance: '0%' },
-          '100%': { offsetDistance: '100%' },
-        },
-        pulseGlow: {
-          '0%': { opacity: '0.4', filter: 'drop-shadow(0 0 4px currentColor)' },
-          '100%': { opacity: '1', filter: 'drop-shadow(0 0 16px currentColor)' },
-        },
-        floatSlow: {
-          '0%, 100%': { transform: 'translateY(0px)' },
-          '50%': { transform: 'translateY(-8px)' },
-        },
+        sans: ['Inter', 'system-ui', 'sans-serif'],
       },
     },
   },
