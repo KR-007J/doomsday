@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { Navbar } from './components/layout/Navbar';
 import { Footer } from './components/layout/Footer';
-import { AuroraBackground } from './components/visualizations/AuroraBackground';
+import { ShaderBackground } from './components/visualizations/ShaderBackground';
 import { CustomCursor } from './components/shared/CustomCursor';
 import { useLenis } from './hooks/useLenis';
 import { useThreatStore } from './features/threat-state-machine/useThreatStore';
@@ -21,18 +21,18 @@ export const App: React.FC = () => {
 
   return (
     <Router>
-      <div className="relative min-h-screen bg-[#030712] text-slate-100 flex flex-col font-sans selection:bg-cyan-500/30 selection:text-cyan-200 cursor-none">
-        {/* Global Custom Cursor */}
+      <div className="relative min-h-screen bg-[#141313] text-[#e5e2e1] flex flex-col font-sans selection:bg-white/20 selection:text-white">
+        {/* Custom Cursor */}
         <CustomCursor />
 
-        {/* Aurora Mesh Gradient Atmospheric Background */}
-        <AuroraBackground />
+        {/* WebGL Shader & Particle Background */}
+        <ShaderBackground />
 
         {/* Global Navbar */}
         <Navbar />
 
-        {/* Route Content */}
-        <main className="flex-1 relative z-10">
+        {/* Main Content Area */}
+        <main className="flex-1 relative z-10 flex flex-col">
           <Routes>
             <Route path="/" element={<LandingPage />} />
             <Route path="/login" element={<LoginPage />} />
