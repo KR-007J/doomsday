@@ -16,7 +16,7 @@ export const PayloadForm: React.FC = () => {
   const resetToSafe = useThreatStore((s) => s.resetToSafe);
   const currentState = useThreatStore((s) => s.currentState);
 
-  const btnTransmitRef = useMagnetic<HTMLButtonElement>(0.3);
+  const btnTransmitRef = useMagnetic<HTMLButtonElement>(0.25);
 
   const handleTransmit = async () => {
     setIsTransmitting(true);
@@ -32,8 +32,9 @@ export const PayloadForm: React.FC = () => {
   };
 
   return (
-    <Card variant="surface-1" className="p-5 w-full">
-      <div className="flex items-center justify-between border-b border-[#242728] pb-3 mb-4">
+    <Card variant="surface-1" className="p-5 w-full flex flex-col justify-between">
+      {/* Header Bar */}
+      <div className="flex items-center justify-between border-b border-[#242728] pb-3 mb-5">
         <div>
           <h2 className="text-sm font-mono font-bold text-[#F2F3F5] uppercase tracking-wider flex items-center gap-2">
             <Radio className="w-4 h-4 text-slate-300" />
@@ -46,20 +47,22 @@ export const PayloadForm: React.FC = () => {
 
         <button
           onClick={resetToSafe}
-          className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#15171B] hover:bg-[#1B1E23] text-xs font-mono text-[#F2F3F5] border border-[#242728] transition-colors"
+          className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#15171B] hover:bg-[#1B1E23] text-xs font-mono text-[#F2F3F5] border border-[#242728] transition-colors shrink-0"
         >
           <RotateCcw className="w-3.5 h-3.5" />
           RESET ENGINE
         </button>
       </div>
 
-      <div className="space-y-4 font-mono text-xs">
-        {/* Payload Input & Encoding Toggle */}
-        <div>
-          <div className="flex items-center justify-between mb-1.5">
+      {/* Form Fields: Rigid Flex Column Flow with gap-5 */}
+      <div className="flex flex-col gap-5 font-mono text-xs w-full">
+        {/* 1. Payload Input & Encoding Toggle */}
+        <div className="flex flex-col gap-2">
+          <div className="flex items-center justify-between">
             <label className="text-[#F2F3F5] font-semibold">TRANSMISSION PAYLOAD</label>
             <div className="flex items-center gap-1 bg-[#15171B] p-0.5 rounded border border-[#242728]">
               <button
+                type="button"
                 onClick={() => setEncodingMode('TEXT')}
                 className={`px-2 py-0.5 rounded text-[10px] ${
                   encodingMode === 'TEXT'
@@ -70,6 +73,7 @@ export const PayloadForm: React.FC = () => {
                 TEXT
               </button>
               <button
+                type="button"
                 onClick={() => setEncodingMode('HEX')}
                 className={`px-2 py-0.5 rounded text-[10px] ${
                   encodingMode === 'HEX'
@@ -86,14 +90,14 @@ export const PayloadForm: React.FC = () => {
             rows={2}
             value={payloadText}
             onChange={(e) => setPayloadText(e.target.value)}
-            className="w-full bg-[#15171B] border border-[#242728] rounded-lg p-2.5 text-xs font-mono text-[#F2F3F5] focus:outline-none focus:border-[#5C6167] transition-colors"
+            className="w-full bg-[#15171B] border border-[#242728] rounded-lg p-2.5 text-xs font-mono text-[#F2F3F5] focus:outline-none focus:border-[#5C6167] transition-colors resize-none"
             placeholder="Enter payload string or hex bytes..."
           />
         </div>
 
-        {/* Frequency Slider */}
-        <div>
-          <div className="flex justify-between items-center mb-1.5">
+        {/* 2. Frequency Slider */}
+        <div className="flex flex-col gap-1.5">
+          <div className="flex justify-between items-center">
             <label className="text-[#F2F3F5] font-semibold">CARRIER FREQUENCY</label>
             <span className="text-[#3ECF8E] font-bold">{(frequency / 1000).toFixed(2)} kHz</span>
           </div>
@@ -104,18 +108,18 @@ export const PayloadForm: React.FC = () => {
             step={100}
             value={frequency}
             onChange={(e) => setFrequency(Number(e.target.value))}
-            className="w-full h-1.5 bg-[#15171B] rounded-lg appearance-none cursor-pointer accent-[#E6E6E6]"
+            className="block w-full h-2 bg-[#15171B] rounded-lg appearance-none cursor-pointer accent-[#E6E6E6]"
           />
-          <div className="flex justify-between text-[10px] text-[#5C6167] mt-1">
+          <div className="flex justify-between text-[10px] text-[#5C6167]">
             <span>18.0 kHz (Audible Edge)</span>
             <span>20.5 kHz (Subcarrier)</span>
             <span>23.5 kHz (Ultrasonic)</span>
           </div>
         </div>
 
-        {/* Duration Slider */}
-        <div>
-          <div className="flex justify-between items-center mb-1.5">
+        {/* 3. Duration Slider */}
+        <div className="flex flex-col gap-1.5">
+          <div className="flex justify-between items-center">
             <label className="text-[#F2F3F5] font-semibold">BURST DURATION</label>
             <span className="text-[#F2F3F5] font-bold">{duration.toFixed(1)} s</span>
           </div>
@@ -126,12 +130,12 @@ export const PayloadForm: React.FC = () => {
             step={0.5}
             value={duration}
             onChange={(e) => setDuration(Number(e.target.value))}
-            className="w-full h-1.5 bg-[#15171B] rounded-lg appearance-none cursor-pointer accent-[#E6E6E6]"
+            className="block w-full h-2 bg-[#15171B] rounded-lg appearance-none cursor-pointer accent-[#E6E6E6]"
           />
         </div>
 
-        {/* Transmit Trigger Action: Solid Near-White Primary CTA (NO GRADIENT) */}
-        <div className="pt-2">
+        {/* 4. Transmit Action Button Container */}
+        <div className="pt-2 w-full">
           <Button
             ref={btnTransmitRef}
             variant="primary"
@@ -139,7 +143,7 @@ export const PayloadForm: React.FC = () => {
             onClick={handleTransmit}
             disabled={isTransmitting || currentState !== 'SAFE'}
             icon={<Zap className="w-4 h-4 text-[#07080A]" />}
-            className="w-full"
+            className="w-full relative block"
           >
             {isTransmitting ? 'EMITTING ACOUSTIC SIGNAL...' : 'TRANSMIT COVERT ACOUSTIC SIGNAL'}
           </Button>
