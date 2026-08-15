@@ -4,14 +4,14 @@ import { useThreatStore } from '../../features/threat-state-machine/useThreatSto
 import { THREAT_STATE_CONFIGS } from '../../features/threat-state-machine/stateMachine';
 
 interface TiltCardProps extends React.HTMLAttributes<HTMLDivElement> {
-  variant?: 'glass' | 'glow' | 'default';
+  variant?: 'default' | 'glass' | 'liquid' | 'glow';
   children: React.ReactNode;
 }
 
 export const TiltCard: React.FC<TiltCardProps> = ({
   children,
   className,
-  variant = 'glass',
+  variant = 'liquid',
   ...props
 }) => {
   const cardRef = useRef<HTMLDivElement | null>(null);
@@ -33,8 +33,8 @@ export const TiltCard: React.FC<TiltCardProps> = ({
     const centerX = rect.width / 2;
     const centerY = rect.height / 2;
 
-    const rX = ((y - centerY) / centerY) * -12; // max tilt deg
-    const rY = ((x - centerX) / centerX) * 12;
+    const rX = ((y - centerY) / centerY) * -10; // max tilt deg
+    const rY = ((x - centerX) / centerX) * 10;
 
     setRotateX(rX);
     setRotateY(rY);
@@ -62,7 +62,7 @@ export const TiltCard: React.FC<TiltCardProps> = ({
         variant={variant}
         className={`transition-all duration-300 ${className || ''}`}
         style={{
-          transform: `rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(${isHovered ? 1.02 : 1}, ${isHovered ? 1.02 : 1}, 1)`,
+          transform: `rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(${isHovered ? 1.015 : 1}, ${isHovered ? 1.015 : 1}, 1)`,
           boxShadow: isHovered
             ? `0 20px 40px -15px ${config.glowHex}, 0 0 15px ${config.colorHex}30`
             : undefined,

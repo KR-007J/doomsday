@@ -51,7 +51,20 @@ body::before {
   box-shadow: 0 10px 40px -10px rgba(6, 182, 212, 0.25);
 }
 
-/* Custom scrollbars */
+/* Kinetic typography gradient sweep */
+@keyframes gradientSweep {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.animate-kinetic-text {
+  background: linear-gradient(90deg, #38bdf8 0%, #818cf8 35%, #ffffff 50%, #818cf8 65%, #38bdf8 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradientSweep 6s ease infinite;
+}
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;

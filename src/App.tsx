@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { Navbar } from './components/layout/Navbar';
 import { Footer } from './components/layout/Footer';
-import { ParticleField } from './components/visualizations/ParticleField';
+import { AuroraBackground } from './components/visualizations/AuroraBackground';
 import { CustomCursor } from './components/shared/CustomCursor';
 import { useLenis } from './hooks/useLenis';
 import { useThreatStore } from './features/threat-state-machine/useThreatStore';
@@ -21,12 +21,12 @@ export const App: React.FC = () => {
 
   return (
     <Router>
-      <div className="relative min-h-screen bg-[#07090E] text-slate-100 flex flex-col font-sans selection:bg-cyan-500/30 selection:text-cyan-200 cursor-none">
+      <div className="relative min-h-screen bg-[#030712] text-slate-100 flex flex-col font-sans selection:bg-cyan-500/30 selection:text-cyan-200 cursor-none">
         {/* Global Custom Cursor */}
         <CustomCursor />
 
-        {/* GPU Particle Field Background */}
-        <ParticleField />
+        {/* Aurora Mesh Gradient Atmospheric Background */}
+        <AuroraBackground />
 
         {/* Global Navbar */}
         <Navbar />
