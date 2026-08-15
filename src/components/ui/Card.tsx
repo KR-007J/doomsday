@@ -2,14 +2,14 @@ import React from 'react';
 import { clsx } from 'clsx';
 
 interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
-  variant?: 'default' | 'glass' | 'liquid' | 'glow';
+  variant?: 'surface-1' | 'surface-2' | 'overlay' | 'glass' | 'liquid' | 'glow' | 'default';
   borderColor?: string;
 }
 
 export const Card: React.FC<CardProps> = ({
   children,
   className,
-  variant = 'glass',
+  variant = 'surface-1',
   borderColor,
   style,
   ...props
@@ -18,14 +18,17 @@ export const Card: React.FC<CardProps> = ({
     <div
       className={clsx(
         'rounded-xl transition-all duration-200 relative overflow-hidden',
-        variant === 'glass' &&
-          'bg-mono-900/80 backdrop-blur-xl border border-white/10 shadow-lg',
-        variant === 'liquid' &&
-          'bg-mono-900/90 backdrop-blur-xl border border-white/15 shadow-xl',
-        variant === 'glow' &&
-          'bg-mono-900/90 backdrop-blur-xl border border-white/20 shadow-2xl',
+        // Surface 1 (Cards, Panels)
+        (variant === 'surface-1' || variant === 'glass' || variant === 'liquid' || variant === 'glow') &&
+          'bg-[#0D0F12] border border-[#242728] shadow-[0px_1px_0px_0px_rgba(255,255,255,0.04)_inset,0px_4px_16px_rgba(0,0,0,0.4)]',
+        // Surface 2 (Nested cards, hover states)
+        variant === 'surface-2' &&
+          'bg-[#15171B] border border-[#242728] shadow-[0px_1px_0px_0px_rgba(255,255,255,0.05)_inset,0px_6px_24px_rgba(0,0,0,0.5)]',
+        // Overlay (Modals, dropdowns)
+        variant === 'overlay' &&
+          'bg-[#1B1E23] border border-[#242728] shadow-[0px_1px_0px_0px_rgba(255,255,255,0.06)_inset,0px_12px_32px_rgba(0,0,0,0.6)]',
         variant === 'default' &&
-          'bg-mono-900 border border-slate-800',
+          'bg-[#0D0F12] border border-[#242728]',
         className
       )}
       style={{

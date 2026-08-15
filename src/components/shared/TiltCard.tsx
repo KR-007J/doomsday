@@ -2,14 +2,14 @@ import React, { useRef, useState } from 'react';
 import { Card } from '../ui/Card';
 
 interface TiltCardProps extends React.HTMLAttributes<HTMLDivElement> {
-  variant?: 'default' | 'glass' | 'liquid' | 'glow';
+  variant?: 'surface-1' | 'surface-2' | 'overlay' | 'default' | 'glass' | 'liquid' | 'glow';
   children: React.ReactNode;
 }
 
 export const TiltCard: React.FC<TiltCardProps> = ({
   children,
   className,
-  variant = 'glass',
+  variant = 'surface-1',
   ...props
 }) => {
   const cardRef = useRef<HTMLDivElement | null>(null);
@@ -58,7 +58,7 @@ export const TiltCard: React.FC<TiltCardProps> = ({
         className={`transition-all duration-200 ${className || ''}`}
         style={{
           transform: `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`,
-          borderColor: isHovered ? 'rgba(255, 255, 255, 0.2)' : undefined,
+          borderColor: isHovered ? 'rgba(255, 255, 255, 0.16)' : undefined,
         }}
       >
         {children}

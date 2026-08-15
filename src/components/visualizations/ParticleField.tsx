@@ -4,18 +4,17 @@ import * as THREE from 'three';
 import { useThreatStore } from '../../features/threat-state-machine/useThreatStore';
 import { THREAT_STATE_CONFIGS } from '../../features/threat-state-machine/stateMachine';
 
-function ParticleSwarm() {
+function ConstellationField() {
   const pointsRef = useRef<THREE.Points>(null!);
   const currentState = useThreatStore((s) => s.currentState);
   const confidence = useThreatStore((s) => s.confidence);
   const config = THREAT_STATE_CONFIGS[currentState];
 
-  const particleCount = 2800;
+  // Sparse, deliberate constellation particle count (800 points max)
+  const particleCount = 800;
 
-  // Generate particle initial positions & velocities
-  const { positions, velocities, colors } = useMemo(() => {
+  const { positions, colors } = useMemo(() => {
     const pos = new Float32Array(particleCount * 3);
-    const vel = new Float32Array(particleCount * 3);
     const col = new Float32Array(particleCount * 3);
 
     const baseColor = new THREE.Color(config.colorHex);
@@ -25,48 +24,41 @@ function ParticleSwarm() {
       const v = Math.random();
       const theta = u * 2.0 * Math.PI;
       const phi = Math.acos(2.0 * v - 1.0);
-      const r = 2.5 + Math.random() * 4.5;
+      const r = 3.0 + Math.random() * 4.0;
 
       pos[i * 3] = r * Math.sin(phi) * Math.cos(theta);
       pos[i * 3 + 1] = r * Math.sin(phi) * Math.sin(theta);
       pos[i * 3 + 2] = r * Math.cos(phi);
 
-      vel[i * 3] = (Math.random() - 0.5) * 0.015;
-      vel[i * 3 + 1] = (Math.random() - 0.5) * 0.015;
-      vel[i * 3 + 2] = (Math.random() - 0.5) * 0.015;
-
-      col[i * 3] = baseColor.r;
-      col[i * 3 + 1] = baseColor.g;
-      col[i * 3 + 2] = baseColor.b;
+      col[i * 3] = baseColor.r * 0.6;
+      col[i * 3 + 1] = baseColor.g * 0.6;
+      col[i * 3 + 2] = baseColor.b * 0.6;
     }
 
-    return { positions: pos, velocities: vel, colors: col };
+    return { positions: pos, colors: col };
   }, [particleCount, config.colorHex]);
 
-  // Continuous frame animation loop: always moving, even when idle
   useFrame((state, delta) => {
     if (!pointsRef.current) return;
 
     const riskFactor = confidence / 100;
-    const speed = 0.4 + riskFactor * 1.6;
+    // Calmer in SAFE, active in THREAT LOGGED
+    const speed = 0.15 + riskFactor * 0.8;
 
-    // Orbit & sinusoidal breathing movement
     const elapsedTime = state.clock.getElapsedTime();
-    pointsRef.current.rotation.y = elapsedTime * 0.06 * speed;
-    pointsRef.current.rotation.x = Math.sin(elapsedTime * 0.04) * 0.15 * speed;
-    pointsRef.current.position.y = Math.sin(elapsedTime * 0.2) * 0.15;
+    pointsRef.current.rotation.y = elapsedTime * 0.03 * speed;
+    pointsRef.current.rotation.x = Math.sin(elapsedTime * 0.02) * 0.08 * speed;
 
     const targetColor = new THREE.Color(config.colorHex);
     const geo = pointsRef.current.geometry;
     const colorAttr = geo.attributes.color;
 
-    // Smoothly interpolate colors to match active threat state
     if (colorAttr) {
       const array = colorAttr.array as Float32Array;
       for (let i = 0; i < particleCount; i++) {
-        array[i * 3] += (targetColor.r - array[i * 3]) * 0.05;
-        array[i * 3 + 1] += (targetColor.g - array[i * 3 + 1]) * 0.05;
-        array[i * 3 + 2] += (targetColor.b - array[i * 3 + 2]) * 0.05;
+        array[i * 3] += (targetColor.r * 0.6 - array[i * 3]) * 0.05;
+        array[i * 3 + 1] += (targetColor.g * 0.6 - array[i * 3 + 1]) * 0.05;
+        array[i * 3 + 2] += (targetColor.b * 0.6 - array[i * 3 + 2]) * 0.05;
       }
       colorAttr.needsUpdate = true;
     }
@@ -85,10 +77,10 @@ function ParticleSwarm() {
         />
       </bufferGeometry>
       <pointsMaterial
-        size={0.038}
+        size={0.025}
         vertexColors
         transparent
-        opacity={0.75}
+        opacity={0.4}
         blending={THREE.AdditiveBlending}
         depthWrite={false}
       />
@@ -101,23 +93,23 @@ export const ParticleField: React.FC = () => {
   const currentState = useThreatStore((s) => s.currentState);
   const config = THREAT_STATE_CONFIGS[currentState];
 
+  // FPS Guardrail or reduced motion check
   if (safeDemoMode) {
     return (
-      <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden transition-all duration-1000">
+      <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden bg-[#07080A]">
         <div
-          className="absolute -top-40 left-1/2 -translate-x-1/2 w-[900px] h-[500px] rounded-full blur-[140px] opacity-30 animate-pulse transition-colors duration-1000"
+          className="absolute -top-40 left-1/2 -translate-x-1/2 w-[700px] h-[400px] rounded-full blur-[140px] opacity-15 transition-colors duration-1000"
           style={{ backgroundColor: config.colorHex }}
         />
-        <div className="absolute inset-0 bg-[radial-gradient(#1e293b_1px,transparent_1px)] [background-size:24px_24px] opacity-25" />
       </div>
     );
   }
 
   return (
-    <div className="fixed inset-0 pointer-events-none z-0 opacity-70 transition-opacity duration-1000">
+    <div className="fixed inset-0 pointer-events-none z-0 opacity-50 transition-opacity duration-1000">
       <Canvas camera={{ position: [0, 0, 6], fov: 60 }}>
-        <ambientLight intensity={0.6} />
-        <ParticleSwarm />
+        <ambientLight intensity={0.4} />
+        <ConstellationField />
       </Canvas>
     </div>
   );

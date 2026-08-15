@@ -10,7 +10,6 @@ export const CustomCursor: React.FC = () => {
   const currentState = useThreatStore((s) => s.currentState);
   const config = THREAT_STATE_CONFIGS[currentState];
 
-  // Spring physics for smooth cursor follower
   const springConfig = { damping: 28, stiffness: 350, mass: 0.5 };
   const cursorX = useSpring(0, springConfig);
   const cursorY = useSpring(0, springConfig);
@@ -20,7 +19,6 @@ export const CustomCursor: React.FC = () => {
   const ringY = useSpring(0, ringSpringConfig);
 
   useEffect(() => {
-    // Hide custom cursor on non-fine pointer devices (touchscreens)
     if (window.matchMedia('(pointer: coarse)').matches) {
       return;
     }
@@ -66,7 +64,6 @@ export const CustomCursor: React.FC = () => {
 
   return (
     <>
-      {/* Small Glowing Center Dot */}
       <motion.div
         className="fixed top-0 left-0 w-2.5 h-2.5 rounded-full pointer-events-none z-50 -translate-x-1/2 -translate-y-1/2 shadow-md"
         style={{
@@ -77,12 +74,11 @@ export const CustomCursor: React.FC = () => {
         }}
       />
 
-      {/* Trailing Ring with Spring Physics */}
       <motion.div
         className="fixed top-0 left-0 rounded-full border pointer-events-none z-50 -translate-x-1/2 -translate-y-1/2 transition-colors duration-300"
         animate={{
-          width: isHovered ? 48 : 26,
-          height: isHovered ? 48 : 26,
+          width: isHovered ? 44 : 24,
+          height: isHovered ? 44 : 24,
           borderColor: config.colorHex,
           backgroundColor: isHovered ? `${config.colorHex}15` : 'transparent',
         }}
@@ -90,7 +86,7 @@ export const CustomCursor: React.FC = () => {
         style={{
           x: ringX,
           y: ringY,
-          boxShadow: isHovered ? `0 0 20px ${config.glowHex}` : 'none',
+          boxShadow: isHovered ? `0 0 16px ${config.colorHex}30` : 'none',
         }}
       />
     </>

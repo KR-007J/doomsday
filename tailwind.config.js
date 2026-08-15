@@ -8,20 +8,19 @@ export default {
   theme: {
     extend: {
       colors: {
-        mono: {
-          950: '#070A11',
-          900: '#0D121C',
-          850: '#131A28',
-          800: '#1A2336',
-          700: '#26334D',
-          600: '#475569',
-        },
-        threat: {
-          safe: '#10B981',
-          detected: '#F59E0B',
-          analyzing: '#6366F1',
-          potential: '#F97316',
-          logged: '#EF4444',
+        canvas: 'var(--color-canvas)',
+        'surface-1': 'var(--color-surface-1)',
+        'surface-2': 'var(--color-surface-2)',
+        overlay: 'var(--color-overlay)',
+        hairline: 'var(--color-hairline)',
+        'text-primary': 'var(--color-text-primary)',
+        'text-secondary': 'var(--color-text-secondary)',
+        'text-tertiary': 'var(--color-text-tertiary)',
+        accent: {
+          safe: 'var(--accent-safe)',
+          warn: 'var(--accent-warn)',
+          critical: 'var(--accent-critical)',
+          neutral: 'var(--accent-neutral)',
         },
       },
       fontFamily: {

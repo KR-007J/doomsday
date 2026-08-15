@@ -20,19 +20,23 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(({
 }, ref) => {
   const sizeClasses = {
     sm: 'px-3 py-1.5 text-xs font-mono',
-    md: 'px-4.5 py-2.5 text-sm font-sans font-semibold',
-    lg: 'px-6 py-3.5 text-sm sm:text-base font-sans font-bold',
+    md: 'px-4 py-2 text-xs sm:text-sm font-sans font-medium',
+    lg: 'px-5 py-2.5 sm:px-6 sm:py-3 text-sm sm:text-base font-sans font-semibold',
   };
 
   const variantClasses = {
+    // Primary CTA: Solid near-white #E6E6E6 (NO GRADIENT, NO BLUE)
     primary:
-      'bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold shadow-lg shadow-cyan-500/25 border border-cyan-300',
+      'bg-[#E6E6E6] hover:bg-white text-[#07080A] font-semibold border border-white/20 shadow-[0px_1px_0px_0px_rgba(255,255,255,0.4)_inset,0px_2px_8px_rgba(0,0,0,0.4)]',
+    // Secondary: Surface 2 #15171B with hairline border #242728
     secondary:
-      'bg-obsidian-900/90 hover:bg-obsidian-850 text-slate-200 border border-white/15 hover:border-cyan-500/40 shadow-md backdrop-blur-md',
+      'bg-[#15171B] hover:bg-[#1B1E23] text-[#F2F3F5] border border-[#242728] hover:border-[#383C42] shadow-sm',
+    // Danger: Functional critical accent #FF5C5C
     danger:
-      'bg-rose-600 hover:bg-rose-500 text-white font-bold shadow-lg shadow-rose-600/30 border border-rose-400',
-    ghost: 'bg-transparent hover:bg-white/10 text-slate-400 hover:text-slate-100',
-    glow: 'bg-gradient-to-r from-cyan-500 to-indigo-600 hover:from-cyan-400 hover:to-indigo-500 text-white font-bold shadow-xl shadow-cyan-500/30 border border-cyan-400',
+      'bg-[#FF5C5C] hover:bg-[#FF7070] text-[#07080A] font-semibold border border-rose-400 shadow-md',
+    ghost: 'bg-transparent hover:bg-[#15171B] text-[#9AA0A6] hover:text-[#F2F3F5]',
+    // Glow variant mapped to solid neutral near-white
+    glow: 'bg-[#E6E6E6] hover:bg-white text-[#07080A] font-semibold border border-white/20 shadow-md',
   };
 
   return (
@@ -43,7 +47,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(({
       whileTap={{ scale: 0.96 }}
       transition={{ type: 'spring', stiffness: 400, damping: 17 }}
       className={clsx(
-        'inline-flex items-center justify-center gap-2.5 rounded-xl transition-colors duration-200 disabled:opacity-50 disabled:pointer-events-none cursor-pointer select-none whitespace-nowrap',
+        'inline-flex items-center justify-center gap-2 rounded-lg transition-colors duration-150 disabled:opacity-40 disabled:pointer-events-none cursor-pointer select-none whitespace-nowrap',
         sizeClasses[size],
         variantClasses[variant],
         className
