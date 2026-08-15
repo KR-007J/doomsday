@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { UltrasonicShader } from '../components/visualizations/UltrasonicShader';
+import { AcousticVideoPlayer } from '../components/visualizations/AcousticVideoPlayer';
 
 export const IntroPage: React.FC = () => {
   const [uptimeSec, setUptimeSec] = useState(0);
@@ -21,7 +22,7 @@ export const IntroPage: React.FC = () => {
 
   return (
     <div className="relative min-h-screen bg-[#141313] text-[#e5e2e1] flex flex-col font-sans overflow-x-hidden selection:bg-[#3ecf8e]/30 selection:text-[#3ecf8e]">
-      {/* Background WebGL Shader */}
+      {/* Background WebGL Soundwave Shader */}
       <UltrasonicShader />
 
       {/* Noise / CRT Scanline Overlay */}
@@ -45,7 +46,7 @@ export const IntroPage: React.FC = () => {
         </header>
 
         {/* Hero Section */}
-        <section className="flex flex-col items-center justify-center flex-grow px-margin-page text-center py-20">
+        <section className="flex flex-col items-center justify-center px-margin-page text-center pt-16 pb-8">
           <div className="max-w-4xl flex flex-col items-center animate-slide-up-blur">
             <div className="font-mono text-[10px] text-[#c4c7c8] tracking-[0.2em] uppercase mb-4 border border-white/10 px-4 py-1 bg-black/40 backdrop-blur-[40px]">
               PRO-EDITION v4.0
@@ -55,11 +56,11 @@ export const IntroPage: React.FC = () => {
               Acoustic Shield
             </h1>
 
-            <h2 className="font-mono text-sm md:text-base text-[#3ecf8e] tracking-widest uppercase mb-8">
+            <h2 className="font-mono text-sm md:text-base text-[#3ecf8e] tracking-widest uppercase mb-6">
               Unveiling The Unheard
             </h2>
 
-            <p className="font-mono text-xs md:text-sm text-[#c4c7c8] max-w-2xl mx-auto uppercase tracking-widest border border-white/10 bg-[#141313]/60 backdrop-blur-md px-6 py-3 rounded mb-10">
+            <p className="font-mono text-xs md:text-sm text-[#c4c7c8] max-w-2xl mx-auto uppercase tracking-widest border border-white/10 bg-[#141313]/60 backdrop-blur-md px-6 py-3 rounded mb-8">
               <span className="text-[#3ecf8e] animate-pulse mr-2">●</span> Operational Status: Vigilance Active // System Alpha
             </p>
 
@@ -73,6 +74,11 @@ export const IntroPage: React.FC = () => {
               </button>
             </Link>
           </div>
+        </section>
+
+        {/* Feature Introduction Video & Acoustic Soundwave Simulator Section */}
+        <section className="w-full px-margin-page relative z-20">
+          <AcousticVideoPlayer />
         </section>
 
         {/* Team Section */}
