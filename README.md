@@ -1,33 +1,32 @@
-# ACOUSTIC SHIELD — National Cyber Defense Operations Center
+# ACOUSTIC SHIELD — Covert Near-Ultrasonic Threat Detection Engine
 
-[![SIH 2026 Defense](https://img.shields.io/badge/SIH%202026-Government%20Defense%20Standard-06B6D4?style=for-the-badge&logo=shield)](https://github.com/KR-007J/doomsday)
 [![React 18](https://img.shields.io/badge/React-18.2-61DAFB?style=for-the-badge&logo=react)](https://react.dev/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.2-3178C6?style=for-the-badge&logo=typescript)](https://www.typescriptlang.org/)
 [![Vite](https://img.shields.io/badge/Vite-5.1-646CFF?style=for-the-badge&logo=vite)](https://vitejs.dev/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind-3.4-38BDF8?style=for-the-badge&logo=tailwindcss)](https://tailwindcss.com/)
 [![Backend Agnostic](https://img.shields.io/badge/Backend-100%25%20Agnostic-10B981?style=for-the-badge)](https://github.com/KR-007J/doomsday)
 
-A production-grade, 2026-era **Cybersecurity Operations Center (SOC) Dashboard** for detecting, analyzing, and logging **covert acoustic & near-ultrasonic communication channels** (16,000 Hz — 24,000 Hz) designed for Smart India Hackathon (SIH) 2026 government evaluation.
+A production-grade, hyper-interactive **Cybersecurity Operations Center (SOC) Dashboard** for detecting, analyzing, and logging **covert acoustic & near-ultrasonic communication channels** (16,000 Hz — 24,000 Hz).
 
 ---
 
-## 🏛 System Overview & Problem Statement
+## 💡 System Overview & Architecture
 
-Modern air-gapped critical infrastructure (defense networks, power grids, financial datacenters) can be compromised by covert acoustic malware utilizing high-frequency near-ultrasonic subcarrier frequencies (18kHz–24kHz) transmitted between isolated microphones and speakers.
+Covert acoustic malware can exfiltrate sensitive data across air-gapped systems utilizing high-frequency near-ultrasonic subcarrier frequencies (18kHz–24kHz) transmitted between isolated microphones and speakers.
 
-**Acoustic Shield** provides a real-time National Cyber Defense Operations Center platform to:
-1. Continuous 24-bit 96kHz PCM FFT spectral sampling.
-2. Formally track threat progression via a 5-State Threat Machine.
+**Acoustic Shield** provides an interactive operations platform to:
+1. Sample 24-bit 96kHz PCM FFT spectral streams in real time.
+2. Formally model detection progression via a 5-State Threat Machine.
 3. Visualize live frequency spectra & 2D waterfall FFT spectrograms.
-4. Simulate FSK acoustic subcarrier packet exfiltration in an Attack Laboratory.
-5. Register verified covert channels into an immutable security incident audit ledger.
+4. Simulate FSK acoustic subcarrier packet exfiltration in an interactive Attack Laboratory.
+5. Log verified covert channels into an incident audit log.
 
 ---
 
 ## 🛠 Technology Stack
 
 - **Core**: React 18 + TypeScript + Vite 5
-- **Styling**: Tailwind CSS (Custom Dark-Mode SOC Tokens: `#07090E` base, Glassmorphism, Signal Accents)
+- **Styling**: Tailwind CSS (Custom Obsidian & Electric Purple Dark Theme)
 - **State Machine & Global State**: Zustand + Typed State Reducer
 - **Data Validation**: Zod runtime schema validation
 - **3D Particle Field & GPU Dynamics**: Three.js + React Three Fiber + Drei
@@ -39,7 +38,7 @@ Modern air-gapped critical infrastructure (defense networks, power grids, financ
 
 ## 📡 Threat State Machine Architecture
 
-Every detection follows an explicit, testable 5-state state machine:
+Every detection follows an explicit 5-state progression sequence:
 
 ```
 [ SAFE ] ──► [ SIGNAL DETECTED ] ──► [ ANALYZING ] ──► [ POTENTIAL COVERT COMM ] ──► [ THREAT LOGGED ]
@@ -51,7 +50,7 @@ Every detection follows an explicit, testable 5-state state machine:
 | **`SIGNAL_DETECTED`** | Signal Detected | `LOW` | Ultrasonic wave envelope anomaly (19.5k–21.2kHz). |
 | **`ANALYZING`** | Spectrum Analysis | `MEDIUM` | Running 512-point FFT & constellation feature extraction. |
 | **`POTENTIAL_COVERT_COMMUNICATION`** | Potential Covert Comm | `HIGH` | High-probability subcarrier FSK constellation identified. |
-| **`THREAT_LOGGED`** | Incident Logged | `HIGH` | Covert channel registered in defense ledger. |
+| **`THREAT_LOGGED`** | Incident Logged | `HIGH` | Covert channel registered in incident log. |
 
 ---
 
@@ -70,7 +69,7 @@ VITE_API_BASE_URL=http://localhost:8000/api
 # Live WebSocket Stream URL
 VITE_WS_URL=ws://localhost:8000/ws
 
-# Bypasses auth login for government jury presentation
+# Bypasses auth login screen
 VITE_DEMO_BYPASS_AUTH=true
 ```
 
@@ -167,6 +166,4 @@ If your team is working with a separate backend repository (e.g. `doomsday-backe
 
 ---
 
-## 🛡 License & SIH 2026 Defense Attribution
-
-Designed & Developed for **Smart India Hackathon (SIH) 2026**. National Cyber Defense Operations Suite. All Rights Reserved.
+Project built for SIH 2026

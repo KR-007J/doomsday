@@ -17,7 +17,7 @@ export const AboutPage: React.FC = () => {
       {/* Title */}
       <div className="text-center space-y-2 max-w-2xl mx-auto">
         <h1 className="text-2xl sm:text-4xl font-bold font-sans tracking-tight text-slate-100 uppercase">
-          SYSTEM ARCHITECTURE & SIH 2026 OVERVIEW
+          SYSTEM ARCHITECTURE & SPECIFICATION
         </h1>
         <p className="text-xs font-mono text-slate-400">
           Acoustic Shield — Near-Ultrasonic Covert Communication Detection Platform
@@ -35,7 +35,7 @@ export const AboutPage: React.FC = () => {
           {pipelineSteps.map((s) => (
             <div
               key={s.step}
-              className="bg-slate-900/80 p-4 rounded-xl border border-slate-800 flex flex-col justify-between hover:border-cyan-500/50 transition-colors"
+              className="bg-obsidian-900/80 p-4 rounded-xl border border-white/10 flex flex-col justify-between hover:border-cyan-500/50 transition-colors"
             >
               <div>
                 <div className="flex items-center justify-between mb-2">
@@ -54,14 +54,14 @@ export const AboutPage: React.FC = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <Card variant="glass" className="p-5">
           <h3 className="text-sm font-mono font-bold text-slate-100 uppercase mb-3 flex items-center gap-2">
-            <Layers className="w-4 h-4 text-cyan-400" /> FRONTEND TECH STACK (2026 SPEC)
+            <Layers className="w-4 h-4 text-cyan-400" /> FRONTEND TECH STACK
           </h3>
           <ul className="space-y-2 text-xs font-mono text-slate-300">
             <li className="flex items-center gap-2">
               <CheckCircle2 className="w-4 h-4 text-emerald-400" /> React 18 + TypeScript + Vite 5
             </li>
             <li className="flex items-center gap-2">
-              <CheckCircle2 className="w-4 h-4 text-emerald-400" /> Tailwind CSS with custom SOC dark theme tokens
+              <CheckCircle2 className="w-4 h-4 text-emerald-400" /> Tailwind CSS with custom obsidian dark theme tokens
             </li>
             <li className="flex items-center gap-2">
               <CheckCircle2 className="w-4 h-4 text-emerald-400" /> Framer Motion shared-element state morphing
@@ -85,13 +85,18 @@ export const AboutPage: React.FC = () => {
           <p className="text-xs font-mono text-slate-400 leading-relaxed mb-3">
             The frontend is 100% backend-agnostic. All data calls pass through a unified service layer routing between mock generators and real endpoints via single environment flag <code className="text-cyan-300">VITE_USE_MOCK_DATA</code>.
           </p>
-          <div className="bg-slate-950 p-3 rounded-lg border border-slate-800 text-[11px] font-mono text-slate-300 space-y-1">
+          <div className="bg-obsidian-950 p-3 rounded-lg border border-white/10 text-[11px] font-mono text-slate-300 space-y-1">
             <div>GET /api/system-status</div>
             <div>GET /api/threats</div>
             <div>GET /api/threats/current</div>
             <div>POST /api/analyze</div>
           </div>
         </Card>
+      </div>
+
+      {/* SIH Note */}
+      <div className="text-center font-mono text-xs text-slate-400 pt-4 border-t border-white/10">
+        Project built for SIH 2026
       </div>
     </div>
   );

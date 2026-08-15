@@ -1,37 +1,45 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Shield, Radio, Terminal, Activity, ArrowRight, Cpu, Layers } from 'lucide-react';
+import { Shield, Radio, Terminal, Activity, ArrowRight, Cpu, Layers, Play, Zap, Sliders } from 'lucide-react';
 import { Button } from '../components/ui/Button';
 import { Card } from '../components/ui/Card';
 import { TiltCard } from '../components/shared/TiltCard';
 import { useMagnetic } from '../hooks/useMagnetic';
 import { useThreatStore } from '../features/threat-state-machine/useThreatStore';
 import { THREAT_STATE_CONFIGS } from '../features/threat-state-machine/stateMachine';
+import { ThreatStateType } from '../types/threat';
 
 export const LandingPage: React.FC = () => {
   const currentState = useThreatStore((s) => s.currentState);
+  const confidence = useThreatStore((s) => s.confidence);
   const systemStatus = useThreatStore((s) => s.systemStatus);
+  const setThreatState = useThreatStore((s) => s.setThreatState);
+  const triggerSimulatedAttack = useThreatStore((s) => s.triggerSimulatedAttack);
+
   const config = THREAT_STATE_CONFIGS[currentState];
 
-  // Magnetic button refs
   const btnMonitoringRef = useMagnetic<HTMLButtonElement>(0.35);
   const btnAttackLabRef = useMagnetic<HTMLButtonElement>(0.35);
 
-  // Framer Motion entrance choreography variants
+  const states: ThreatStateType[] = [
+    'SAFE',
+    'SIGNAL_DETECTED',
+    'ANALYZING',
+    'POTENTIAL_COVERT_COMMUNICATION',
+    'THREAT_LOGGED',
+  ];
+
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: {
-        staggerChildren: 0.12,
-        delayChildren: 0.1,
-      },
+      transition: { staggerChildren: 0.1, delayChildren: 0.05 },
     },
   };
 
   const itemVariants = {
-    hidden: { opacity: 0, y: 24, scale: 0.96 },
+    hidden: { opacity: 0, y: 20, scale: 0.98 },
     visible: {
       opacity: 1,
       y: 0,
@@ -47,30 +55,27 @@ export const LandingPage: React.FC = () => {
       animate="visible"
       className="min-h-screen py-10 px-4 sm:px-6 max-w-7xl mx-auto space-y-12"
     >
-      {/* Hero Section */}
-      <div className="text-center space-y-4 max-w-3xl mx-auto pt-6">
-        {/* Badge */}
+      {/* Hero Header */}
+      <div className="text-center space-y-4 max-w-3xl mx-auto pt-4">
         <motion.div variants={itemVariants} className="inline-block">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-cyan-950/80 text-cyan-300 border border-cyan-500/40 text-xs font-mono mb-2 shadow-lg shadow-cyan-950/50 animate-pulse">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-cyan-950/80 text-cyan-300 border border-cyan-500/40 text-xs font-mono mb-2 shadow-lg shadow-cyan-950/50">
             <Shield className="w-3.5 h-3.5 text-cyan-400" />
-            SIH 2026 // CYBERSECURITY DEFENSE SYSTEM
+            NEAR-ULTRASONIC THREAT ENGINE (16kHz — 24kHz)
           </div>
         </motion.div>
 
-        {/* Headline */}
         <motion.h1
           variants={itemVariants}
-          className="text-3xl sm:text-5xl font-extrabold tracking-tight text-slate-100 uppercase font-sans drop-shadow-lg"
+          className="text-4xl sm:text-6xl font-extrabold tracking-tight text-slate-100 uppercase font-sans drop-shadow-2xl"
         >
-          ACOUSTIC<span className="text-cyan-400">SHIELD</span> SOC DASHBOARD
+          ACOUSTIC<span className="text-cyan-400">SHIELD</span>
         </motion.h1>
 
-        {/* Subtext */}
         <motion.p
           variants={itemVariants}
           className="text-sm sm:text-base font-mono text-slate-400 leading-relaxed"
         >
-          Real-time detection, signal constellation analysis, and security ledger logging for covert near-ultrasonic acoustic communication channels (16kHz — 24kHz).
+          Real-time signal analysis, subcarrier constellation detection, and security incident logging for covert acoustic communication channels.
         </motion.p>
 
         {/* Magnetic CTA Buttons */}
@@ -98,44 +103,88 @@ export const LandingPage: React.FC = () => {
         </motion.div>
       </div>
 
-      {/* Dynamic System Status Card */}
-      <motion.div variants={itemVariants}>
-        <Card variant="glow" className="p-6 max-w-4xl mx-auto border-cyan-500/40">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+      {/* Live Interactive Threat State Machine Jumper Hero Widget */}
+      <motion.div variants={itemVariants} className="max-w-4xl mx-auto">
+        <Card variant="glow" className="p-6 border-cyan-500/40 relative overflow-hidden">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-6 mb-6">
             <div className="flex items-center gap-4">
-              <div className="p-3 rounded-xl bg-slate-900 border border-slate-800 text-cyan-400 shadow-inner">
-                <Activity className="w-8 h-8 animate-pulse" style={{ color: config.colorHex }} />
+              <div
+                className="p-3.5 rounded-xl bg-obsidian-900 border border-white/10 shadow-inner"
+                style={{ color: config.colorHex }}
+              >
+                <Activity className="w-8 h-8 animate-pulse" />
               </div>
               <div>
-                <span className="text-xs font-mono text-slate-400 uppercase">SYSTEM STATE</span>
-                <div className="text-xl font-mono font-bold text-slate-100 flex items-center gap-2">
+                <span className="text-xs font-mono text-slate-400 uppercase tracking-wider">
+                  LIVE ENGINE STATE
+                </span>
+                <div className="text-2xl font-mono font-extrabold uppercase flex items-center gap-2">
                   <span style={{ color: config.colorHex }}>{config.label}</span>
                 </div>
-                <p className="text-xs font-mono text-slate-400 mt-1 max-w-md">
+                <p className="text-xs font-mono text-slate-300 mt-1 max-w-md">
                   {config.subText}
                 </p>
               </div>
             </div>
 
-            <div className="flex items-center gap-6 font-mono text-xs text-right border-t md:border-t-0 md:border-l border-slate-800 pt-4 md:pt-0 md:pl-6">
+            <div className="flex items-center gap-6 font-mono text-xs text-right border-t md:border-t-0 md:border-l border-white/10 pt-4 md:pt-0 md:pl-6">
               <div>
-                <span className="text-slate-500 block">ACTIVE SENSORS</span>
-                <span className="text-lg font-bold text-emerald-400 animate-pulse">
-                  {systemStatus.activeSensors} ONLINE
+                <span className="text-slate-400 block">CONFIDENCE</span>
+                <span className="text-2xl font-bold" style={{ color: config.colorHex }}>
+                  {confidence}%
                 </span>
               </div>
               <div>
-                <span className="text-slate-500 block">INCIDENTS TODAY</span>
-                <span className="text-lg font-bold text-cyan-400 animate-pulse">
-                  {systemStatus.totalThreatsToday}
-                </span>
+                <span className="text-slate-400 block">RISK LEVEL</span>
+                <span className="text-lg font-bold text-slate-100">{config.risk}</span>
               </div>
+            </div>
+          </div>
+
+          {/* Interactive State Jumper Buttons */}
+          <div className="pt-4 border-t border-white/10">
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-xs font-mono font-bold text-slate-300 uppercase tracking-wider flex items-center gap-1.5">
+                <Sliders className="w-3.5 h-3.5 text-cyan-400" />
+                INTERACTIVE THREAT STATE CONTROLLER (CLICK TO TEST LIVE ENGINE)
+              </span>
+              <button
+                onClick={() => triggerSimulatedAttack({ frequencyMin: 20000, frequencyMax: 22000, duration: 4 })}
+                className="text-xs font-mono text-cyan-400 hover:text-cyan-300 flex items-center gap-1 font-bold"
+              >
+                <Zap className="w-3.5 h-3.5" /> AUTO SIMULATED ATTACK
+              </button>
+            </div>
+
+            <div className="grid grid-cols-2 sm:grid-cols-5 gap-2">
+              {states.map((st) => {
+                const stateConfig = THREAT_STATE_CONFIGS[st];
+                const isActive = currentState === st;
+                return (
+                  <button
+                    key={st}
+                    onClick={() => setThreatState(st)}
+                    className={`p-2.5 rounded-lg border text-left font-mono text-xs transition-all duration-300 ${
+                      isActive
+                        ? 'bg-obsidian-900 border-2 shadow-lg scale-105 font-bold'
+                        : 'bg-obsidian-950/80 border-white/10 hover:border-white/20 opacity-70 hover:opacity-100'
+                    }`}
+                    style={{ borderColor: isActive ? stateConfig.colorHex : undefined }}
+                  >
+                    <div
+                      className="w-2 h-2 rounded-full mb-1.5"
+                      style={{ backgroundColor: stateConfig.colorHex }}
+                    />
+                    <div className="text-[11px] text-slate-200 truncate">{stateConfig.label}</div>
+                  </button>
+                );
+              })}
             </div>
           </div>
         </Card>
       </motion.div>
 
-      {/* Interactive 3D Tilt Feature Cards */}
+      {/* Feature Cards */}
       <motion.div variants={itemVariants} className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
         <TiltCard variant="glass" className="p-5 h-full">
           <div className="p-2.5 w-fit rounded-lg bg-cyan-950/80 border border-cyan-800/60 text-cyan-400 mb-3 shadow-md">
@@ -145,12 +194,12 @@ export const LandingPage: React.FC = () => {
             REAL-TIME SPECTROGRAM
           </h3>
           <p className="text-xs font-mono text-slate-400 leading-relaxed">
-            2D Waterfall FFT matrix visualization rendering high-frequency acoustic emissions in real time at 96kHz 24-bit sampling.
+            2D Waterfall FFT matrix visualizer rendering high-frequency acoustic emissions in real time at 96kHz 24-bit sampling.
           </p>
         </TiltCard>
 
         <TiltCard variant="glass" className="p-5 h-full">
-          <div className="p-2.5 w-fit rounded-lg bg-indigo-950/80 border border-indigo-800/60 text-indigo-400 mb-3 shadow-md">
+          <div className="p-2.5 w-fit rounded-lg bg-purple-950/80 border border-purple-800/60 text-purple-400 mb-3 shadow-md">
             <Cpu className="w-5 h-5" />
           </div>
           <h3 className="text-sm font-mono font-bold text-slate-100 uppercase mb-1">
@@ -169,7 +218,7 @@ export const LandingPage: React.FC = () => {
             ATTACK LAB SIMULATOR
           </h3>
           <p className="text-xs font-mono text-slate-400 leading-relaxed">
-            Member 2's interactive transmitter suite for synthesizing FSK acoustic subcarrier packets and verifying SOC response.
+            Interactive transmitter suite for synthesizing FSK acoustic subcarrier packets and verifying SOC response.
           </p>
         </TiltCard>
       </motion.div>

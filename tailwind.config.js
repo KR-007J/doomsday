@@ -8,64 +8,52 @@ export default {
   theme: {
     extend: {
       colors: {
-        soc: {
-          bg: '#07090E',
-          surface: '#0E131F',
-          card: '#141B2D',
-          border: '#1E293B',
-          muted: '#64748B',
-          highlight: '#38BDF8',
+        obsidian: {
+          950: '#030712',
+          900: '#0B0F19',
+          850: '#111726',
+          800: '#172033',
+          700: '#1E293B',
+          600: '#334155',
         },
-        state: {
-          safe: {
-            DEFAULT: '#10B981',
-            glow: 'rgba(16, 185, 129, 0.25)',
-            text: '#34D399',
-            border: '#059669',
-          },
-          detected: {
-            DEFAULT: '#F59E0B',
-            glow: 'rgba(245, 158, 11, 0.25)',
-            text: '#FBBF24',
-            border: '#D97706',
-          },
-          analyzing: {
-            DEFAULT: '#6366F1',
-            glow: 'rgba(99, 102, 241, 0.25)',
-            text: '#818CF8',
-            border: '#4F46E5',
-          },
-          potential: {
-            DEFAULT: '#F97316',
-            glow: 'rgba(249, 115, 22, 0.25)',
-            text: '#FB923C',
-            border: '#EA580C',
-          },
-          logged: {
-            DEFAULT: '#EF4444',
-            glow: 'rgba(239, 68, 68, 0.35)',
-            text: '#F87171',
-            border: '#DC2626',
-          },
+        brand: {
+          cyan: '#06B6D4',
+          purple: '#8B5CF6',
+          violet: '#6366F1',
+          emerald: '#10B981',
+          amber: '#F59E0B',
+          rose: '#F43F5E',
+        },
+        threat: {
+          safe: '#10B981',
+          detected: '#F59E0B',
+          analyzing: '#8B5CF6',
+          potential: '#F97316',
+          logged: '#F43F5E',
         },
       },
       fontFamily: {
-        mono: ['"JetBrains Mono"', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'monospace'],
-        sans: ['Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+        mono: ['"JetBrains Mono"', 'monospace'],
+        sans: ['"Plus Jakarta Sans"', 'Inter', 'sans-serif'],
       },
       animation: {
-        'pulse-fast': 'pulse 1s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-        'radar-sweep': 'sweep 4s linear infinite',
-        'signal-glow': 'signalGlow 2s ease-in-out infinite alternate',
+        'border-beam': 'borderBeam 6s linear infinite',
+        'pulse-glow': 'pulseGlow 2s ease-in-out infinite alternate',
+        'wave-flow': 'waveFlow 4s linear infinite',
+        'float-slow': 'floatSlow 6s ease-in-out infinite',
       },
       keyframes: {
-        sweep: {
-          '0%': { transform: 'rotate(0deg)' },
-          '100%': { transform: 'rotate(360deg)' },
+        borderBeam: {
+          '0%': { offsetDistance: '0%' },
+          '100%': { offsetDistance: '100%' },
         },
-        signalGlow: {
+        pulseGlow: {
           '0%': { opacity: '0.4', filter: 'drop-shadow(0 0 4px currentColor)' },
-          '100%': { opacity: '1', filter: 'drop-shadow(0 0 12px currentColor)' },
+          '100%': { opacity: '1', filter: 'drop-shadow(0 0 16px currentColor)' },
+        },
+        floatSlow: {
+          '0%, 100%': { transform: 'translateY(0px)' },
+          '50%': { transform: 'translateY(-8px)' },
         },
       },
     },

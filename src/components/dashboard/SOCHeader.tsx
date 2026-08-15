@@ -1,5 +1,5 @@
 import React from 'react';
-import { Radio, ShieldAlert, Cpu, Activity, Clock } from 'lucide-react';
+import { ShieldAlert, Activity, Radio, Signal } from 'lucide-react';
 import { useThreatStore } from '../../features/threat-state-machine/useThreatStore';
 import { THREAT_STATE_CONFIGS } from '../../features/threat-state-machine/stateMachine';
 
@@ -11,10 +11,10 @@ export const SOCHeader: React.FC = () => {
   const config = THREAT_STATE_CONFIGS[currentState];
 
   return (
-    <div className="w-full bg-slate-900/60 backdrop-blur-xl border border-slate-800 rounded-xl p-4 sm:p-6 shadow-xl relative overflow-hidden">
+    <div className="w-full bg-obsidian-900/70 backdrop-blur-xl border border-white/10 rounded-xl p-4 sm:p-6 shadow-2xl relative overflow-hidden">
       {/* Background state accent ambient glow */}
       <div
-        className="absolute top-0 right-0 w-80 h-80 rounded-full blur-[100px] opacity-15 pointer-events-none transition-colors duration-1000"
+        className="absolute top-0 right-0 w-80 h-80 rounded-full blur-[100px] opacity-20 pointer-events-none transition-colors duration-1000"
         style={{ backgroundColor: config.colorHex }}
       />
 
@@ -24,13 +24,13 @@ export const SOCHeader: React.FC = () => {
             <h1 className="text-xl sm:text-2xl font-bold font-sans tracking-tight text-slate-100 uppercase">
               SECURITY OPERATIONS CENTER <span className="text-cyan-400">// NODE-ALPHA</span>
             </h1>
-            <span className="flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-mono bg-emerald-950/80 text-emerald-400 border border-emerald-500/30">
+            <span className="flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-mono bg-emerald-950/80 text-emerald-400 border border-emerald-500/30 font-semibold">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping" />
-              LIVE SOC STREAM
+              LIVE STREAM
             </span>
           </div>
           <p className="text-xs font-mono text-slate-400">
-            Scanning 16,000 Hz — 24,000 Hz (Near-Ultrasonic Acoustic Carrier Spectrum)
+            Scanning 16,000 Hz — 24,000 Hz (Near-Ultrasonic Acoustic Subcarrier Spectrum)
           </p>
         </div>
 
