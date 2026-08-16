@@ -49,7 +49,7 @@ export const Chapter2Pipeline: React.FC = () => {
       exit={{ opacity: 0, y: -20, filter: "blur(10px)" }} 
       transition={{ duration: 0.5, ease: "easeOut" }} 
       id="chapter-2" 
-      className="relative w-full min-h-screen py-24 px-8 md:px-16 bg-[#0A0A0B] flex flex-col justify-center"
+      className="relative w-full min-h-screen py-24 px-8 md:px-16 bg-transparent flex flex-col justify-center"
     >
       <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10">
         {/* Left Side: Context */}

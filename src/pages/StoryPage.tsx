@@ -6,7 +6,7 @@ import { Chapter4Classification } from '../components/story/Chapter4Classificati
 
 export const StoryPage: React.FC = () => {
   return (
-    <div className="relative min-h-screen bg-[#0A0A0B] text-[#F5F5F5] font-sans selection:bg-[#E83939]/30 selection:text-[#E83939]">
+    <div className="relative min-h-screen bg-transparent text-[#F5F5F5] font-sans selection:bg-[#E83939]/30 selection:text-[#E83939]">
       {/* Chapter 1: Hero */}
       <Chapter1Hero />
 

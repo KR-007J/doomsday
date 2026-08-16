@@ -19,7 +19,7 @@ export const Chapter1Hero: React.FC = () => {
       animate={{ opacity: 1, y: 0, filter: "blur(0px)" }} 
       exit={{ opacity: 0, y: -20, filter: "blur(10px)" }} 
       transition={{ duration: 0.5, ease: "easeOut" }} 
-      className="relative w-full min-h-screen flex flex-col justify-center px-8 md:px-16 pt-20 pb-16 bg-[#0A0A0B] overflow-hidden"
+      className="relative w-full min-h-screen flex flex-col justify-center px-8 md:px-16 pt-20 pb-16 bg-transparent overflow-hidden"
     >
       {/* Background Radial Grid */}
       <div className="absolute inset-0 bg-grid-pattern opacity-20 pointer-events-none" />
