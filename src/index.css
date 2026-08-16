@@ -31,50 +31,75 @@
   .text-accent-info { color: var(--accent-info); }
   .bg-accent-info { background-color: var(--accent-info); }
 
-  .text-accent-neutral { color: var(--accent-neutral); }
-  .bg-accent-neutral { background-color: var(--accent-neutral); }
+  .text-accent-blue { color: var(--accent-blue); }
+  .bg-accent-blue { background-color: var(--accent-blue); }
 
   .shadow-elevation-1 { box-shadow: var(--elevation-1); }
   .shadow-elevation-2 { box-shadow: var(--elevation-2); }
   .shadow-elevation-3 { box-shadow: var(--elevation-3); }
+  .shadow-elevation-4 { box-shadow: var(--elevation-4); }
   .rounded-card { border-radius: var(--radius-card); }
   
-  /* Claude Code Brutalist / Precision Tech Utilities */
+  /* Google Cloud / DeepMind Glassmorphic Panel Standards */
   .glass-panel {
-    background-color: var(--color-surface-1);
-    backdrop-filter: blur(40px); /* Deep blur for elegance */
-    -webkit-backdrop-filter: blur(40px);
-    border: 1px solid var(--color-hairline);
-    box-shadow: var(--elevation-1);
+    background: linear-gradient(135deg, rgba(30, 41, 59, 0.5) 0%, rgba(15, 23, 42, 0.4) 100%);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
     border-radius: var(--radius-card);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .glass-panel:hover {
+    border-color: rgba(66, 133, 244, 0.3);
   }
   
   .glass-panel-heavy {
-    background-color: var(--color-surface-2);
-    backdrop-filter: blur(64px);
-    -webkit-backdrop-filter: blur(64px);
-    border: 1px solid var(--color-hairline-glow);
-    box-shadow: var(--elevation-2);
+    background: linear-gradient(135deg, rgba(30, 41, 59, 0.8) 0%, rgba(15, 23, 42, 0.75) 100%);
+    backdrop-filter: blur(40px);
+    -webkit-backdrop-filter: blur(40px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.5);
     border-radius: var(--radius-card);
+  }
+
+  /* Google Button CTA Styling */
+  .btn-google-primary {
+    background-color: var(--accent-blue);
+    color: #FFFFFF;
+    font-weight: 500;
+    border-radius: var(--radius-pill);
+    padding: 0.625rem 1.25rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    transition: all 0.2s ease;
+  }
+  .btn-google-primary:hover {
+    background-color: var(--accent-blue-hover);
+    box-shadow: 0 4px 12px rgba(26, 115, 232, 0.35);
+    transform: translateY(-1px);
+  }
+  .btn-google-primary:active {
+    transform: translateY(0);
   }
 }
 
 @layer base {
   button, a, [role='button'] {
-    transition: all 0.1s linear; /* Instant, snappy transitions, no bounce */
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   }
   button:focus-visible, a:focus-visible {
-    outline: 1px solid var(--color-text-secondary); /* Surgical focus ring */
-    outline-offset: 4px;
+    outline: 2px solid var(--accent-blue);
+    outline-offset: 2px;
     border-radius: var(--radius-sm);
   }
   
-  /* Mathematical grid lines underlying the app */
   body {
     background-image: 
-      linear-gradient(var(--color-hairline) 1px, transparent 1px),
-      linear-gradient(90deg, var(--color-hairline) 1px, transparent 1px);
-    background-size: 40px 40px;
+      radial-gradient(circle at 50% 0%, rgba(26, 115, 232, 0.08) 0%, transparent 60%),
+      linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+    background-size: 100% 100%, 48px 48px, 48px 48px;
     background-position: center top;
   }
 }

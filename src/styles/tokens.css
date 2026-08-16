@@ -1,54 +1,56 @@
-@import url('https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&family=Inter:wght@300;400;500;600&family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;1,400&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&family=Inter:wght@300;400;500;600;700&family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;1,400&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap');
 
 :root {
-  /* Ultra-Premium Claude Code Foundations */
-  --color-canvas: #0F0E11; /* Deepest warm obsidian */
+  /* Google Customer Psychology & Trust Foundations */
+  /* Deep slate obsidian for optimal optical contrast & zero visual fatigue */
+  --color-canvas: #0B0F19; 
   
-  /* Mathematical Surfaces */
-  --color-surface-1: rgba(22, 22, 24, 0.4); /* Translucent for glassmorphism */
-  --color-surface-2: rgba(28, 28, 30, 0.6);
-  --color-overlay: rgba(15, 14, 17, 0.85);
+  /* Google Cloud / DeepMind Mathematical Glass Surfaces */
+  --color-surface-1: rgba(30, 41, 59, 0.45); /* Deep slate translucent glass */
+  --color-surface-2: rgba(30, 41, 59, 0.70); 
+  --color-overlay: rgba(11, 15, 25, 0.90);
   
-  /* Precision Borders (Strict hairline, zero glow) */
-  --color-hairline: rgba(255, 255, 255, 0.06);
-  --color-hairline-glow: rgba(255, 255, 255, 0.12); 
+  /* Precision Borders (Subtle Google Blue/White translucent borders) */
+  --color-hairline: rgba(255, 255, 255, 0.08);
+  --color-hairline-glow: rgba(66, 133, 244, 0.25); 
   
-  /* Typography - Claude Code Standard */
-  --color-text-primary: #F2F1ED; /* Sophisticated off-white (Claude Code style) */
-  --color-text-secondary: #A1A09A; /* Warm stone gray */
-  --color-text-tertiary: #6E6D68;
+  /* Google High-Contrast Typography */
+  --color-text-primary: #F8FAFC;   /* Crisp slate-50 */
+  --color-text-secondary: #94A3B8; /* Slate-400 */
+  --color-text-tertiary: #64748B;  /* Slate-500 */
 
-  /* Restrained, Non-Gamified Palette */
-  --accent-safe: #618A71;      
-  --accent-warn: #AD8C5B;      
-  --accent-critical: #A35050;  
-  --accent-info: #5B7A9E;      
-  --accent-neutral: #E6E5DF;
+  /* Google Color Psychology Palette (Trust, Security, High Conversion) */
+  --accent-blue: #1A73E8;       /* Primary Google Trust Blue (Authority & Tech) */
+  --accent-blue-hover: #1557B0;
+  --accent-safe: #0F9D58;       /* Google Emerald Green (Nominal, Safe, Active) */
+  --accent-warn: #F4B400;       /* Google Amber (Intelligence, Advisory) */
+  --accent-critical: #EA4335;   /* Google Coral Red (Critical Alert, Immediate Action) */
+  --accent-info: #4285F4;       /* Google Vibrant Blue */
+  --accent-neutral: #E2E8F0;
 
-  /* Fonts - Pure Claude Code Stack */
+  /* Narrative Story Tokens */
+  --story-canvas: #0B0F19;
+  --story-white: #F8FAFC;
+  --story-blue: #1A73E8;
+  --story-amber: #F4B400;
+  --story-red: #EA4335;
+  --story-muted: #94A3B8;
+
+  /* Fonts - Google / Claude Editorial Hybrid Stack */
   --font-primary: 'Inter', system-ui, -apple-system, sans-serif;
-  --font-display: 'Newsreader', 'Tiems', serif; 
-  --font-mono: 'IBM Plex Mono', 'Courier New', monospace;
+  --font-display: 'Newsreader', serif; 
+  --font-mono: 'IBM Plex Mono', monospace;
 
-  /* Spacing - Exact multiples of 4 for mathematical alignment */
-  --space-4: 4px;
-  --space-8: 8px;
-  --space-12: 12px;
-  --space-16: 16px;
-  --space-20: 20px;
-  --space-24: 24px;
-  --space-32: 32px;
-  --space-40: 40px;
-
-  /* Radius - Brutally tight */
-  --radius-card: 6px; 
-  --radius-sm: 2px;
+  /* Radius */
+  --radius-card: 12px; /* Smooth rounded Google Cloud cards */
+  --radius-sm: 6px;
   --radius-pill: 9999px;
 
-  /* Shadows - Deep ambient occlusion, no neon glows */
-  --elevation-1: inset 0 1px 0 rgba(255,255,255,0.05), 0 2px 8px rgba(0, 0, 0, 0.4);
-  --elevation-2: inset 0 1px 0 rgba(255,255,255,0.08), 0 8px 24px rgba(0, 0, 0, 0.6);
-  --elevation-3: inset 0 1px 0 rgba(255,255,255,0.1), 0 16px 48px rgba(0, 0, 0, 0.8);
+  /* Shadows - Google Material Depth */
+  --elevation-1: 0 1px 3px rgba(0,0,0,0.3), 0 1px 2px rgba(0,0,0,0.2), 0 0 0 1px var(--color-hairline);
+  --elevation-2: 0 4px 6px -1px rgba(0,0,0,0.4), 0 2px 4px -1px rgba(0,0,0,0.2), 0 0 0 1px var(--color-hairline);
+  --elevation-3: 0 10px 15px -3px rgba(0,0,0,0.5), 0 4px 6px -2px rgba(0,0,0,0.25), 0 0 0 1px var(--color-hairline-glow);
+  --elevation-4: 0 20px 25px -5px rgba(0,0,0,0.6), 0 10px 10px -5px rgba(0,0,0,0.3), 0 0 0 1px var(--color-hairline-glow);
 }
 
 body {
@@ -59,7 +61,6 @@ body {
   font-family: var(--font-primary);
   font-weight: 400; 
   letter-spacing: -0.01em;
-  font-feature-settings: 'ss01' 1, 'ss03' 1, 'calt' 1, 'kern' 1;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
@@ -70,36 +71,35 @@ body {
   font-family: var(--font-mono);
   font-variant-numeric: tabular-nums;
   letter-spacing: -0.02em;
-  font-size: 0.9em;
 }
 
 .font-display {
   font-family: var(--font-display);
-  font-weight: 300; /* Ultra-elegant light serif */
+  font-weight: 400;
   letter-spacing: -0.02em;
   line-height: 1.1;
 }
 
-/* Base Material Symbols */
+/* Material Symbols */
 .material-symbols-outlined {
-  font-variation-settings: 'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 20;
+  font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 20;
   display: inline-block;
   vertical-align: middle;
   line-height: 1;
 }
 
-/* Minimalist Scrollbar */
+/* Minimalist Google Slate Scrollbar */
 ::-webkit-scrollbar {
-  width: 4px;
-  height: 4px;
+  width: 6px;
+  height: 6px;
 }
 ::-webkit-scrollbar-track {
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--color-hairline-glow);
-  border-radius: 2px;
+  background: rgba(148, 163, 184, 0.2);
+  border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--color-text-tertiary);
+  background: rgba(148, 163, 184, 0.4);
 }
