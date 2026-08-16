@@ -12,86 +12,81 @@ export const BottomNavBar: React.FC = () => {
   const isLogs = location.pathname === '/logs';
 
   return (
-    <div className="md:hidden fixed bottom-4 w-full z-50 flex justify-center pointer-events-none">
+    <div className="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-center">
       <motion.nav 
-        initial={{ y: 100, opacity: 0 }} 
-        animate={{ y: 0, opacity: 1 }} 
-        transition={{ type: "spring", stiffness: 300, damping: 20, delay: 0.1 }}
-        className="pointer-events-auto rounded-full glass-panel-heavy w-[95%] border border-white/10 shadow-lg shadow-black/50 flex justify-around items-center h-16 px-4 font-mono text-[10px] overflow-hidden"
+        initial={{ opacity: 0 }} 
+        animate={{ opacity: 1 }} 
+        transition={{ duration: 0.15, ease: "easeOut" }}
+        className="w-full bg-black/80 backdrop-blur-sm border-t border-white/10 flex justify-around items-center h-16 px-0 font-mono text-[10px]"
       >
-        {/* STORY */}
         <Link
           to="/story"
-          className={`flex flex-col items-center justify-center w-1/5 h-full transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent-safe focus-visible:outline-offset-2 ${
+          className={`flex flex-col items-center justify-center w-1/5 h-full transition-colors duration-150 ease-out focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent-safe focus-visible:outline-offset-2 ${
             isStory
-              ? 'text-primary-ui border-t-2 border-accent-safe bg-white/5 font-bold'
-              : 'text-secondary-ui opacity-70 hover:opacity-100 hover:bg-white/5'
+              ? 'text-primary-ui border-t border-primary-ui bg-white/5'
+              : 'text-secondary-ui hover:text-primary-ui hover:bg-white/5'
           }`}
         >
-          <motion.div whileTap={{ scale: 0.9 }} className="flex flex-col items-center">
-            <span className="material-symbols-outlined text-[20px] mb-1">auto_stories</span>
+          <div className="flex flex-col items-center">
+            <span className="material-symbols-outlined text-[18px] mb-1">auto_stories</span>
             <span>STORY</span>
-          </motion.div>
+          </div>
         </Link>
 
-        {/* MATRIX */}
         <Link
           to="/matrix"
-          className={`flex flex-col items-center justify-center w-1/5 h-full transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent-safe focus-visible:outline-offset-2 ${
+          className={`flex flex-col items-center justify-center w-1/5 h-full transition-colors duration-150 ease-out focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent-safe focus-visible:outline-offset-2 ${
             isMatrix
-              ? 'text-primary-ui border-t-2 border-accent-safe bg-white/5 font-bold'
-              : 'text-secondary-ui opacity-70 hover:opacity-100 hover:bg-white/5'
+              ? 'text-primary-ui border-t border-primary-ui bg-white/5'
+              : 'text-secondary-ui hover:text-primary-ui hover:bg-white/5'
           }`}
         >
-          <motion.div whileTap={{ scale: 0.9 }} className="flex flex-col items-center">
-            <span className="material-symbols-outlined text-[20px] mb-1">grid_view</span>
+          <div className="flex flex-col items-center">
+            <span className="material-symbols-outlined text-[18px] mb-1">grid_view</span>
             <span>MATRIX</span>
-          </motion.div>
+          </div>
         </Link>
 
-        {/* SIGNAL */}
         <Link
           to="/monitoring"
-          className={`flex flex-col items-center justify-center w-1/5 h-full transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent-safe focus-visible:outline-offset-2 ${
+          className={`flex flex-col items-center justify-center w-1/5 h-full transition-colors duration-150 ease-out focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent-safe focus-visible:outline-offset-2 ${
             isSignal
-              ? 'text-primary-ui border-t-2 border-accent-safe bg-white/5 font-bold'
-              : 'text-secondary-ui opacity-70 hover:opacity-100 hover:bg-white/5'
+              ? 'text-primary-ui border-t border-primary-ui bg-white/5'
+              : 'text-secondary-ui hover:text-primary-ui hover:bg-white/5'
           }`}
         >
-          <motion.div whileTap={{ scale: 0.9 }} className="flex flex-col items-center">
-            <span className="material-symbols-outlined text-[20px] mb-1">waves</span>
+          <div className="flex flex-col items-center">
+            <span className="material-symbols-outlined text-[18px] mb-1">waves</span>
             <span>SIGNAL</span>
-          </motion.div>
+          </div>
         </Link>
 
-        {/* NETWORK */}
         <Link
           to="/network"
-          className={`flex flex-col items-center justify-center w-1/5 h-full transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent-safe focus-visible:outline-offset-2 ${
+          className={`flex flex-col items-center justify-center w-1/5 h-full transition-colors duration-150 ease-out focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent-safe focus-visible:outline-offset-2 ${
             isNetwork
-              ? 'text-primary-ui border-t-2 border-accent-safe bg-white/5 font-bold'
-              : 'text-secondary-ui opacity-70 hover:opacity-100 hover:bg-white/5'
+              ? 'text-primary-ui border-t border-primary-ui bg-white/5'
+              : 'text-secondary-ui hover:text-primary-ui hover:bg-white/5'
           }`}
         >
-          <motion.div whileTap={{ scale: 0.9 }} className="flex flex-col items-center">
-            <span className="material-symbols-outlined text-[20px] mb-1">hub</span>
+          <div className="flex flex-col items-center">
+            <span className="material-symbols-outlined text-[18px] mb-1">hub</span>
             <span>NETWORK</span>
-          </motion.div>
+          </div>
         </Link>
 
-        {/* LOGS */}
         <Link
           to="/logs"
-          className={`flex flex-col items-center justify-center w-1/5 h-full transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent-safe focus-visible:outline-offset-2 ${
+          className={`flex flex-col items-center justify-center w-1/5 h-full transition-colors duration-150 ease-out focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent-safe focus-visible:outline-offset-2 ${
             isLogs
-              ? 'text-primary-ui border-t-2 border-accent-safe bg-white/5 font-bold'
-              : 'text-secondary-ui opacity-70 hover:opacity-100 hover:bg-white/5'
+              ? 'text-primary-ui border-t border-primary-ui bg-white/5'
+              : 'text-secondary-ui hover:text-primary-ui hover:bg-white/5'
           }`}
         >
-          <motion.div whileTap={{ scale: 0.9 }} className="flex flex-col items-center">
-            <span className="material-symbols-outlined text-[20px] mb-1">terminal</span>
+          <div className="flex flex-col items-center">
+            <span className="material-symbols-outlined text-[18px] mb-1">terminal</span>
             <span>LOGS</span>
-          </motion.div>
+          </div>
         </Link>
       </motion.nav>
     </div>

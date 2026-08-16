@@ -1,42 +1,42 @@
-@import url('https://fonts.googleapis.com/css2?family=Archivo+Narrow:ital,wght@0,600;0,700;1,600;1,700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500;600&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&family=Inter:wght@300;400;500;600&family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;1,400&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap');
 
 :root {
-  /* Glassmorphic Foundations */
-  --color-canvas: #000000;
+  /* Editorial-Tech Foundations */
+  --color-canvas: #0F0F11; /* Ultra-deep obsidian, not pure black */
   
-  /* Highly translucent surfaces to let WebGL bleed through */
-  --color-surface-1: rgba(10, 10, 12, 0.4);
-  --color-surface-2: rgba(20, 22, 28, 0.45);
-  --color-overlay: rgba(25, 28, 35, 0.6);
+  /* Mathematical Surfaces */
+  --color-surface-1: #161618;
+  --color-surface-2: #1C1C1E;
+  --color-overlay: rgba(15, 15, 17, 0.85);
   
-  /* Glowing / Frosted borders */
-  --color-hairline: rgba(255, 255, 255, 0.08);
-  --color-hairline-glow: rgba(255, 255, 255, 0.15);
+  /* Precision Borders (No Glow) */
+  --color-hairline: #2A2A2D;
+  --color-hairline-glow: #3A3A3E; /* Used sparingly for focus, completely desaturated */
   
   /* Typography */
-  --color-text-primary: #FFFFFF;
-  --color-text-secondary: rgba(255, 255, 255, 0.7);
-  --color-text-tertiary: rgba(255, 255, 255, 0.4);
+  --color-text-primary: #EDEDEF; /* Soft, readable off-white */
+  --color-text-secondary: #909095; /* Muted stone gray */
+  --color-text-tertiary: #606065;
 
-  /* Cinematic Natural Color Grading */
-  /* Instead of flat colors, we use deeper, richer tones that look like emitted light */
-  --accent-safe: #00FF9D;      /* Neon emerald for nominal states */
-  --accent-warn: #FF9900;      /* Radioactive amber for anomalies */
-  --accent-critical: #FF2A2A;  /* Deep crimson for confirmed threats */
-  --accent-info: #00D1FF;      /* Cyan strictly for non-critical information */
-  --accent-neutral: #FFFFFF;   /* Primary solid accents */
+  /* Restrained Color Palette */
+  /* Replaced gamified neons with elegant, muted tones */
+  --accent-safe: #5C8C6B;      /* Desaturated sage green */
+  --accent-warn: #A88755;      /* Muted bronze/brass */
+  --accent-critical: #9E4D4D;  /* Desaturated brick red */
+  --accent-info: #557599;      /* Slate blue */
+  --accent-neutral: #E0E0E0;
 
   /* Narrative Story Tokens */
-  --story-canvas: #000000;
-  --story-white: #FFFFFF;
-  --story-amber: #FF9900;
-  --story-red: #FF2A2A;
-  --story-muted: rgba(255, 255, 255, 0.5);
+  --story-canvas: #0F0F11;
+  --story-white: #EDEDEF;
+  --story-amber: #A88755;
+  --story-red: #9E4D4D;
+  --story-muted: #909095;
 
-  /* Fonts */
+  /* Fonts - Claude Code Aesthetic */
   --font-primary: 'Inter', system-ui, -apple-system, sans-serif;
-  --font-display: 'Archivo Narrow', sans-serif;
-  --font-mono: 'IBM Plex Mono', 'JetBrains Mono', monospace;
+  --font-display: 'Newsreader', serif; /* Elegant, premium editorial feel */
+  --font-mono: 'IBM Plex Mono', monospace;
 
   /* Spacing */
   --space-8: 8px;
@@ -45,17 +45,16 @@
   --space-32: 32px;
   --space-40: 40px;
 
-  /* Radius */
-  --radius-card: 16px;
-  --radius-sm: 6px;
+  /* Radius - More brutalist/sharp */
+  --radius-card: 4px; /* Tight, precise corners */
+  --radius-sm: 2px;
   --radius-pill: 9999px;
 
-  /* Glass Elevation Shadows */
-  /* Replaced solid dropshadows with glowing inner and outer diffusions */
-  --elevation-1: inset 0 1px 0 0 rgba(255, 255, 255, 0.1), 0 4px 16px rgba(0, 0, 0, 0.4);
-  --elevation-2: inset 0 1px 0 0 rgba(255, 255, 255, 0.15), 0 8px 32px rgba(0, 0, 0, 0.5);
-  --elevation-3: inset 0 1px 0 0 rgba(255, 255, 255, 0.2), 0 12px 48px rgba(0, 0, 0, 0.6);
-  --elevation-4: inset 0 1px 0 0 rgba(255, 255, 255, 0.25), 0 0 40px rgba(0, 255, 157, 0.15); /* Ambient glow */
+  /* Shadows - Deep and subtle, completely removed glowing neons */
+  --elevation-1: 0 1px 2px rgba(0, 0, 0, 0.4), 0 0 0 1px var(--color-hairline);
+  --elevation-2: 0 4px 12px rgba(0, 0, 0, 0.5), 0 0 0 1px var(--color-hairline);
+  --elevation-3: 0 12px 32px rgba(0, 0, 0, 0.6), 0 0 0 1px var(--color-hairline);
+  --elevation-4: 0 24px 64px rgba(0, 0, 0, 0.8), 0 0 0 1px var(--color-hairline);
 }
 
 body {
@@ -64,9 +63,11 @@ body {
   background-color: var(--color-canvas);
   color: var(--color-text-primary);
   font-family: var(--font-primary);
-  font-weight: 500;
+  font-weight: 400; /* Lighter base weight for elegance */
+  letter-spacing: -0.01em;
   font-feature-settings: 'ss03' 1, 'calt' 1, 'kern' 1, 'liga' 1;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
 }
 
@@ -74,34 +75,36 @@ body {
 .font-mono {
   font-family: var(--font-mono);
   font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
 }
 
 .font-display {
   font-family: var(--font-display);
-  text-transform: uppercase;
-  letter-spacing: -0.02em;
+  font-weight: 400; /* Serifs look best at lighter weights */
+  letter-spacing: -0.03em;
+  text-transform: none; /* Removed aggressive ALL-CAPS sci-fi look */
 }
 
 /* Base Material Symbols */
 .material-symbols-outlined {
-  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 20; /* Thinner icons */
   display: inline-block;
   vertical-align: middle;
   line-height: 1;
 }
 
-/* Glassmorphic Custom Scrollbar */
+/* Minimalist Scrollbar */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 4px;
+  height: 4px;
 }
 ::-webkit-scrollbar-track {
-  background: rgba(0, 0, 0, 0.2);
+  background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.15);
-  border-radius: 3px;
+  background: var(--color-hairline-glow);
+  border-radius: 2px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.3);
+  background: var(--color-text-tertiary);
 }

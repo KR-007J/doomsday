@@ -9,7 +9,6 @@ import { IntelligenceLogsPage } from './pages/IntelligenceLogsPage';
 import { NetworkTopologyPage } from './pages/NetworkTopologyPage';
 import { AttackLabPage } from './pages/AttackLabPage';
 import { DevStatePanel } from './components/common/DevStatePanel';
-import { CursorTrail } from './components/common/CursorTrail';
 import { CinematicBackground } from './components/visualizations/CinematicBackground';
 import { AnimatePresence } from 'framer-motion';
 
@@ -37,14 +36,13 @@ export const App: React.FC = () => {
         <div className="fixed inset-0 z-0">
           <CinematicBackground />
         </div>
-        <div className="fixed inset-0 bg-grid-pattern opacity-40 pointer-events-none z-0" />
+        <div className="fixed inset-0 bg-grid-pattern opacity-10 pointer-events-none z-0" />
         <Navbar />
         <main className="relative z-10 flex-1 flex flex-col w-full">
           <AppRoutes />
         </main>
         <BottomNavBar />
         <DevStatePanel />
-        <CursorTrail />
       </div>
     </Router>
   );

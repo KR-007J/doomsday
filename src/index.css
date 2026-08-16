@@ -40,31 +40,38 @@
   .shadow-elevation-4 { box-shadow: var(--elevation-4); }
   .rounded-card { border-radius: var(--radius-card); }
   
-  /* Glassmorphism Utilities */
+  /* Brutalist / Precision Tech Utilities */
   .glass-panel {
     background-color: var(--color-surface-1);
-    backdrop-filter: blur(24px);
-    -webkit-backdrop-filter: blur(24px);
     border: 1px solid var(--color-hairline);
     box-shadow: var(--elevation-1);
+    border-radius: var(--radius-card);
   }
   
   .glass-panel-heavy {
     background-color: var(--color-surface-2);
-    backdrop-filter: blur(40px);
-    -webkit-backdrop-filter: blur(40px);
     border: 1px solid var(--color-hairline-glow);
     box-shadow: var(--elevation-2);
+    border-radius: var(--radius-card);
   }
 }
 
 @layer base {
   button, a, [role='button'] {
-    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.15s ease-in-out; /* Faster, less bouncy transitions */
   }
   button:focus-visible, a:focus-visible {
-    outline: 2px solid var(--accent-safe);
+    outline: 1px solid var(--color-text-secondary); /* Surgical focus ring instead of glowing accent */
     outline-offset: 4px;
     border-radius: var(--radius-sm);
+  }
+  
+  /* Mathematical grid lines underlying the app */
+  body {
+    background-image: 
+      linear-gradient(var(--color-hairline) 1px, transparent 1px),
+      linear-gradient(90deg, var(--color-hairline) 1px, transparent 1px);
+    background-size: 40px 40px;
+    background-position: center top;
   }
 }

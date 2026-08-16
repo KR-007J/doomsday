@@ -4,33 +4,36 @@ import { motion } from 'framer-motion';
 export const LandingPage: React.FC = () => {
   return (
     <motion.div
-      initial={{ opacity: 0, scale: 0.98, filter: "blur(10px)" }}
-      animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
-      exit={{ opacity: 0, scale: 1.02, filter: "blur(10px)" }}
-      transition={{ duration: 0.4, ease: "circOut" }}
-      className="min-h-screen w-full bg-black text-white p-8 flex flex-col items-center justify-center"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.2 }}
+      className="min-h-screen w-full bg-zinc-950 text-zinc-100 flex flex-col items-center justify-center p-8"
     >
-      <div className="max-w-4xl w-full text-center">
-        <h1 className="text-5xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-600">Acoustic Shield</h1>
-        <p className="text-xl text-cyan-200 mb-12">Enterprise Threat Detection & Neutralization</p>
+      <div className="max-w-5xl w-full grid grid-cols-12 gap-6">
+        <div className="col-span-12 text-center mb-12">
+          <h1 className="text-4xl md:text-5xl font-display mb-4 text-zinc-100">Acoustic Shield</h1>
+          <p className="text-lg text-zinc-400">Enterprise threat detection and neutralization</p>
+        </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="col-span-12 md:col-span-6">
           <motion.button
-            whileHover={{ scale: 1.02, boxShadow: "0 0 20px rgba(0, 255, 157, 0.2)" }}
-            whileTap={{ scale: 0.98 }}
-            className="glass-panel p-8 rounded-xl border border-cyan-500/30 text-left"
+            whileHover={{ backgroundColor: "rgba(39, 39, 42, 0.5)" }}
+            whileTap={{ scale: 0.99 }}
+            className="w-full glass-panel p-8 rounded-lg border border-zinc-800 text-left transition-colors"
           >
-            <h2 className="text-2xl font-semibold mb-4 text-cyan-300">SOC Dashboard</h2>
-            <p className="text-sm text-cyan-100/70">Real-time threat monitoring and incident response.</p>
+            <h2 className="text-xl font-medium mb-2 text-zinc-200 font-display">SOC dashboard</h2>
+            <p className="text-sm text-zinc-500">Real-time threat monitoring and incident response.</p>
           </motion.button>
+        </div>
 
+        <div className="col-span-12 md:col-span-6">
           <motion.button
-            whileHover={{ scale: 1.02, boxShadow: "0 0 20px rgba(0, 255, 157, 0.2)" }}
-            whileTap={{ scale: 0.98 }}
-            className="glass-panel-heavy p-8 rounded-xl border border-cyan-500/30 text-left"
+            whileHover={{ backgroundColor: "rgba(39, 39, 42, 0.5)" }}
+            whileTap={{ scale: 0.99 }}
+            className="w-full glass-panel p-8 rounded-lg border border-zinc-800 text-left transition-colors"
           >
-            <h2 className="text-2xl font-semibold mb-4 text-cyan-300">Network Topology</h2>
-            <p className="text-sm text-cyan-100/70">Global satellite and local node visualization.</p>
+            <h2 className="text-xl font-medium mb-2 text-zinc-200 font-display">Network topology</h2>
+            <p className="text-sm text-zinc-500">Global satellite and local node visualization.</p>
           </motion.button>
         </div>
       </div>
