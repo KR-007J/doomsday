@@ -94,17 +94,17 @@ export const LandingPage: React.FC = () => {
         {/* Status Chips */}
         <div className="relative z-10 p-4 flex justify-between items-start pointer-events-none mt-2">
           <div className="flex flex-col gap-2">
-            <div className="bg-surface-2/90 border border-hairline px-3 py-1 rounded-card flex items-center gap-2 shadow-elevation-1">
+            <div className="bg-surface-2/90 border border-hairline px-3 py-1.5 rounded-card flex items-center gap-2 shadow-elevation-1 backdrop-blur-sm">
               <span className="w-1.5 h-1.5 rounded-full bg-accent-warn" />
-              <span className="text-primary-ui text-[11px]">Gravity active</span>
+              <span className="text-primary-ui text-[11px] font-medium">Gravity active</span>
             </div>
-            <div className="bg-surface-2/90 border border-hairline px-3 py-1 rounded-card flex items-center gap-2 shadow-elevation-1">
+            <div className="bg-surface-2/90 border border-hairline px-3 py-1.5 rounded-card flex items-center gap-2 shadow-elevation-1 backdrop-blur-sm">
               <span className="w-1.5 h-1.5 rounded-full bg-accent-safe" />
-              <span className="text-primary-ui text-[11px]">Packet flow omnidirectional</span>
+              <span className="text-primary-ui text-[11px] font-medium">Packet flow omnidirectional</span>
             </div>
           </div>
 
-          <div className="bg-surface-2/90 border border-accent-safe/40 px-3 py-1.5 rounded-card flex items-center gap-2 shadow-elevation-2">
+          <div className="bg-surface-2/90 border border-accent-safe/40 px-3 py-1.5 rounded-card flex items-center gap-2 shadow-elevation-2 backdrop-blur-sm">
             <span className="w-2 h-2 rounded-full bg-accent-safe animate-pulse" />
             <span className="text-accent-safe font-bold uppercase text-[11px]">Scanning Sector 7G...</span>
           </div>
@@ -133,8 +133,8 @@ export const LandingPage: React.FC = () => {
 
         {/* Floating Action CTA Button */}
         <div className="relative z-20 pb-6 flex justify-center">
-          <Link to="/monitoring">
-            <button className="bg-accent-neutral text-canvas font-mono font-bold px-8 py-3.5 rounded-card uppercase tracking-[0.2em] hover:bg-white transition-all flex items-center gap-3 shadow-elevation-3 active:scale-95 cursor-pointer">
+          <Link to="/monitoring" className="focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent-safe rounded-card block">
+            <button className="bg-accent-neutral text-canvas font-mono font-bold px-8 py-3.5 rounded-card uppercase tracking-[0.2em] hover:bg-white transition-all flex items-center gap-3 shadow-elevation-3 active:scale-95 cursor-pointer w-full h-full focus-visible:outline-none">
               <span className="material-symbols-outlined text-[20px]">pause_circle</span>
               <span>STANDBY [ALT+S]</span>
             </button>

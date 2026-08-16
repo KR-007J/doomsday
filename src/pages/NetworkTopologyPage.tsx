@@ -6,6 +6,7 @@ import { NodeStatus } from '../types/threat';
 export const NetworkTopologyPage: React.FC = () => {
   const [nodes, setNodes] = useState<NodeStatus[]>(INITIAL_NODES);
   const [selectedNodeId, setSelectedNodeId] = useState<string>('NODE-01');
+  const [panelState, setPanelState] = useState<'happy' | 'loading' | 'empty' | 'error'>('happy');
 
   const selectedNode = nodes.find((n) => n.id === selectedNodeId) || nodes[0];
 
@@ -19,7 +20,36 @@ export const NetworkTopologyPage: React.FC = () => {
             GLOBAL MAP: STABLE
           </span>
         </div>
-        <span className="text-accent-safe font-bold">UPLINK: 99.8%</span>
+        
+        <div className="flex items-center gap-2">
+          <div className="flex bg-surface-2 border border-hairline rounded-card p-0.5 text-[10px]">
+            <button
+              onClick={() => setPanelState('happy')}
+              className={`px-2 py-1 rounded focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent-safe ${panelState === 'happy' ? 'bg-overlay text-primary-ui font-bold' : 'text-tertiary-ui'}`}
+            >
+              LIVE
+            </button>
+            <button
+              onClick={() => setPanelState('loading')}
+              className={`px-2 py-1 rounded focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent-safe ${panelState === 'loading' ? 'bg-overlay text-primary-ui font-bold' : 'text-tertiary-ui'}`}
+            >
+              LOAD
+            </button>
+            <button
+              onClick={() => setPanelState('empty')}
+              className={`px-2 py-1 rounded focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent-safe ${panelState === 'empty' ? 'bg-overlay text-primary-ui font-bold' : 'text-tertiary-ui'}`}
+            >
+              EMPTY
+            </button>
+            <button
+              onClick={() => setPanelState('error')}
+              className={`px-2 py-1 rounded focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent-safe ${panelState === 'error' ? 'bg-overlay text-primary-ui font-bold' : 'text-tertiary-ui'}`}
+            >
+              ERR
+            </button>
+          </div>
+          <span className="text-accent-safe font-bold">UPLINK: 99.8%</span>
+        </div>
       </div>
 
       {/* Hero Radar Scope Card */}
@@ -44,8 +74,28 @@ export const NetworkTopologyPage: React.FC = () => {
           </span>
         </div>
 
-        {/* Selected Primary Node Card */}
-        <div className="card-panel border-l-4 border-accent-safe p-4 flex flex-col gap-3 bg-surface-2/60">
+        {panelState === 'loading' && (
+          <div className="card-panel p-8 text-center flex flex-col items-center justify-center gap-2 text-tertiary-ui min-h-[200px]">
+             <span className="material-symbols-outlined animate-spin">sync</span>
+             <span>LOADING NODE DATA...</span>
+          </div>
+        )}
+        {panelState === 'empty' && (
+          <div className="card-panel p-8 text-center flex flex-col items-center justify-center gap-2 text-tertiary-ui min-h-[200px]">
+             <span className="material-symbols-outlined">blur_on</span>
+             <span>NO NODES DETECTED IN SECTOR.</span>
+          </div>
+        )}
+        {panelState === 'error' && (
+          <div className="card-panel p-8 text-center flex flex-col items-center justify-center gap-2 text-accent-critical bg-accent-critical/5 min-h-[200px]">
+             <span className="material-symbols-outlined">warning</span>
+             <span>UPLINK ERROR: UNABLE TO FETCH NODE DATA.</span>
+          </div>
+        )}
+        {panelState === 'happy' && (
+          <>
+            {/* Selected Primary Node Card */}
+            <div className="card-panel border-l-4 border-accent-safe p-4 flex flex-col gap-3 bg-surface-2/60">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
               <span className="w-2.5 h-2.5 rounded-full bg-accent-safe" />
@@ -131,9 +181,11 @@ export const NetworkTopologyPage: React.FC = () => {
               );
             })}
         </div>
+          </>
+        )}
 
         {/* Deploy Node Action Button */}
-        <button className="mt-2 w-full bg-surface-2 hover:bg-overlay border border-hairline text-primary-ui font-bold py-3.5 rounded-card uppercase tracking-widest transition-colors flex items-center justify-center gap-2 cursor-pointer">
+        <button className="mt-2 w-full bg-surface-2 hover:bg-overlay border border-hairline text-primary-ui font-bold py-3.5 rounded-card uppercase tracking-widest transition-colors flex items-center justify-center gap-2 cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent-safe active:scale-[0.97]">
           <span className="material-symbols-outlined text-[18px]">add</span>
           <span>DEPLOY NODE</span>
         </button>

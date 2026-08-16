@@ -29,12 +29,12 @@ export const Chapter3Preview: React.FC = () => {
         {/* 4 Bento Panels Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
           {/* Panel 1: Waveform */}
-          <div className="bg-[#0e0e0f] border border-[#1A1A1A] rounded-card p-4 flex flex-col justify-between min-h-[260px]">
+          <div className="bg-[#0e0e0f] hover:bg-[#15171B] transition-colors border border-[#1A1A1A] rounded-card p-4 flex flex-col justify-between min-h-[260px]">
             <div className="flex justify-between items-center pb-2 border-b border-[#1A1A1A] font-mono text-xs">
               <span className="text-[#8A8D91] uppercase">CHANNEL / WAVEFORM</span>
-              <div className="flex items-center gap-2 border border-[#E83939] px-2 py-0.5 bg-[#E83939]/10 rounded-sm">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#E83939] animate-pulse" />
-                <span className="text-[#E83939] font-bold text-[10px]">LIVE</span>
+              <div className={`flex items-center gap-2 border px-2 py-0.5 rounded-sm ${currentState === 'THREAT_LOGGED' ? 'border-[#E83939] bg-[#E83939]/10' : 'border-[#3ECF8E] bg-[#3ECF8E]/10'}`}>
+                <span className={`w-1.5 h-1.5 rounded-full animate-pulse ${currentState === 'THREAT_LOGGED' ? 'bg-[#E83939]' : 'bg-[#3ECF8E]'}`} />
+                <span className={`font-bold text-[10px] ${currentState === 'THREAT_LOGGED' ? 'text-[#E83939]' : 'text-[#3ECF8E]'}`}>LIVE</span>
               </div>
             </div>
             <div className="my-4 flex-1 flex items-center justify-center relative">
@@ -51,7 +51,7 @@ export const Chapter3Preview: React.FC = () => {
           </div>
 
           {/* Panel 2: Spectrum 16-24kHz */}
-          <div className="bg-[#0e0e0f] border border-[#1A1A1A] rounded-card p-4 flex flex-col justify-between min-h-[260px]">
+          <div className="bg-[#0e0e0f] hover:bg-[#15171B] transition-colors border border-[#1A1A1A] rounded-card p-4 flex flex-col justify-between min-h-[260px]">
             <div className="flex justify-between items-center pb-2 border-b border-[#1A1A1A] font-mono text-xs">
               <span className="text-[#8A8D91] uppercase">SPECTRUM / 16-24kHz</span>
               <div className="flex items-center gap-1 border border-[#E83939] px-2 py-0.5 bg-[#E83939]/10 rounded-sm">
@@ -82,7 +82,7 @@ export const Chapter3Preview: React.FC = () => {
           </div>
 
           {/* Panel 3: Sensor Topology */}
-          <div className="bg-[#0e0e0f] border border-[#1A1A1A] rounded-card p-4 flex flex-col justify-between min-h-[260px]">
+          <div className="bg-[#0e0e0f] hover:bg-[#15171B] transition-colors border border-[#1A1A1A] rounded-card p-4 flex flex-col justify-between min-h-[260px]">
             <div className="flex justify-between items-center pb-2 border-b border-[#1A1A1A] font-mono text-xs">
               <span className="text-[#8A8D91] uppercase">SENSOR TOPOLOGY</span>
               <span className="text-[#F5F5F5] font-bold text-[10px]">ONLINE: 24/24</span>
@@ -93,7 +93,7 @@ export const Chapter3Preview: React.FC = () => {
           </div>
 
           {/* Panel 4: Live Event Stream */}
-          <div className="bg-[#0e0e0f] border border-[#1A1A1A] rounded-card p-4 flex flex-col justify-between min-h-[260px]">
+          <div className="bg-[#0e0e0f] hover:bg-[#15171B] transition-colors border border-[#1A1A1A] rounded-card p-4 flex flex-col justify-between min-h-[260px]">
             <div className="flex justify-between items-center pb-2 border-b border-[#1A1A1A] font-mono text-xs">
               <span className="text-[#8A8D91] uppercase">LIVE EVENT STREAM</span>
               <span className="material-symbols-outlined text-[16px] text-[#8A8D91]">list</span>
@@ -120,8 +120,9 @@ export const Chapter3Preview: React.FC = () => {
         </div>
 
         {/* Action Button */}
-        <div className="text-center mt-6">
-          <button className="px-8 py-4 border border-[#8A8D91] hover:border-[#F5F5F5] text-[#8A8D91] hover:text-[#0A0A0B] hover:bg-[#F5F5F5] transition-all duration-300 font-mono text-xs tracking-widest uppercase cursor-pointer">
+        <div className="text-center mt-6 flex flex-col items-center">
+          <p className='font-mono text-[11px] text-[#8A8D91] mb-3'>Telemetry capture complete. Proceed to automated classification engine to categorize detected signatures.</p>
+          <button className="px-8 py-4 border border-[#8A8D91] hover:border-[#F5F5F5] text-[#8A8D91] hover:text-[#0A0A0B] hover:bg-[#F5F5F5] transition-all duration-300 font-mono text-xs tracking-widest uppercase cursor-pointer active:scale-[0.99] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#F5F5F5] focus-visible:outline-offset-2">
             &gt; INITIATE DEEP CLASSIFICATION
           </button>
         </div>

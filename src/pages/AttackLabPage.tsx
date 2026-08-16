@@ -6,6 +6,7 @@ export const AttackLabPage: React.FC = () => {
   const [freqSliderVal, setFreqSliderVal] = useState(205);
   const [durSliderVal, setDurSliderVal] = useState(50);
   const [isTransmitting, setIsTransmitting] = useState(false);
+  const [panelState, setPanelState] = useState<'happy' | 'loading' | 'empty' | 'error'>('happy');
   const [logs, setLogs] = useState<Array<{ time: string; level: string; msg: string; color: string }>>([
     { time: '14:02:11.405', level: 'INFO', msg: 'System initialized. Terminal v2.4.0 active.', color: 'text-tertiary-ui' },
     { time: '14:02:11.450', level: 'INFO', msg: 'Audio interfaces enumerated. Selected virtual sink: V-AUDIO_SINK_01', color: 'text-tertiary-ui' },
@@ -129,9 +130,37 @@ export const AttackLabPage: React.FC = () => {
             OOB Acoustic payload modulation simulator environment
           </p>
         </div>
-        <div className="flex items-center gap-2 px-3 py-1 bg-surface-2 border border-hairline rounded-sm text-accent-safe font-bold">
-          <span className="w-2 h-2 rounded-full bg-accent-safe animate-pulse" />
-          SIMULATOR ENGINE: ONLINE
+        <div className="flex items-center gap-2">
+          <div className="flex bg-surface-2 border border-hairline rounded-card p-0.5 text-[10px]">
+            <button
+              onClick={() => setPanelState('happy')}
+              className={`px-2 py-1 rounded focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent-safe ${panelState === 'happy' ? 'bg-overlay text-primary-ui font-bold' : 'text-tertiary-ui'}`}
+            >
+              LIVE
+            </button>
+            <button
+              onClick={() => setPanelState('loading')}
+              className={`px-2 py-1 rounded focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent-safe ${panelState === 'loading' ? 'bg-overlay text-primary-ui font-bold' : 'text-tertiary-ui'}`}
+            >
+              LOAD
+            </button>
+            <button
+              onClick={() => setPanelState('empty')}
+              className={`px-2 py-1 rounded focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent-safe ${panelState === 'empty' ? 'bg-overlay text-primary-ui font-bold' : 'text-tertiary-ui'}`}
+            >
+              EMPTY
+            </button>
+            <button
+              onClick={() => setPanelState('error')}
+              className={`px-2 py-1 rounded focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent-safe ${panelState === 'error' ? 'bg-overlay text-primary-ui font-bold' : 'text-tertiary-ui'}`}
+            >
+              ERR
+            </button>
+          </div>
+          <div className="flex items-center gap-2 px-3 py-1 bg-surface-2 border border-hairline rounded-sm text-accent-safe font-bold">
+            <span className="w-2 h-2 rounded-full bg-accent-safe animate-pulse" />
+            SIMULATOR ENGINE: ONLINE
+          </div>
         </div>
       </header>
 
@@ -146,79 +175,99 @@ export const AttackLabPage: React.FC = () => {
             <span className="text-tertiary-ui text-[10px]">NODE: LAB_TX_01</span>
           </div>
 
-          <div className="p-4 flex flex-col justify-between flex-1 gap-6">
-            <div className="flex flex-col gap-4">
-              {/* Payload Input */}
-              <div className="flex flex-col gap-1.5">
-                <label className="text-tertiary-ui uppercase text-[10px]">
-                  Payload Sequence (HEX / ASCII)
-                </label>
-                <input
-                  type="text"
-                  value={payload}
-                  onChange={(e) => setPayload(e.target.value)}
-                  className="w-full bg-surface-2 border border-hairline p-3 text-primary-ui rounded-card focus:outline-none focus:border-accent-safe transition-colors"
-                />
-              </div>
-
-              {/* Carrier Frequency Slider */}
-              <div className="flex flex-col gap-1.5">
-                <div className="flex justify-between items-end">
-                  <label className="text-tertiary-ui uppercase text-[10px]">Carrier Frequency</label>
-                  <span className="text-primary-ui font-bold">{currentFreqKhz} kHz</span>
-                </div>
-                <input
-                  type="range"
-                  min={180}
-                  max={220}
-                  value={freqSliderVal}
-                  onChange={(e) => setFreqSliderVal(Number(e.target.value))}
-                  className="w-full"
-                />
-                <div className="flex justify-between text-[10px] text-tertiary-ui">
-                  <span>18.0 kHz</span>
-                  <span>20.0 kHz</span>
-                  <span>22.0 kHz</span>
-                </div>
-              </div>
-
-              {/* Burst Duration Slider */}
-              <div className="flex flex-col gap-1.5">
-                <div className="flex justify-between items-end">
-                  <label className="text-tertiary-ui uppercase text-[10px]">Burst Duration</label>
-                  <span className="text-primary-ui font-bold">{durSliderVal} ms</span>
-                </div>
-                <input
-                  type="range"
-                  min={10}
-                  max={200}
-                  step={10}
-                  value={durSliderVal}
-                  onChange={(e) => setDurSliderVal(Number(e.target.value))}
-                  className="w-full"
-                />
-                <div className="flex justify-between text-[10px] text-tertiary-ui">
-                  <span>10 ms</span>
-                  <span>100 ms</span>
-                  <span>200 ms</span>
-                </div>
-              </div>
+          {panelState === 'loading' && (
+            <div className="p-8 text-center flex flex-col items-center justify-center gap-2 text-tertiary-ui flex-1">
+               <span className="material-symbols-outlined animate-spin">sync</span>
+               <span>INITIALIZING TRANSMITTER...</span>
             </div>
+          )}
+          {panelState === 'empty' && (
+            <div className="p-8 text-center flex flex-col items-center justify-center gap-2 text-tertiary-ui flex-1">
+               <span className="material-symbols-outlined">blur_on</span>
+               <span>NO HARDWARE DETECTED.</span>
+            </div>
+          )}
+          {panelState === 'error' && (
+            <div className="p-8 text-center flex flex-col items-center justify-center gap-2 text-accent-critical flex-1">
+               <span className="material-symbols-outlined">warning</span>
+               <span>HARDWARE FAULT: CONNECTION REFUSED.</span>
+            </div>
+          )}
+          {panelState === 'happy' && (
+            <div className="p-4 flex flex-col justify-between flex-1 gap-6">
+              <div className="flex flex-col gap-4">
+                {/* Payload Input */}
+                <div className="flex flex-col gap-1.5">
+                  <label className="text-tertiary-ui uppercase text-[10px]">
+                    Payload Sequence (HEX / ASCII)
+                  </label>
+                  <input
+                    type="text"
+                    value={payload}
+                    onChange={(e) => setPayload(e.target.value)}
+                    className="w-full bg-surface-2 border border-hairline p-3 text-primary-ui rounded-card focus:outline-none focus:border-accent-safe transition-colors"
+                  />
+                </div>
 
-            {/* Transmit Button (Normal flow, no absolute positioning!) */}
-            <button
-              onClick={handleTransmit}
-              disabled={isTransmitting}
-              className={`w-full bg-accent-neutral text-canvas py-4 rounded-card uppercase font-bold tracking-widest hover:bg-white transition-colors flex items-center justify-center gap-2 cursor-pointer shadow-elevation-2 mt-4 ${
-                isTransmitting ? 'opacity-50 cursor-not-allowed' : ''
-              }`}
-            >
-              <span className={`material-symbols-outlined text-[18px] ${isTransmitting ? 'animate-spin' : ''}`}>
-                {isTransmitting ? 'sync' : 'cell_tower'}
-              </span>
-              {isTransmitting ? 'TRANSMITTING SIGNAL...' : 'Transmit Covert Acoustic Signal'}
-            </button>
-          </div>
+                {/* Carrier Frequency Slider */}
+                <div className="flex flex-col gap-1.5">
+                  <div className="flex justify-between items-end">
+                    <label className="text-tertiary-ui uppercase text-[10px]">Carrier Frequency</label>
+                    <span className="text-primary-ui font-bold">{currentFreqKhz} kHz</span>
+                  </div>
+                  <input
+                    type="range"
+                    min={180}
+                    max={220}
+                    value={freqSliderVal}
+                    onChange={(e) => setFreqSliderVal(Number(e.target.value))}
+                    className="w-full"
+                  />
+                  <div className="flex justify-between text-[10px] text-tertiary-ui">
+                    <span>18.0 kHz</span>
+                    <span>20.0 kHz</span>
+                    <span>22.0 kHz</span>
+                  </div>
+                </div>
+
+                {/* Burst Duration Slider */}
+                <div className="flex flex-col gap-1.5">
+                  <div className="flex justify-between items-end">
+                    <label className="text-tertiary-ui uppercase text-[10px]">Burst Duration</label>
+                    <span className="text-primary-ui font-bold">{durSliderVal} ms</span>
+                  </div>
+                  <input
+                    type="range"
+                    min={10}
+                    max={200}
+                    step={10}
+                    value={durSliderVal}
+                    onChange={(e) => setDurSliderVal(Number(e.target.value))}
+                    className="w-full"
+                  />
+                  <div className="flex justify-between text-[10px] text-tertiary-ui">
+                    <span>10 ms</span>
+                    <span>100 ms</span>
+                    <span>200 ms</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Transmit Button (Normal flow, no absolute positioning!) */}
+              <button
+                onClick={handleTransmit}
+                disabled={isTransmitting}
+                className={`w-full bg-accent-neutral text-canvas py-4 rounded-card uppercase font-bold tracking-widest hover:bg-white transition-colors flex items-center justify-center gap-2 cursor-pointer shadow-elevation-2 mt-4 focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent-safe active:scale-[0.97] ${
+                  isTransmitting ? 'opacity-50 cursor-not-allowed' : ''
+                }`}
+              >
+                <span className={`material-symbols-outlined text-[18px] ${isTransmitting ? 'animate-spin' : ''}`}>
+                  {isTransmitting ? 'sync' : 'cell_tower'}
+                </span>
+                {isTransmitting ? 'TRANSMITTING SIGNAL...' : 'Transmit Covert Acoustic Signal'}
+              </button>
+            </div>
+          )}
         </div>
 
         {/* Right: Spectrogram Preview Canvas */}
@@ -231,6 +280,24 @@ export const AttackLabPage: React.FC = () => {
           </div>
 
           <div className="flex-1 relative bg-surface-1 flex flex-col">
+            {panelState === 'loading' && (
+              <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 text-tertiary-ui z-10 bg-surface-1/80 backdrop-blur-sm">
+                 <span className="material-symbols-outlined animate-spin">sync</span>
+                 <span>CALIBRATING SENSORS...</span>
+              </div>
+            )}
+            {panelState === 'empty' && (
+              <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 text-tertiary-ui z-10 bg-surface-1/80 backdrop-blur-sm">
+                 <span className="material-symbols-outlined">blur_on</span>
+                 <span>NO SIGNAL.</span>
+              </div>
+            )}
+            {panelState === 'error' && (
+              <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 text-accent-critical z-10 bg-surface-1/80 backdrop-blur-sm">
+                 <span className="material-symbols-outlined">warning</span>
+                 <span>SENSOR ERROR.</span>
+              </div>
+            )}
             <canvas ref={canvasRef} className="absolute inset-0 w-full h-full block" />
           </div>
         </div>
@@ -242,7 +309,7 @@ export const AttackLabPage: React.FC = () => {
           <span className="text-secondary-ui uppercase tracking-wider font-bold">
             EVENT LOG CONSOLE
           </span>
-          <button onClick={() => setLogs([])} className="text-tertiary-ui hover:text-primary-ui uppercase">
+          <button onClick={() => setLogs([])} className="text-tertiary-ui hover:text-primary-ui uppercase focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent-safe active:scale-[0.97] px-2 py-1 rounded">
             Clear
           </button>
         </div>

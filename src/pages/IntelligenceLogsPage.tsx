@@ -52,7 +52,7 @@ export const IntelligenceLogsPage: React.FC = () => {
         <div className="flex gap-2">
           <button
             onClick={() => setFilterLevel('ALL')}
-            className={`px-3 py-1.5 border rounded-card transition-colors cursor-pointer uppercase ${
+            className={`px-3 py-1.5 border rounded-card transition-colors cursor-pointer uppercase focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent-safe ${
               filterLevel === 'ALL' ? 'bg-surface-2 border-hairline text-primary-ui font-bold' : 'border-hairline text-tertiary-ui hover:text-primary-ui'
             }`}
           >
@@ -60,7 +60,7 @@ export const IntelligenceLogsPage: React.FC = () => {
           </button>
           <button
             onClick={() => setFilterLevel('INFO')}
-            className={`px-3 py-1.5 border rounded-card transition-colors cursor-pointer uppercase ${
+            className={`px-3 py-1.5 border rounded-card transition-colors cursor-pointer uppercase focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent-safe ${
               filterLevel === 'INFO' ? 'bg-accent-safe/10 border-accent-safe text-accent-safe font-bold' : 'border-hairline text-tertiary-ui hover:text-accent-safe'
             }`}
           >
@@ -68,7 +68,7 @@ export const IntelligenceLogsPage: React.FC = () => {
           </button>
           <button
             onClick={() => setFilterLevel('WARN')}
-            className={`px-3 py-1.5 border rounded-card transition-colors cursor-pointer uppercase ${
+            className={`px-3 py-1.5 border rounded-card transition-colors cursor-pointer uppercase focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent-safe ${
               filterLevel === 'WARN' ? 'bg-accent-warn/10 border-accent-warn text-accent-warn font-bold' : 'border-hairline text-tertiary-ui hover:text-accent-warn'
             }`}
           >
@@ -76,7 +76,7 @@ export const IntelligenceLogsPage: React.FC = () => {
           </button>
           <button
             onClick={() => setFilterLevel('CRIT')}
-            className={`px-3 py-1.5 border rounded-card transition-colors cursor-pointer uppercase ${
+            className={`px-3 py-1.5 border rounded-card transition-colors cursor-pointer uppercase focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent-safe ${
               filterLevel === 'CRIT' ? 'bg-accent-critical/10 border-accent-critical text-accent-critical font-bold' : 'border-hairline text-tertiary-ui hover:text-accent-critical'
             }`}
           >
@@ -108,7 +108,7 @@ export const IntelligenceLogsPage: React.FC = () => {
           <span className="text-primary-ui text-[11px] font-bold">Omniscience Active</span>
         </div>
 
-        <button className="bg-accent-neutral text-canvas font-bold px-4 py-2.5 rounded-card uppercase tracking-wider hover:bg-white transition-colors cursor-pointer shrink-0 flex items-center gap-2">
+        <button className="bg-accent-neutral text-canvas font-bold px-4 py-2.5 rounded-card uppercase tracking-wider hover:bg-white transition-colors cursor-pointer shrink-0 flex items-center gap-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent-safe active:scale-[0.97]">
           <span className="material-symbols-outlined text-[16px]">rocket_launch</span>
           <span>DEPLOY NODE</span>
         </button>
@@ -154,8 +154,8 @@ export const IntelligenceLogsPage: React.FC = () => {
         <div className="p-3 border-t border-hairline bg-surface-2 flex justify-between items-center text-tertiary-ui text-[10px]">
           <span>SHOWING {filteredLogs.length} OF 1,204 EVENTS</span>
           <div className="flex gap-2 text-secondary-ui">
-            <button className="hover:text-primary-ui cursor-pointer">&lt; PREV</button>
-            <button className="hover:text-primary-ui cursor-pointer">NEXT &gt;</button>
+            <button className="hover:text-primary-ui cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent-safe active:scale-[0.97] px-2 py-1 rounded">&lt; PREV</button>
+            <button className="hover:text-primary-ui cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent-safe active:scale-[0.97] px-2 py-1 rounded">NEXT &gt;</button>
           </div>
         </div>
       </div>

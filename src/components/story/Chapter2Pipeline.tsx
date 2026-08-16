@@ -62,7 +62,7 @@ export const Chapter2Pipeline: React.FC = () => {
             Tracing the lifecycle of an acoustic anomaly from initial encoding at the source device to final neutralization within the Security Operations Center. Silence is no longer secure.
           </p>
 
-          <button className="mt-4 px-6 py-3 border border-[#F5F5F5] text-[#F5F5F5] font-mono text-xs hover:bg-[#F5F5F5] hover:text-[#0A0A0B] transition-colors duration-300 w-max uppercase tracking-wider flex items-center gap-2 cursor-pointer">
+          <button className="mt-4 px-6 py-3 border border-[#F5F5F5] text-[#F5F5F5] font-mono text-xs hover:bg-[#F5F5F5] hover:text-[#0A0A0B] transition-all duration-300 w-max uppercase tracking-wider flex items-center gap-2 cursor-pointer active:scale-[0.97] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#F5F5F5] focus-visible:outline-offset-2">
             <span className="font-bold">&gt;</span> INITIATE TRACE
           </button>
         </div>

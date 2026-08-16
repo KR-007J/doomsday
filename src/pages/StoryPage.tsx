@@ -18,6 +18,16 @@ export const StoryPage: React.FC = () => {
 
       {/* Chapter 4: Classification */}
       <Chapter4Classification />
+
+      {/* Sticky Footer */}
+      <div className="sticky bottom-0 w-full flex justify-between items-center px-8 py-2 bg-[#0A0A0B]/90 backdrop-blur z-50 border-t border-[#1A1A1A]">
+        <span className="font-mono text-[10px] text-[#8A8D91]">© 2024 ACOUSTIC SHIELD // SIGNAL INTEL</span>
+        <div className="flex gap-4 font-mono text-[10px] text-[#8A8D91]">
+          <span>SYSTEM STATUS: NOMINAL</span>
+          <span>LAT: 34.0522 N</span>
+          <span>LONG: 118.2437 W</span>
+        </div>
+      </div>
     </div>
   );
 };

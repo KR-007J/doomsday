@@ -30,7 +30,7 @@ export const Chapter1Hero: React.FC = () => {
           <div className="flex items-center gap-2 font-mono text-xs text-[#8A8D91] tracking-widest uppercase mb-2">
             <span className={`w-2 h-2 rounded-full ${currentState === 'THREAT_LOGGED' ? 'bg-[#E83939] animate-pulse' : 'bg-[#3ECF8E] animate-pulse'}`} />
             <span className={currentState === 'THREAT_LOGGED' ? 'text-[#E83939] font-bold' : 'text-[#3ECF8E] font-bold'}>
-              ACOUSTIC MONITORING · SYSTEM NOMINAL
+              {currentState === 'THREAT_LOGGED' ? 'ACOUSTIC MONITORING · THREAT DETECTED' : 'ACOUSTIC MONITORING · SYSTEM NOMINAL'}
             </span>
           </div>
 
@@ -58,7 +58,7 @@ export const Chapter1Hero: React.FC = () => {
           {/* CTAs */}
           <div className="flex flex-wrap items-center gap-6">
             <Link to="/monitoring">
-              <button className="bg-transparent text-[#F5F5F5] font-mono text-xs font-bold uppercase tracking-[0.15em] px-8 py-4 border border-[#E83939] hover:bg-[#E83939] hover:text-white transition-all duration-300 flex items-center gap-3 cursor-pointer shadow-[0_0_20px_rgba(232,57,57,0.2)]">
+              <button className="bg-transparent text-[#F5F5F5] font-mono text-xs font-bold uppercase tracking-[0.15em] px-8 py-4 border border-[#E83939] hover:bg-[#E83939] hover:text-white transition-all duration-300 flex items-center gap-3 cursor-pointer shadow-[0_0_20px_rgba(232,57,57,0.2)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#E83939] focus-visible:outline-offset-2 active:scale-[0.97]">
                 <span>ENTER SOC DASHBOARD</span>
                 <span className="material-symbols-outlined text-[16px]">arrow_forward</span>
               </button>
@@ -66,9 +66,9 @@ export const Chapter1Hero: React.FC = () => {
 
             <button
               onClick={scrollToChapter2}
-              className="text-[#8A8D91] hover:text-[#F5F5F5] font-mono text-xs uppercase tracking-wider transition-colors cursor-pointer flex items-center gap-1"
+              className="text-[#8A8D91] hover:text-[#F5F5F5] font-mono text-xs uppercase tracking-wider transition-colors cursor-pointer flex items-center gap-1 group focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#F5F5F5] focus-visible:outline-offset-4"
             >
-              <span>&gt; Explore the Detection Pipeline</span>
+              <span>&gt; <span className="group-hover:underline">Explore the Detection Pipeline</span></span>
             </button>
           </div>
         </motion.div>
@@ -78,14 +78,30 @@ export const Chapter1Hero: React.FC = () => {
           <div className="w-full max-w-md bg-[#0e0e0f] border border-[#1A1A1A] rounded-lg p-8 relative shadow-2xl overflow-hidden flex flex-col items-center">
             {/* SVG Sensor Node Shape */}
             <div className="relative w-64 h-80 flex items-center justify-center">
-              <svg className="w-full h-full text-white/5" viewBox="0 0 200 260" fill="currentColor">
+              <svg className="w-full h-full text-white/[0.03]" viewBox="0 0 200 260" fill="currentColor">
                 <polygon points="100,10 180,60 180,200 100,250 20,200 20,60" />
               </svg>
-              {/* Glowing Sensor Lights */}
-              <div className="absolute top-1/4 left-1/3 w-2.5 h-2.5 rounded-full bg-[#F0A030] shadow-[0_0_10px_#F0A030]" />
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 w-3.5 h-3.5 rounded-full bg-[#E83939] shadow-[0_0_15px_#E83939] animate-pulse" />
-              <div className="absolute top-1/2 right-1/4 w-3 h-3 rounded-full bg-white/80 shadow-[0_0_12px_rgba(255,255,255,0.8)]" />
-              <div className="absolute bottom-1/4 right-1/3 w-2 h-2 rounded-full bg-[#E83939]" />
+              {/* Glowing Sensor Lights & Labels */}
+              {/* Top-left amber dot */}
+              <div className="absolute top-1/4 left-1/4 flex flex-col items-center -translate-x-1/2 -translate-y-1/2">
+                <div className="font-mono text-[8px] text-[#F0A030] mb-1 whitespace-nowrap">NODE-04 // SCAN</div>
+                <div className="w-2.5 h-2.5 rounded-full bg-[#F0A030] shadow-[0_0_10px_#F0A030]" />
+              </div>
+              {/* Center red dot */}
+              <div className="absolute top-1/2 left-1/2 flex flex-col items-center -translate-x-1/2 -translate-y-1/2">
+                <div className="font-mono text-[8px] text-[#E83939] mb-1 font-bold whitespace-nowrap">ANOMALY</div>
+                <div className="w-3.5 h-3.5 rounded-full bg-[#E83939] shadow-[0_0_15px_#E83939] animate-pulse" />
+              </div>
+              {/* Right white dot */}
+              <div className="absolute top-1/2 right-1/4 flex flex-col items-center translate-x-1/2 -translate-y-1/2">
+                <div className="font-mono text-[8px] text-white mb-1 whitespace-nowrap">NODE-12 // SYNC</div>
+                <div className="w-3 h-3 rounded-full bg-white/80 shadow-[0_0_12px_rgba(255,255,255,0.8)]" />
+              </div>
+            </div>
+
+            {/* Legend Below Hexagon */}
+            <div className="font-mono text-[10px] text-[#8A8D91] mt-4 mb-4">
+              ACTIVE DETECTION NODES · 4,092 ONLINE
             </div>
 
             {/* Node Metadata Footer */}

@@ -15,13 +15,8 @@ export const App: React.FC = () => {
   return (
     <Router>
       <div className="min-h-screen bg-canvas text-primary-ui flex flex-col pt-14 pb-16 md:pb-0 relative selection:bg-accent-safe/30 selection:text-accent-safe">
-        {/* Background Grid Pattern Overlay */}
         <div className="fixed inset-0 bg-grid-pattern opacity-40 pointer-events-none z-0" />
-
-        {/* Top Navbar */}
         <Navbar />
-
-        {/* Main Content Area */}
         <main className="relative z-10 flex-1 flex flex-col w-full">
           <Routes>
             <Route path="/" element={<StoryPage />} />
@@ -33,11 +28,7 @@ export const App: React.FC = () => {
             <Route path="/attack-lab" element={<AttackLabPage />} />
           </Routes>
         </main>
-
-        {/* Bottom Navigation for Mobile Devices */}
         <BottomNavBar />
-
-        {/* Dev State Override Panel & Cursor Trail */}
         <DevStatePanel />
         <CursorTrail />
       </div>

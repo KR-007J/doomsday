@@ -27,7 +27,7 @@ export const Chapter4Classification: React.FC = () => {
         {/* 3 Column Cards Row */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {/* Card 1: Safe/Nominal */}
-          <div className="bg-[#0e0e0f] border border-[#1A1A1A] rounded-card p-6 flex flex-col justify-between hover:border-[#333333] transition-colors">
+          <div className="bg-[#0e0e0f] border border-[#1A1A1A] rounded-card p-6 flex flex-col justify-between hover:border-[#333333] hover:shadow-lg transition-all duration-300">
             <div>
               <div className="flex justify-between items-center mb-6 font-mono text-xs">
                 <div>
@@ -53,7 +53,7 @@ export const Chapter4Classification: React.FC = () => {
           </div>
 
           {/* Card 2: Anomaly */}
-          <div className="bg-[#0e0e0f] border border-[#F0A030]/40 rounded-card p-6 flex flex-col justify-between hover:border-[#F0A030] transition-colors">
+          <div className="bg-[#0e0e0f] border border-[#F0A030]/40 rounded-card p-6 flex flex-col justify-between hover:border-[#F0A030] hover:shadow-lg transition-all duration-300">
             <div>
               <div className="flex justify-between items-center mb-6 font-mono text-xs">
                 <div>
@@ -74,14 +74,14 @@ export const Chapter4Classification: React.FC = () => {
             </div>
             <div className="pt-4 border-t border-[#1A1A1A] flex justify-between items-center font-mono text-xs">
               <span className="text-[#F0A030] text-[10px] border border-[#F0A030]/50 px-2 py-0.5 bg-[#F0A030]/10">ACT_RATING: 6.8</span>
-              <button className="text-[#F0A030] font-bold border border-[#F0A030] px-3 py-1 hover:bg-[#F0A030] hover:text-[#0A0A0B] transition-colors cursor-pointer">
+              <button className="text-[#F0A030] font-bold border border-[#F0A030] px-3 py-1 hover:bg-[#F0A030] hover:text-[#0A0A0B] transition-colors cursor-pointer active:scale-[0.97] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#F0A030] focus-visible:outline-offset-2">
                 VALIDATE
               </button>
             </div>
           </div>
 
           {/* Card 3: Threat (Emphasized with --story-red when active) */}
-          <div className={`bg-[#0e0e0f] rounded-card p-6 flex flex-col justify-between transition-colors ${
+          <div className={`bg-[#0e0e0f] rounded-card p-6 flex flex-col justify-between transition-all duration-300 hover:shadow-lg ${
             isCritical
               ? 'border-2 border-[#E83939] shadow-[0_0_30px_rgba(232,57,57,0.2)] bg-[#E83939]/5'
               : 'border border-[#E83939]/40 hover:border-[#E83939]'
@@ -106,7 +106,7 @@ export const Chapter4Classification: React.FC = () => {
             </div>
             <div className="pt-4 border-t border-[#E83939]/30 flex justify-between items-center font-mono text-xs">
               <span className="text-[#E83939] text-[10px] border border-[#E83939] px-2 py-0.5 bg-[#E83939]/10 font-bold">ACT_RATING: 9.9</span>
-              <button className="bg-[#E83939] text-white font-bold px-4 py-1.5 hover:bg-white hover:text-[#E83939] transition-colors cursor-pointer uppercase">
+              <button className="bg-[#E83939] text-white font-bold px-4 py-1.5 hover:bg-white hover:text-[#E83939] transition-colors cursor-pointer uppercase active:scale-[0.97] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#E83939] focus-visible:outline-offset-2">
                 LOG &amp; CONTAIN
               </button>
             </div>

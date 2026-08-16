@@ -27,32 +27,32 @@ export const SOCMonitoringPage: React.FC = () => {
         <div className="flex items-center gap-2">
           <button
             onClick={() => triggerSimulatedAttack()}
-            className="px-3 py-1.5 bg-accent-warn/10 border border-accent-warn text-accent-warn font-bold rounded-card hover:bg-accent-warn/20 transition-colors cursor-pointer uppercase text-[10px]"
+            className="px-3 py-1.5 bg-accent-warn/10 border border-accent-warn text-accent-warn font-bold rounded-card hover:bg-accent-warn/20 transition-colors cursor-pointer uppercase text-[10px] focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent-warn active:scale-[0.97]"
           >
             TEST ATTACK VECTOR
           </button>
           <div className="flex bg-surface-2 border border-hairline rounded-card p-0.5 text-[10px]">
             <button
               onClick={() => setPanelState('happy')}
-              className={`px-2 py-1 rounded ${panelState === 'happy' ? 'bg-overlay text-primary-ui font-bold' : 'text-tertiary-ui'}`}
+              className={`px-2 py-1 rounded focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent-safe ${panelState === 'happy' ? 'bg-overlay text-primary-ui font-bold' : 'text-tertiary-ui'}`}
             >
               LIVE
             </button>
             <button
               onClick={() => setPanelState('loading')}
-              className={`px-2 py-1 rounded ${panelState === 'loading' ? 'bg-overlay text-primary-ui font-bold' : 'text-tertiary-ui'}`}
+              className={`px-2 py-1 rounded focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent-safe ${panelState === 'loading' ? 'bg-overlay text-primary-ui font-bold' : 'text-tertiary-ui'}`}
             >
               LOAD
             </button>
             <button
               onClick={() => setPanelState('empty')}
-              className={`px-2 py-1 rounded ${panelState === 'empty' ? 'bg-overlay text-primary-ui font-bold' : 'text-tertiary-ui'}`}
+              className={`px-2 py-1 rounded focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent-safe ${panelState === 'empty' ? 'bg-overlay text-primary-ui font-bold' : 'text-tertiary-ui'}`}
             >
               EMPTY
             </button>
             <button
               onClick={() => setPanelState('error')}
-              className={`px-2 py-1 rounded ${panelState === 'error' ? 'bg-overlay text-primary-ui font-bold' : 'text-tertiary-ui'}`}
+              className={`px-2 py-1 rounded focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent-safe ${panelState === 'error' ? 'bg-overlay text-primary-ui font-bold' : 'text-tertiary-ui'}`}
             >
               ERR
             </button>
@@ -152,12 +152,12 @@ export const SOCMonitoringPage: React.FC = () => {
 
       {/* Action Buttons */}
       <section className="flex gap-4 mt-2">
-        <button className="flex-1 bg-surface-2 border border-hairline hover:bg-overlay text-primary-ui font-mono py-4 rounded-card text-sm tracking-widest flex items-center justify-center gap-2 cursor-pointer font-bold">
+        <button className="flex-1 bg-surface-2 border border-hairline hover:bg-overlay text-primary-ui font-mono py-4 rounded-card text-sm tracking-widest flex items-center justify-center gap-2 cursor-pointer font-bold focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent-safe active:scale-[0.97]">
           <span className="material-symbols-outlined">visibility</span>
           <span>MONITOR</span>
         </button>
 
-        <button className={`flex-1 font-mono py-4 rounded-card text-sm tracking-widest flex items-center justify-center gap-2 cursor-pointer font-bold ${
+        <button className={`flex-1 font-mono py-4 rounded-card text-sm tracking-widest flex items-center justify-center gap-2 cursor-pointer font-bold focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent-safe active:scale-[0.97] ${
           isCritical
             ? 'bg-accent-critical text-white border border-accent-critical shadow-elevation-3'
             : 'bg-surface-2 border border-hairline text-secondary-ui hover:text-primary-ui'

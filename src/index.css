@@ -4,6 +4,16 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  button, a, [role='button'] {
+    transition: all 0.15s ease;
+  }
+  button:focus-visible, a:focus-visible {
+    outline: 2px solid var(--accent-safe);
+    outline-offset: 2px;
+  }
+}
+
 @layer utilities {
   .text-canvas { color: var(--color-canvas); }
   .bg-canvas { background-color: var(--color-canvas); }
@@ -33,4 +43,10 @@
 
   .text-accent-neutral { color: var(--accent-neutral); }
   .bg-accent-neutral { background-color: var(--accent-neutral); }
+
+  .shadow-elevation-1 { box-shadow: var(--elevation-1); }
+  .shadow-elevation-2 { box-shadow: var(--elevation-2); }
+  .shadow-elevation-3 { box-shadow: var(--elevation-3); }
+  .shadow-elevation-4 { box-shadow: var(--elevation-4); }
+  .rounded-card { border-radius: var(--radius-card); }
 }
