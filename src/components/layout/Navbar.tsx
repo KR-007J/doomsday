@@ -49,7 +49,7 @@ export const Navbar: React.FC = () => {
     >
       <div className="glass-panel-heavy rounded-2xl px-3 md:px-4 py-2 flex items-center justify-between border border-slate-700/60 shadow-2xl backdrop-blur-xl gap-2 w-full">
         
-        {/* Left Side: Brand Logo & Always-Visible 3D Scope Button */}
+        {/* Left Side: Brand Logo & 3D Scope Button */}
         <div className="flex items-center gap-2 md:gap-3 shrink-0">
           <Link to="/" className="flex items-center gap-2 text-slate-100 hover:text-white transition-colors shrink-0" aria-label="Acoustic Shield Home">
             <div className="w-8 h-8 rounded-lg bg-indigo-600 flex items-center justify-center shadow-lg shadow-indigo-500/30">
@@ -60,7 +60,7 @@ export const Navbar: React.FC = () => {
             </span>
           </Link>
 
-          {/* 3D Scope Background Menu Button (Placed Right Next to Logo for 100% Visibility) */}
+          {/* 3D Scope Background Menu Button (Guaranteed Visible) */}
           <div className="relative shrink-0" ref={dropdownRef}>
             <motion.button
               whileHover={{ scale: 1.03 }}
@@ -125,8 +125,8 @@ export const Navbar: React.FC = () => {
           </div>
         </div>
 
-        {/* Right Side: Navigation Links */}
-        <nav className="flex items-center gap-1 bg-slate-900/80 p-1 rounded-xl border border-slate-800/80 shrink overflow-x-auto no-scrollbar" aria-label="Main Navigation">
+        {/* Right Side: Responsive Nav Links (Active tab shows label always, inactive tabs show icons on laptop/tablet) */}
+        <nav className="flex items-center gap-1 bg-slate-900/80 p-1 rounded-xl border border-slate-800/80 shrink-0" aria-label="Main Navigation">
           {navLinks.map((link) => {
             const isActive = location.pathname === link.path || (link.path === '/story' && location.pathname === '/');
             const IconComponent = link.icon;
@@ -134,16 +134,17 @@ export const Navbar: React.FC = () => {
             return (
               <Link key={link.path} to={link.path} aria-label={`Navigate to ${link.label}`}>
                 <motion.div
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
+                  whileHover={{ scale: 1.03 }}
+                  whileTap={{ scale: 0.97 }}
                   className={`px-2.5 py-1.5 rounded-lg text-xs font-mono flex items-center gap-1.5 transition-all ${
                     isActive
                       ? 'bg-indigo-600 text-white font-medium shadow-md shadow-indigo-500/25'
                       : 'text-slate-400 hover:text-slate-100 hover:bg-slate-800/50'
                   }`}
+                  title={link.label}
                 >
                   <IconComponent className="w-3.5 h-3.5" />
-                  <span className="hidden md:inline">{link.label}</span>
+                  <span className={isActive ? 'inline' : 'hidden lg:inline'}>{link.label}</span>
                 </motion.div>
               </Link>
             );
