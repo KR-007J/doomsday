@@ -25,7 +25,7 @@ export const Navbar: React.FC = () => {
       <div className="glass-panel-heavy rounded-2xl px-4 md:px-6 py-3 flex items-center justify-between border border-slate-700/60 shadow-2xl backdrop-blur-xl">
         {/* Brand Logo */}
         <Link to="/" className="flex items-center gap-2 text-slate-100 hover:text-white transition-colors" aria-label="Acoustic Shield Home">
-          <div className="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center shadow-lg shadow-blue-500/30">
+          <div className="w-8 h-8 rounded-lg bg-indigo-600 flex items-center justify-center shadow-lg shadow-indigo-500/30">
             <Shield className="w-4 h-4 text-white" />
           </div>
           <span className="font-display text-xl tracking-tight font-light text-slate-100 hidden sm:inline">
@@ -46,7 +46,7 @@ export const Navbar: React.FC = () => {
                   whileTap={{ scale: 0.97 }}
                   className={`px-3 py-1.5 rounded-lg text-xs font-mono flex items-center gap-1.5 transition-all ${
                     isActive
-                      ? 'bg-blue-600 text-white font-medium shadow-md shadow-blue-500/25'
+                      ? 'bg-indigo-600 text-white font-medium shadow-md shadow-indigo-500/25'
                       : 'text-slate-400 hover:text-slate-100 hover:bg-slate-800/50'
                   }`}
                 >

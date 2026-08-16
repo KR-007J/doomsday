@@ -3,21 +3,21 @@ import { Canvas, useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 import { useThreatStore } from '../../features/threat-state-machine/useThreatStore';
 
-const GoogleDeepMindAmbientField = () => {
+const Top100OrganicAmbientField = () => {
   const meshRef = useRef<THREE.Mesh>(null);
   const currentState = useThreatStore((s) => s.currentState);
   
-  // Custom shader using Google DeepMind Ambient Slate & Trust Blue color psychology
+  // Custom WebGL shader inspired by Framer & Linear ambient mesh gradients
   const shaderMaterial = useMemo(() => {
     return new THREE.ShaderMaterial({
       uniforms: {
         uTime: { value: 0 },
         uThreatLevel: { value: 0.0 },
-        // Google Color Psychology Spectrum
-        uColorBase: { value: new THREE.Color('#0B0F19') },        // Deep Slate Canvas
-        uColorTrustBlue: { value: new THREE.Color('#1A73E8') },   // Google Trust Blue
-        uColorEmerald: { value: new THREE.Color('#0F9D58') },     // Safe Emerald Green
-        uColorCoral: { value: new THREE.Color('#EA4335') }        // Threat Coral Red
+        // Top 100 Palette: Deep Space, Royal Indigo, Emerald, Crimson
+        uColorBase: { value: new THREE.Color('#08090D') },        // Midnight Obsidian
+        uColorIndigo: { value: new THREE.Color('#6366F1') },      // Electric Royal Indigo
+        uColorEmerald: { value: new THREE.Color('#10B981') },     // Organic Emerald
+        uColorCrimson: { value: new THREE.Color('#F43F5E') }      // Rose Crimson
       },
       vertexShader: `
         varying vec2 vUv;
@@ -30,9 +30,9 @@ const GoogleDeepMindAmbientField = () => {
         uniform float uTime;
         uniform float uThreatLevel;
         uniform vec3 uColorBase;
-        uniform vec3 uColorTrustBlue;
+        uniform vec3 uColorIndigo;
         uniform vec3 uColorEmerald;
-        uniform vec3 uColorCoral;
+        uniform vec3 uColorCrimson;
         varying vec2 vUv;
         
         float random(vec2 st) {
@@ -57,30 +57,32 @@ const GoogleDeepMindAmbientField = () => {
         }
 
         void main() {
-          vec2 st = vUv * 2.5;
-          float time = uTime * 0.08;
+          vec2 st = vUv * 2.2;
+          float time = uTime * 0.06;
           
           vec2 q = vec2(0.);
-          q.x = fbm( st + 0.05*time);
+          q.x = fbm( st + 0.04*time);
           q.y = fbm( st + vec2(1.0));
 
           vec2 r = vec2(0.);
-          r.x = fbm( st + 1.0*q + vec2(1.7,9.2)+ 0.15*time );
-          r.y = fbm( st + 1.0*q + vec2(8.3,2.8)+ 0.126*time);
+          r.x = fbm( st + 1.0*q + vec2(1.7,9.2)+ 0.12*time );
+          r.y = fbm( st + 1.0*q + vec2(8.3,2.8)+ 0.10*time);
 
           float f = fbm(st+r);
 
-          // Google Psychology Color Integration:
-          // Default State: Soft Trust Blue ambient flow
-          // Threat State: Shift to Amber/Coral Alert flow
-          vec3 safeFlow = mix(uColorBase, uColorTrustBlue * 0.18, f * f * 2.0);
-          vec3 threatFlow = mix(uColorBase, uColorCoral * 0.25, f * f * 2.5);
+          // Top 100 Ambient Integration:
+          // Default State: Deep indigo & emerald silk ambient flow
+          // Threat State: Shift to Rose Crimson flow
+          vec3 safeFlow = mix(uColorBase, uColorIndigo * 0.22, f * f * 2.2);
+          safeFlow += uColorEmerald * 0.04 * f;
+          
+          vec3 threatFlow = mix(uColorBase, uColorCrimson * 0.28, f * f * 2.5);
           
           vec3 finalColor = mix(safeFlow, threatFlow, uThreatLevel);
           
-          // Subtle Google radial glow from top center
+          // Subtle top radial spotlight
           float topGlow = smoothstep(1.0, 0.0, distance(vUv, vec2(0.5, 1.0)));
-          finalColor += uColorTrustBlue * 0.06 * topGlow;
+          finalColor += uColorIndigo * 0.08 * topGlow;
           
           gl_FragColor = vec4(finalColor, 1.0);
         }
@@ -114,7 +116,7 @@ export const CinematicBackground: React.FC = () => {
         dpr={[1, 2]}
         gl={{ powerPreference: 'high-performance' }}
       >
-        <GoogleDeepMindAmbientField />
+        <Top100OrganicAmbientField />
       </Canvas>
     </div>
   );
