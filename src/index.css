@@ -37,12 +37,13 @@
   .shadow-elevation-1 { box-shadow: var(--elevation-1); }
   .shadow-elevation-2 { box-shadow: var(--elevation-2); }
   .shadow-elevation-3 { box-shadow: var(--elevation-3); }
-  .shadow-elevation-4 { box-shadow: var(--elevation-4); }
   .rounded-card { border-radius: var(--radius-card); }
   
-  /* Brutalist / Precision Tech Utilities */
+  /* Claude Code Brutalist / Precision Tech Utilities */
   .glass-panel {
     background-color: var(--color-surface-1);
+    backdrop-filter: blur(40px); /* Deep blur for elegance */
+    -webkit-backdrop-filter: blur(40px);
     border: 1px solid var(--color-hairline);
     box-shadow: var(--elevation-1);
     border-radius: var(--radius-card);
@@ -50,6 +51,8 @@
   
   .glass-panel-heavy {
     background-color: var(--color-surface-2);
+    backdrop-filter: blur(64px);
+    -webkit-backdrop-filter: blur(64px);
     border: 1px solid var(--color-hairline-glow);
     box-shadow: var(--elevation-2);
     border-radius: var(--radius-card);
@@ -58,10 +61,10 @@
 
 @layer base {
   button, a, [role='button'] {
-    transition: all 0.15s ease-in-out; /* Faster, less bouncy transitions */
+    transition: all 0.1s linear; /* Instant, snappy transitions, no bounce */
   }
   button:focus-visible, a:focus-visible {
-    outline: 1px solid var(--color-text-secondary); /* Surgical focus ring instead of glowing accent */
+    outline: 1px solid var(--color-text-secondary); /* Surgical focus ring */
     outline-offset: 4px;
     border-radius: var(--radius-sm);
   }

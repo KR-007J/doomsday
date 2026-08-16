@@ -3,18 +3,21 @@ import { Canvas, useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 import { useThreatStore } from '../../features/threat-state-machine/useThreatStore';
 
-const MinimalTopographyField = () => {
+const GodLevelFluidField = () => {
   const meshRef = useRef<THREE.Mesh>(null);
   const currentState = useThreatStore((s) => s.currentState);
   
-  // Custom shader for an elegant, minimalist monochromatic topography
+  // Custom shader for an ultra-premium, dark, fluid WebGL simulation
+  // Designed to look like expensive physical glass/fluid rather than a glowing neon screen.
   const shaderMaterial = useMemo(() => {
     return new THREE.ShaderMaterial({
       uniforms: {
         uTime: { value: 0 },
         uThreatLevel: { value: 0.0 },
-        uColorSafe: { value: new THREE.Color('#2A2A2D') }, // Hairline color
-        uColorThreat: { value: new THREE.Color('#9E4D4D') } // Desaturated brick red
+        // Claude Code / Anthropic highly muted colors
+        uColorBase: { value: new THREE.Color('#0A0A0C') }, // Deep obsidian
+        uColorSafeFlow: { value: new THREE.Color('#141816') }, // Almost imperceptible sage/gray tint
+        uColorThreatFlow: { value: new THREE.Color('#1F1414') } // Almost imperceptible warm/crimson tint
       },
       vertexShader: `
         varying vec2 vUv;
@@ -26,59 +29,59 @@ const MinimalTopographyField = () => {
       fragmentShader: `
         uniform float uTime;
         uniform float uThreatLevel;
-        uniform vec3 uColorSafe;
-        uniform vec3 uColorThreat;
+        uniform vec3 uColorBase;
+        uniform vec3 uColorSafeFlow;
+        uniform vec3 uColorThreatFlow;
         varying vec2 vUv;
         
-        // Simplex noise function
-        vec3 mod289(vec3 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
-        vec2 mod289(vec2 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
-        vec3 permute(vec3 x) { return mod289(((x*34.0)+1.0)*x); }
-        float snoise(vec2 v) {
-          const vec4 C = vec4(0.211324865405187, 0.366025403784439, -0.577350269189626, 0.024390243902439);
-          vec2 i  = floor(v + dot(v, C.yy) );
-          vec2 x0 = v -   i + dot(i, C.xx);
-          vec2 i1;
-          i1 = (x0.x > x0.y) ? vec2(1.0, 0.0) : vec2(0.0, 1.0);
-          vec4 x12 = x0.xyxy + C.xxzz;
-          x12.xy -= i1;
-          i = mod289(i);
-          vec3 p = permute( permute( i.y + vec3(0.0, i1.y, 1.0 )) + i.x + vec3(0.0, i1.x, 1.0 ));
-          vec3 m = max(0.5 - vec3(dot(x0,x0), dot(x12.xy,x12.xy), dot(x12.zw,x12.zw)), 0.0);
-          m = m*m ;
-          m = m*m ;
-          vec3 x = 2.0 * fract(p * C.www) - 1.0;
-          vec3 h = abs(x) - 0.5;
-          vec3 ox = floor(x + 0.5);
-          vec3 a0 = x - ox;
-          m *= 1.79284291400159 - 0.85373472095314 * ( a0*a0 + h*h );
-          vec3 g;
-          g.x  = a0.x  * x0.x  + h.x  * x0.y;
-          g.yz = a0.yz * x12.xz + h.yz * x12.yw;
-          return 130.0 * dot(m, g);
+        // Classic FBM noise for silky, liquid-like fluid motion
+        float random(vec2 st) {
+            return fract(sin(dot(st.xy, vec2(12.9898,78.233))) * 43758.5453123);
+        }
+        float noise(vec2 st) {
+            vec2 i = floor(st);
+            vec2 f = fract(st);
+            vec2 u = f * f * (3.0 - 2.0 * f);
+            return mix( mix( random( i + vec2(0.0,0.0) ), random( i + vec2(1.0,0.0) ), u.x),
+                        mix( random( i + vec2(0.0,1.0) ), random( i + vec2(1.0,1.0) ), u.x), u.y);
+        }
+        float fbm(vec2 st) {
+            float value = 0.0;
+            float amplitude = .5;
+            float frequency = 0.;
+            for (int i = 0; i < 6; i++) {
+                value += amplitude * noise(st);
+                st *= 2.;
+                amplitude *= .5;
+            }
+            return value;
         }
 
         void main() {
-          // Slow, deliberate motion
-          float time = uTime * 0.05;
+          vec2 st = vUv * 3.0; // Scale
           
-          // Generate sweeping topographic lines
-          float noise = snoise(vUv * 4.0 + time);
-          noise += snoise(vUv * 8.0 - time * 1.5) * 0.5;
+          // Domain warping for liquid silk effect
+          vec2 q = vec2(0.);
+          q.x = fbm( st + 0.00*uTime);
+          q.y = fbm( st + vec2(1.0));
+
+          vec2 r = vec2(0.);
+          r.x = fbm( st + 1.0*q + vec2(1.7,9.2)+ 0.15*uTime );
+          r.y = fbm( st + 1.0*q + vec2(8.3,2.8)+ 0.126*uTime);
+
+          float f = fbm(st+r);
+
+          // Blend colors based on threat state
+          vec3 flowColor = mix(uColorSafeFlow, uColorThreatFlow, uThreatLevel);
           
-          // Create contour lines (modulo creates repeating bands)
-          float contour = fract(noise * 8.0);
-          // Make lines thin and sharp
-          float line = smoothstep(0.0, 0.05, contour) - smoothstep(0.05, 0.1, contour);
+          // Mix base and flow based on the warped noise
+          vec3 finalColor = mix(uColorBase, flowColor, clamp((f*f)*4.0, 0.0, 1.0));
           
-          // Determine color based on threat
-          vec3 baseColor = mix(uColorSafe, uColorThreat, uThreatLevel);
-          
-          // Subtle radial fade at edges
+          // Extremely subtle vignette to draw focus to center panels
           float dist = distance(vUv, vec2(0.5));
-          float vignette = smoothstep(0.8, 0.2, dist);
+          finalColor = mix(finalColor, vec3(0.02, 0.02, 0.03), dist * 0.8);
           
-          gl_FragColor = vec4(baseColor * line * vignette * 0.5, 1.0);
+          gl_FragColor = vec4(finalColor, 1.0);
         }
       `
     });
@@ -89,7 +92,6 @@ const MinimalTopographyField = () => {
       const mat = meshRef.current.material as THREE.ShaderMaterial;
       mat.uniforms.uTime.value = state.clock.elapsedTime;
       
-      // Interpolate threat level uniform smoothly
       const targetThreat = currentState === 'THREAT_LOGGED' ? 1.0 : (currentState === 'ANALYZING' ? 0.3 : 0.0);
       mat.uniforms.uThreatLevel.value += (targetThreat - mat.uniforms.uThreatLevel.value) * 0.02;
     }
@@ -108,12 +110,11 @@ export const CinematicBackground: React.FC = () => {
     <div className="fixed inset-0 z-0 overflow-hidden pointer-events-none">
       <Canvas
         camera={{ position: [0, 0, 1], fov: 90 }}
-        dpr={[1, 2]}
-        gl={{ powerPreference: 'low-power' }} // Efficiency over performance for this minimal background
+        dpr={[1, 2]} // High DPI for smooth silk edges
+        gl={{ powerPreference: 'high-performance' }}
       >
-        <MinimalTopographyField />
+        <GodLevelFluidField />
       </Canvas>
-      {/* We already have a CSS background grid, but this retains the z-index foundation */}
     </div>
   );
 };
