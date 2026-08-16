@@ -8,7 +8,6 @@ import { SOCMonitoringPage } from './pages/SOCMonitoringPage';
 import { IntelligenceLogsPage } from './pages/IntelligenceLogsPage';
 import { NetworkTopologyPage } from './pages/NetworkTopologyPage';
 import { AttackLabPage } from './pages/AttackLabPage';
-import { DevStatePanel } from './components/common/DevStatePanel';
 import { CinematicBackground } from './components/visualizations/CinematicBackground';
 import { AnimatePresence } from 'framer-motion';
 
@@ -42,7 +41,6 @@ export const App: React.FC = () => {
           <AppRoutes />
         </main>
         <BottomNavBar />
-        <DevStatePanel />
       </div>
     </Router>
   );
