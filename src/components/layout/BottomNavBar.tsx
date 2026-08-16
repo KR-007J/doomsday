@@ -1,65 +1,99 @@
 import React from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Home, Activity, ShieldAlert, Settings } from 'lucide-react';
-import { useLocation, Link } from 'react-router-dom';
 
 export const BottomNavBar: React.FC = () => {
   const location = useLocation();
 
-  const navItems = [
-    { icon: Home, path: '/dashboard', label: 'Home' },
-    { icon: Activity, path: '/analysis', label: 'Activity' },
-    { icon: ShieldAlert, path: '/alerts', label: 'Alerts' },
-    { icon: Settings, path: '/settings', label: 'Settings' },
-  ];
+  const isStory = location.pathname === '/' || location.pathname === '/story';
+  const isMatrix = location.pathname === '/matrix';
+  const isSignal = location.pathname === '/monitoring';
+  const isNetwork = location.pathname === '/network';
+  const isLogs = location.pathname === '/logs';
 
   return (
-    <motion.nav
-      initial={{ y: 50, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-      className="md:hidden fixed bottom-6 left-1/2 -translate-x-1/2 w-[calc(100%-3rem)] max-w-md z-50"
-    >
-      <div className="glass-panel border border-white/10 rounded-2xl px-2 py-2 flex items-center justify-between shadow-2xl">
-        {navItems.map((item) => {
-          const isActive = location.pathname.startsWith(item.path);
-          const Icon = item.icon;
-          
-          return (
-            <Link key={item.path} to={item.path} className="w-1/4">
-              <motion.div
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                transition={{ duration: 0.3 }}
-                className="flex flex-col items-center justify-center py-2 relative rounded-xl hover:bg-white/5"
-              >
-                <Icon 
-                  className={`w-5 h-5 mb-1 transition-colors duration-300 ${
-                    isActive ? 'text-white' : 'text-white/50'
-                  }`} 
-                />
-                <span 
-                  className={`text-[10px] font-mono tracking-wider transition-colors duration-300 ${
-                    isActive ? 'text-white' : 'text-white/50'
-                  }`}
-                >
-                  {item.label}
-                </span>
-                
-                {isActive && (
-                  <motion.div 
-                    layoutId="bottomNavIndicator"
-                    className="absolute -top-2 w-8 h-1 rounded-full bg-white/40"
-                    transition={{ type: 'tween', ease: 'circOut', duration: 0.4 }}
-                  />
-                )}
-              </motion.div>
-            </Link>
-          );
-        })}
-      </div>
-    </motion.nav>
+    <div className="md:hidden fixed bottom-4 w-full z-50 flex justify-center pointer-events-none">
+      <motion.nav 
+        initial={{ y: 100, opacity: 0 }} 
+        animate={{ y: 0, opacity: 1 }} 
+        transition={{ type: "spring", stiffness: 300, damping: 20, delay: 0.1 }}
+        className="pointer-events-auto rounded-full glass-panel-heavy w-[95%] border border-white/10 shadow-lg shadow-black/50 flex justify-around items-center h-16 px-4 font-mono text-[10px] overflow-hidden"
+      >
+        {/* STORY */}
+        <Link
+          to="/story"
+          className={`flex flex-col items-center justify-center w-1/5 h-full transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent-safe focus-visible:outline-offset-2 ${
+            isStory
+              ? 'text-primary-ui border-t-2 border-accent-safe bg-white/5 font-bold'
+              : 'text-secondary-ui opacity-70 hover:opacity-100 hover:bg-white/5'
+          }`}
+        >
+          <motion.div whileTap={{ scale: 0.9 }} className="flex flex-col items-center">
+            <span className="material-symbols-outlined text-[20px] mb-1">auto_stories</span>
+            <span>STORY</span>
+          </motion.div>
+        </Link>
+
+        {/* MATRIX */}
+        <Link
+          to="/matrix"
+          className={`flex flex-col items-center justify-center w-1/5 h-full transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent-safe focus-visible:outline-offset-2 ${
+            isMatrix
+              ? 'text-primary-ui border-t-2 border-accent-safe bg-white/5 font-bold'
+              : 'text-secondary-ui opacity-70 hover:opacity-100 hover:bg-white/5'
+          }`}
+        >
+          <motion.div whileTap={{ scale: 0.9 }} className="flex flex-col items-center">
+            <span className="material-symbols-outlined text-[20px] mb-1">grid_view</span>
+            <span>MATRIX</span>
+          </motion.div>
+        </Link>
+
+        {/* SIGNAL */}
+        <Link
+          to="/monitoring"
+          className={`flex flex-col items-center justify-center w-1/5 h-full transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent-safe focus-visible:outline-offset-2 ${
+            isSignal
+              ? 'text-primary-ui border-t-2 border-accent-safe bg-white/5 font-bold'
+              : 'text-secondary-ui opacity-70 hover:opacity-100 hover:bg-white/5'
+          }`}
+        >
+          <motion.div whileTap={{ scale: 0.9 }} className="flex flex-col items-center">
+            <span className="material-symbols-outlined text-[20px] mb-1">waves</span>
+            <span>SIGNAL</span>
+          </motion.div>
+        </Link>
+
+        {/* NETWORK */}
+        <Link
+          to="/network"
+          className={`flex flex-col items-center justify-center w-1/5 h-full transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent-safe focus-visible:outline-offset-2 ${
+            isNetwork
+              ? 'text-primary-ui border-t-2 border-accent-safe bg-white/5 font-bold'
+              : 'text-secondary-ui opacity-70 hover:opacity-100 hover:bg-white/5'
+          }`}
+        >
+          <motion.div whileTap={{ scale: 0.9 }} className="flex flex-col items-center">
+            <span className="material-symbols-outlined text-[20px] mb-1">hub</span>
+            <span>NETWORK</span>
+          </motion.div>
+        </Link>
+
+        {/* LOGS */}
+        <Link
+          to="/logs"
+          className={`flex flex-col items-center justify-center w-1/5 h-full transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent-safe focus-visible:outline-offset-2 ${
+            isLogs
+              ? 'text-primary-ui border-t-2 border-accent-safe bg-white/5 font-bold'
+              : 'text-secondary-ui opacity-70 hover:opacity-100 hover:bg-white/5'
+          }`}
+        >
+          <motion.div whileTap={{ scale: 0.9 }} className="flex flex-col items-center">
+            <span className="material-symbols-outlined text-[20px] mb-1">terminal</span>
+            <span>LOGS</span>
+          </motion.div>
+        </Link>
+      </motion.nav>
+    </div>
   );
 };
-
-export default BottomNavBar;

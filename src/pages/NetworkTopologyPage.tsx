@@ -1,102 +1,91 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Share2, Server, Globe } from 'lucide-react';
 
-const containerVariants = {
-  hidden: { opacity: 0 },
-  show: {
-    opacity: 1,
-    transition: { staggerChildren: 0.1 }
-  }
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, scale: 0.98 },
-  show: { opacity: 1, scale: 1, transition: { duration: 0.4, ease: [0.16, 1, 0.3, 1] } }
-};
-
-export function NetworkTopologyPage() {
+export const NetworkTopologyPage: React.FC = () => {
   return (
-    <motion.div 
-      className="min-h-screen p-8 text-white z-10 relative"
-      variants={containerVariants}
-      initial="hidden"
-      animate="show"
+    <motion.div
+      initial={{ opacity: 0, scale: 0.98, filter: "blur(10px)" }}
+      animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+      exit={{ opacity: 0, scale: 1.02, filter: "blur(10px)" }}
+      transition={{ duration: 0.4, ease: "circOut" }}
+      className="min-h-screen w-full bg-black text-white p-8 relative overflow-hidden"
     >
-      <motion.header className="mb-12" variants={itemVariants}>
-        <h1 className="font-display text-5xl font-light mb-4 text-white/90">
-          Network topology
-        </h1>
-        <p className="text-white/60 text-lg max-w-2xl font-light">
-          Distributed acoustic sensor architecture and routing paths.
-        </p>
-      </motion.header>
+      {/* Background pseudo-grid or glow */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-cyan-900/20 via-black to-black pointer-events-none" />
 
-      <motion.section className="grid grid-cols-12 gap-6" variants={itemVariants}>
-        <motion.div className="glass-panel col-span-12 md:col-span-8 p-8 border border-white/10 rounded-2xl flex flex-col" variants={itemVariants}>
-          <div className="flex items-center mb-6">
-            <Share2 className="w-6 h-6 mr-3 text-white/70" />
-            <h2 className="font-display text-2xl">Topology visualization</h2>
-          </div>
-          <div className="flex-1 min-h-[400px] border border-white/5 rounded-xl bg-black/20 flex flex-col items-center justify-center relative overflow-hidden">
-             {/* Placeholder for actual WebGL or D3 topology map */}
-             <Globe className="w-16 h-16 text-white/20 mb-4" />
-             <p className="text-white/40">Interactive graph visualization layer</p>
-             <p className="text-white/30 text-sm mt-2">1,204 nodes · 4,812 edges</p>
-          </div>
-        </motion.div>
+      <header className="relative z-10 mb-8 border-b border-cyan-500/30 pb-4 flex justify-between items-end">
+        <div>
+          <h1 className="text-3xl font-bold text-cyan-400">Network Topology</h1>
+          <p className="text-cyan-200/60 text-sm font-mono">NODE MAP & SATELLITE UPLINK STATUS</p>
+        </div>
+        <motion.button 
+          whileHover={{ scale: 1.02, boxShadow: "0 0 20px rgba(0, 255, 157, 0.2)" }}
+          whileTap={{ scale: 0.98 }}
+          className="px-6 py-2 glass-panel border border-cyan-500/40 text-cyan-300 font-mono text-sm rounded"
+        >
+          REFRESH PING
+        </motion.button>
+      </header>
 
-        <motion.div className="glass-panel-heavy col-span-12 md:col-span-4 p-8 border border-white/10 rounded-2xl" variants={itemVariants}>
-          <div className="flex items-center mb-6">
-            <Server className="w-6 h-6 mr-3 text-white/70" />
-            <h2 className="font-display text-2xl">Infrastructure details</h2>
-          </div>
+      <div className="relative z-10 grid grid-cols-1 lg:grid-cols-4 gap-6 h-[70vh]">
+        
+        {/* Main Map Area */}
+        <motion.div 
+          className="glass-panel-heavy rounded-xl border border-cyan-500/30 col-span-3 flex items-center justify-center relative overflow-hidden"
+        >
+          {/* Simulated scanning line */}
+          <motion.div 
+            animate={{ top: ["0%", "100%", "0%"] }}
+            transition={{ duration: 8, ease: "linear", repeat: Infinity }}
+            className="absolute left-0 w-full h-1 bg-cyan-400/50 shadow-[0_0_10px_#00ff9d]"
+          />
           
-          <div className="space-y-6">
-            <div className="p-5 rounded-xl border border-white/5 bg-white/5">
-              <h3 className="text-white/80 mb-4 font-display text-xl">Core regions</h3>
-              <ul className="space-y-3">
-                <li className="flex justify-between items-center">
-                  <span className="text-white/60">US-East</span>
-                  <span className="text-[var(--accent-safe)]">Operational</span>
-                </li>
-                <li className="flex justify-between items-center">
-                  <span className="text-white/60">EU-West</span>
-                  <span className="text-[var(--accent-safe)]">Operational</span>
-                </li>
-                <li className="flex justify-between items-center">
-                  <span className="text-white/60">AP-South</span>
-                  <span className="text-[var(--accent-warn)]">Degraded</span>
-                </li>
-              </ul>
-            </div>
-            
-            <div className="p-5 rounded-xl border border-white/5 bg-white/5">
-              <h3 className="text-white/80 mb-4 font-display text-xl">Routing metrics</h3>
-              <ul className="space-y-3">
-                <li className="flex flex-col">
-                  <div className="flex justify-between items-center mb-1">
-                    <span className="text-white/60 text-sm">Packet loss</span>
-                    <span className="text-white/90 text-sm">0.02%</span>
-                  </div>
-                  <div className="h-1 bg-white/10 rounded-full overflow-hidden">
-                    <div className="h-full bg-[var(--accent-safe)] w-[2%]" />
-                  </div>
-                </li>
-                <li className="flex flex-col mt-3">
-                  <div className="flex justify-between items-center mb-1">
-                    <span className="text-white/60 text-sm">Bandwidth usage</span>
-                    <span className="text-white/90 text-sm">74%</span>
-                  </div>
-                  <div className="h-1 bg-white/10 rounded-full overflow-hidden">
-                    <div className="h-full bg-white/50 w-[74%]" />
-                  </div>
-                </li>
-              </ul>
-            </div>
+          <div className="text-center">
+            <h2 className="text-cyan-500/30 text-6xl font-bold tracking-widest opacity-20">VISUALIZATION CORE</h2>
+            <p className="text-cyan-300/50 font-mono mt-4">[ Awaiting Telemetry ]</p>
           </div>
         </motion.div>
-      </motion.section>
+
+        {/* Sidebar */}
+        <motion.div 
+          className="flex flex-col gap-6"
+        >
+          <motion.div 
+            whileHover={{ scale: 1.02, boxShadow: "0 0 20px rgba(0, 255, 157, 0.2)" }}
+            className="glass-panel p-6 rounded-xl border border-cyan-500/20 flex-1"
+          >
+            <h3 className="text-sm text-cyan-300 mb-4 tracking-widest font-mono border-b border-cyan-500/20 pb-2">ACTIVE NODES</h3>
+            <ul className="space-y-3 font-mono text-xs">
+              <li className="flex items-center gap-3">
+                <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
+                <span className="text-cyan-100">NODE ALPHA (NY)</span>
+              </li>
+              <li className="flex items-center gap-3">
+                <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
+                <span className="text-cyan-100">NODE BETA (LDN)</span>
+              </li>
+              <li className="flex items-center gap-3">
+                <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
+                <span className="text-red-300">NODE GAMMA (TYO) - OFFLINE</span>
+              </li>
+            </ul>
+          </motion.div>
+
+          <motion.div 
+            whileHover={{ scale: 1.02, boxShadow: "0 0 20px rgba(0, 255, 157, 0.2)" }}
+            className="glass-panel p-6 rounded-xl border border-cyan-500/20 flex-1"
+          >
+            <h3 className="text-sm text-cyan-300 mb-4 tracking-widest font-mono border-b border-cyan-500/20 pb-2">TRAFFIC METRICS</h3>
+            <div className="space-y-2 font-mono text-xs text-cyan-200">
+              <p>INBOUND: <span className="text-green-400">34.2 TB/s</span></p>
+              <p>OUTBOUND: <span className="text-green-400">12.8 TB/s</span></p>
+              <p>PACKET LOSS: <span className="text-red-400">0.03%</span></p>
+            </div>
+          </motion.div>
+        </motion.div>
+      </div>
     </motion.div>
   );
-}
+};
+
+export default NetworkTopologyPage;

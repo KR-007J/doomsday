@@ -1,77 +1,89 @@
 import React from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Shield, Settings, User } from 'lucide-react';
-import { useLocation, Link } from 'react-router-dom';
 
 export const Navbar: React.FC = () => {
   const location = useLocation();
 
+  const isStory = location.pathname === '/' || location.pathname === '/story';
+  const isMatrix = location.pathname === '/matrix';
+  const isSignal = location.pathname === '/monitoring';
+  const isNetwork = location.pathname === '/network';
+  const isLogs = location.pathname === '/logs';
+
+  const getLinkClasses = (isActive: boolean) => {
+    return `focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent-safe focus-visible:outline-offset-2 transition-colors inline-block ${
+      isActive ? 'text-primary-ui' : 'hover:text-primary-ui'
+    }`;
+  };
+
   return (
-    <motion.nav 
-      initial={{ y: -50, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-      className="fixed top-6 left-1/2 -translate-x-1/2 w-[calc(100%-3rem)] max-w-7xl z-50"
+    <motion.header 
+      initial={{ y: -100, opacity: 0 }} 
+      animate={{ y: 0, opacity: 1 }} 
+      transition={{ type: "spring", stiffness: 300, damping: 20 }}
+      className="fixed top-4 left-1/2 -translate-x-1/2 w-[95%] max-w-7xl rounded-full glass-panel-heavy z-50 flex justify-between items-center px-6 h-14 font-mono text-xs border border-white/10 shadow-lg shadow-black/50"
     >
-      <div className="glass-panel-heavy rounded-2xl px-6 py-4 flex items-center justify-between">
-        <div className="flex items-center space-x-3 w-1/3">
-          <motion.div
-            whileHover={{ scale: 1.02 }}
-            transition={{ duration: 0.3, ease: 'easeOut' }}
-            className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center shadow-inner"
-          >
-            <Shield className="w-4 h-4 text-white" />
-          </motion.div>
-          <span className="font-display text-xl tracking-tight text-white uppercase">
-            Acoustic Shield
-          </span>
-        </div>
-
-        <div className="flex justify-center w-1/3">
-          <div className="flex space-x-1 bg-white/5 border border-white/10 rounded-lg p-1">
-            {[
-              { path: '/dashboard', label: 'Dashboard' },
-              { path: '/analysis', label: 'Analysis' }
-            ].map((item) => {
-              const isActive = location.pathname.startsWith(item.path);
-              return (
-                <Link key={item.path} to={item.path}>
-                  <motion.div
-                    whileHover={{ backgroundColor: 'rgba(255, 255, 255, 0.08)' }}
-                    transition={{ duration: 0.3 }}
-                    className={`px-4 py-1.5 rounded-md text-sm font-mono transition-colors duration-300 ${
-                      isActive ? 'bg-white/15 text-white shadow-sm' : 'text-white/60 hover:text-white/90'
-                    }`}
-                  >
-                    {item.label}
-                  </motion.div>
-                </Link>
-              );
-            })}
-          </div>
-        </div>
-
-        <div className="flex items-center justify-end space-x-2 w-1/3">
-          <motion.button
-            whileHover={{ scale: 1.05, backgroundColor: 'rgba(255, 255, 255, 0.1)' }}
-            whileTap={{ scale: 0.98 }}
-            transition={{ duration: 0.3 }}
-            className="p-2.5 text-white/60 hover:text-white transition-colors rounded-lg"
-          >
-            <Settings className="w-4 h-4" />
-          </motion.button>
-          <motion.button
-            whileHover={{ scale: 1.05, backgroundColor: 'rgba(255, 255, 255, 0.1)' }}
-            whileTap={{ scale: 0.98 }}
-            transition={{ duration: 0.3 }}
-            className="p-2.5 text-white/60 hover:text-white transition-colors rounded-lg"
-          >
-            <User className="w-4 h-4" />
-          </motion.button>
+      {/* Left Brand & Uplink */}
+      <div className="flex items-center gap-4">
+        <Link to="/" className="flex items-center gap-2 text-primary-ui hover:text-accent-safe active:opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent-safe focus-visible:outline-offset-2 transition-colors">
+          <span className="material-symbols-outlined text-[20px] text-accent-critical">security</span>
+          <span className="font-bold tracking-widest text-sm uppercase">ACOUSTIC SHIELD</span>
+        </Link>
+        <div className="hidden lg:flex items-center gap-2 text-tertiary-ui uppercase text-[10px] tracking-widest border-l border-white/10 pl-4">
+          <span>SIGINT</span>
+          <span className="material-symbols-outlined text-[12px]">chevron_right</span>
+          <span>COMMAND</span>
+          <span className="material-symbols-outlined text-[12px]">chevron_right</span>
+          <span className="text-primary-ui">CORE</span>
         </div>
       </div>
-    </motion.nav>
+
+      {/* Center Status */}
+      <div className="flex flex-col items-center absolute left-1/2 -translate-x-1/2">
+        <div className="flex items-center gap-1.5 bg-black/40 px-3 py-1 rounded-full border border-accent-safe/20 backdrop-blur-md">
+          <motion.span 
+            animate={{ 
+              boxShadow: ["0 0 4px #00ff9d", "0 0 12px #00ff9d", "0 0 4px #00ff9d"],
+              opacity: [0.7, 1, 0.7]
+            }}
+            transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
+            className="w-1.5 h-1.5 rounded-full bg-accent-safe" 
+          />
+          <span className="font-bold text-accent-safe uppercase tracking-widest text-[10px]">
+            OMNISCIENCE ACTIVE
+          </span>
+        </div>
+      </div>
+
+      {/* Right Desktop Nav Links */}
+      <div className="hidden md:flex items-center gap-6 h-full text-secondary-ui uppercase tracking-wider text-xs">
+        <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+          <Link to="/story" className={getLinkClasses(isStory)}>STORY</Link>
+        </motion.div>
+        <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+          <Link to="/matrix" className={getLinkClasses(isMatrix)}>MATRIX</Link>
+        </motion.div>
+        <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+          <Link to="/monitoring" className={getLinkClasses(isSignal)}>SIGNAL</Link>
+        </motion.div>
+        <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+          <Link to="/network" className={getLinkClasses(isNetwork)}>NETWORK</Link>
+        </motion.div>
+        <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+          <Link to="/logs" className={getLinkClasses(isLogs)}>LOGS</Link>
+        </motion.div>
+      </div>
+
+      {/* Trailing Icon */}
+      <div className="flex items-center gap-2 ml-4 border-l border-white/10 pl-4">
+        <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+          <Link to="/attack-lab" className="flex items-center gap-1 text-secondary-ui hover:text-accent-critical focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent-safe focus-visible:outline-offset-2 transition-colors" title="Transmitter Suite">
+            <span className="material-symbols-outlined text-[18px]">cell_tower</span>
+            <span className="hidden md:inline font-bold uppercase tracking-wider text-[10px]">TRANSMITTER</span>
+          </Link>
+        </motion.div>
+      </div>
+    </motion.header>
   );
 };
-
-export default Navbar;

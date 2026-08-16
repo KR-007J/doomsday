@@ -1,88 +1,81 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Activity, AlertTriangle, CheckCircle } from 'lucide-react';
 
 const containerVariants = {
   hidden: { opacity: 0 },
   show: {
     opacity: 1,
-    transition: { staggerChildren: 0.1 }
+    transition: {
+      staggerChildren: 0.1
+    }
   }
 };
 
 const itemVariants = {
-  hidden: { opacity: 0, scale: 0.98 },
-  show: { opacity: 1, scale: 1, transition: { duration: 0.4, ease: [0.16, 1, 0.3, 1] } }
+  hidden: { opacity: 0, y: 20 },
+  show: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 300, damping: 24 } }
 };
 
-export function SOCMonitoringPage() {
+export const SOCMonitoringPage: React.FC = () => {
   return (
-    <motion.div 
-      className="min-h-screen p-8 text-white z-10 relative"
-      variants={containerVariants}
-      initial="hidden"
-      animate="show"
+    <motion.div
+      initial={{ opacity: 0, scale: 0.98, filter: "blur(10px)" }}
+      animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+      exit={{ opacity: 0, scale: 1.02, filter: "blur(10px)" }}
+      transition={{ duration: 0.4, ease: "circOut" }}
+      className="min-h-screen w-full bg-black text-white p-8"
     >
-      <motion.header className="mb-12" variants={itemVariants}>
-        <h1 className="font-display text-5xl font-light mb-4 text-white/90">
-          Security operations center
-        </h1>
-        <p className="text-white/60 text-lg max-w-2xl font-light">
-          Global threat monitoring and incident response dashboard.
-        </p>
-      </motion.header>
+      <header className="mb-8 border-b border-cyan-500/30 pb-4">
+        <h1 className="text-3xl font-bold text-cyan-400">SOC Active Monitoring</h1>
+        <p className="text-cyan-200/60 text-sm">GLOBAL THREAT ASSESSMENT GRID</p>
+      </header>
 
-      <motion.section className="grid grid-cols-12 gap-6" variants={itemVariants}>
-        <motion.div className="glass-panel-heavy col-span-12 md:col-span-3 p-6 border border-white/10 rounded-2xl" variants={itemVariants}>
-          <div className="flex flex-col gap-4">
-             <div className="p-4 rounded-xl bg-white/5 border border-white/5">
-                <div className="text-sm text-white/50 mb-1">Critical threats</div>
-                <div className="text-3xl text-[var(--accent-warn)] font-light">2</div>
-             </div>
-             <div className="p-4 rounded-xl bg-white/5 border border-white/5">
-                <div className="text-sm text-white/50 mb-1">Active nodes</div>
-                <div className="text-3xl text-[var(--accent-safe)] font-light">1,204</div>
-             </div>
-             <div className="p-4 rounded-xl bg-white/5 border border-white/5">
-                <div className="text-sm text-white/50 mb-1">Global latency</div>
-                <div className="text-3xl text-white/80 font-light">42ms</div>
-             </div>
-          </div>
-        </motion.div>
-
-        <motion.div className="glass-panel col-span-12 md:col-span-9 p-8 border border-white/10 rounded-2xl" variants={itemVariants}>
-          <div className="flex items-center mb-6 justify-between">
-            <h2 className="font-display text-2xl">Incident feed</h2>
-            <div className="flex gap-2">
-               <span className="px-3 py-1 rounded-full border border-[var(--accent-warn)]/30 text-[var(--accent-warn)] text-xs">High priority</span>
-               <span className="px-3 py-1 rounded-full border border-white/10 text-white/50 text-xs">All events</span>
-            </div>
-          </div>
-          
-          <div className="space-y-3">
-            {[
-              { id: 'EVT-992', title: 'Unexpected acoustic signature detected', severity: 'warn', time: '2m ago' },
-              { id: 'EVT-991', title: 'Sensor node reconnected', severity: 'safe', time: '15m ago' },
-              { id: 'EVT-990', title: 'Routine calibration complete', severity: 'safe', time: '1h ago' },
-            ].map(event => (
-              <div key={event.id} className="flex items-center justify-between p-4 rounded-xl border border-white/5 bg-black/20 hover:bg-white/5 transition-colors">
-                <div className="flex items-center gap-4">
-                  {event.severity === 'warn' ? (
-                    <AlertTriangle className="w-5 h-5 text-[var(--accent-warn)]" />
-                  ) : (
-                    <CheckCircle className="w-5 h-5 text-[var(--accent-safe)]" />
-                  )}
-                  <div>
-                    <div className="text-white/90">{event.title}</div>
-                    <div className="text-white/40 text-sm">{event.id}</div>
-                  </div>
+      <motion.section 
+        variants={containerVariants}
+        initial="hidden"
+        animate="show"
+        className="grid grid-cols-1 md:grid-cols-3 gap-6"
+      >
+        <motion.div variants={itemVariants} className="glass-panel p-6 rounded-xl border border-cyan-500/20 col-span-2">
+          <h3 className="text-lg text-cyan-300 mb-4 tracking-widest font-mono border-b border-cyan-500/20 pb-2">LIVE THREAT FEED</h3>
+          <div className="space-y-4">
+            {[1, 2, 3].map((i) => (
+              <motion.div 
+                key={i}
+                whileHover={{ scale: 1.02, boxShadow: "0 0 20px rgba(0, 255, 157, 0.2)" }}
+                className="bg-red-900/20 border border-red-500/30 p-4 rounded"
+              >
+                <div className="flex justify-between text-sm">
+                  <span className="text-red-400 font-bold">CRITICAL ANOMALY DETECTED</span>
+                  <span className="text-red-400/60 font-mono">ID: {Math.random().toString(36).substring(7).toUpperCase()}</span>
                 </div>
-                <div className="text-white/40 text-sm">{event.time}</div>
-              </div>
+              </motion.div>
             ))}
           </div>
         </motion.div>
+
+        <motion.div variants={itemVariants} className="glass-panel-heavy p-6 rounded-xl border border-cyan-500/20">
+          <h3 className="text-lg text-cyan-300 mb-4 tracking-widest font-mono border-b border-cyan-500/20 pb-2">SYSTEM STATUS</h3>
+          <ul className="space-y-4 font-mono text-sm">
+            <li className="flex justify-between"><span className="text-cyan-100">DEFENSE GRID</span><span className="text-green-400">ONLINE</span></li>
+            <li className="flex justify-between"><span className="text-cyan-100">SATELLITE LINK</span><span className="text-green-400">SECURE</span></li>
+            <li className="flex justify-between"><span className="text-cyan-100">AI KERNEL</span><span className="text-yellow-400">PROCESSING</span></li>
+          </ul>
+        </motion.div>
+
+        <motion.div variants={itemVariants} className="glass-panel p-6 rounded-xl border border-cyan-500/20 relative overflow-hidden z-10">
+          <h3 className="text-lg text-cyan-300 mb-4 tracking-widest font-mono border-b border-cyan-500/20 pb-2">PATTERN MATCHING</h3>
+          <p className="text-cyan-100/70 text-sm">Analyzing incoming vectors...</p>
+        </motion.div>
+
+        <motion.div variants={itemVariants} className="glass-panel p-6 rounded-xl border border-cyan-500/20 relative overflow-hidden z-10">
+          <h3 className="text-lg text-cyan-300 mb-4 tracking-widest font-mono border-b border-cyan-500/20 pb-2">METADATA</h3>
+          <p className="text-cyan-100/70 text-sm">Encrypted payloads intercepted: 4,921</p>
+        </motion.div>
+
       </motion.section>
     </motion.div>
   );
-}
+};
+
+export default SOCMonitoringPage;

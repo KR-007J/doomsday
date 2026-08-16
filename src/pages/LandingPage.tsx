@@ -1,82 +1,41 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Shield, Activity, Share2 } from 'lucide-react';
 
-const containerVariants = {
-  hidden: { opacity: 0 },
-  show: {
-    opacity: 1,
-    transition: { staggerChildren: 0.1 }
-  }
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, scale: 0.98 },
-  show: { opacity: 1, scale: 1, transition: { duration: 0.4, ease: [0.16, 1, 0.3, 1] } }
-};
-
-export function LandingPage() {
+export const LandingPage: React.FC = () => {
   return (
-    <motion.div 
-      className="min-h-screen p-8 text-white z-10 relative"
-      variants={containerVariants}
-      initial="hidden"
-      animate="show"
+    <motion.div
+      initial={{ opacity: 0, scale: 0.98, filter: "blur(10px)" }}
+      animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+      exit={{ opacity: 0, scale: 1.02, filter: "blur(10px)" }}
+      transition={{ duration: 0.4, ease: "circOut" }}
+      className="min-h-screen w-full bg-black text-white p-8 flex flex-col items-center justify-center"
     >
-      <motion.header className="mb-12" variants={itemVariants}>
-        <h1 className="font-display text-5xl font-light mb-4 text-white/90">
-          Acoustic shield overview
-        </h1>
-        <p className="text-white/60 text-lg max-w-2xl font-light">
-          Enterprise grade soundwave monitoring and threat detection system. Advanced acoustic intelligence.
-        </p>
-      </motion.header>
-
-      <motion.section className="grid grid-cols-12 gap-6" variants={itemVariants}>
-        <motion.div className="glass-panel col-span-12 md:col-span-8 p-8 border border-white/10 rounded-2xl" variants={itemVariants}>
-          <div className="flex items-center mb-6">
-            <Shield className="w-6 h-6 mr-3 text-[var(--accent-safe)]" />
-            <h2 className="font-display text-2xl">System status</h2>
-          </div>
-          <div className="h-64 flex items-center justify-center border border-white/5 rounded-xl bg-black/20">
-            <span className="text-white/40">Real-time acoustic analysis running</span>
-          </div>
-        </motion.div>
-
-        <motion.div className="glass-panel col-span-12 md:col-span-4 p-8 border border-white/10 rounded-2xl flex flex-col justify-between" variants={itemVariants}>
-          <div>
-            <div className="flex items-center mb-6">
-              <Activity className="w-6 h-6 mr-3 text-[var(--accent-warn)]" />
-              <h2 className="font-display text-2xl">Active alerts</h2>
-            </div>
-            <ul className="space-y-4">
-              <li className="flex justify-between items-center pb-2 border-b border-white/5">
-                <span className="text-white/80">Frequency anomaly</span>
-                <span className="text-[var(--accent-warn)] text-sm">Zone B</span>
-              </li>
-              <li className="flex justify-between items-center pb-2 border-b border-white/5">
-                <span className="text-white/80">Pattern mismatch</span>
-                <span className="text-white/40 text-sm">Zone D</span>
-              </li>
-            </ul>
-          </div>
-        </motion.div>
+      <div className="max-w-4xl w-full text-center">
+        <h1 className="text-5xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-600">Acoustic Shield</h1>
+        <p className="text-xl text-cyan-200 mb-12">Enterprise Threat Detection & Neutralization</p>
         
-        <motion.div className="glass-panel col-span-12 p-8 border border-white/10 rounded-2xl mt-2" variants={itemVariants}>
-           <div className="flex items-center mb-6">
-            <Share2 className="w-6 h-6 mr-3 text-white/70" />
-            <h2 className="font-display text-2xl">Network health</h2>
-          </div>
-          <div className="grid grid-cols-4 gap-4">
-            {[1, 2, 3, 4].map(i => (
-              <div key={i} className="p-4 rounded-xl border border-white/5 bg-white/5">
-                <div className="text-sm text-white/50 mb-1">Sensor node {i}</div>
-                <div className="text-xl text-[var(--accent-safe)]">Operational</div>
-              </div>
-            ))}
-          </div>
-        </motion.div>
-      </motion.section>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <motion.button
+            whileHover={{ scale: 1.02, boxShadow: "0 0 20px rgba(0, 255, 157, 0.2)" }}
+            whileTap={{ scale: 0.98 }}
+            className="glass-panel p-8 rounded-xl border border-cyan-500/30 text-left"
+          >
+            <h2 className="text-2xl font-semibold mb-4 text-cyan-300">SOC Dashboard</h2>
+            <p className="text-sm text-cyan-100/70">Real-time threat monitoring and incident response.</p>
+          </motion.button>
+
+          <motion.button
+            whileHover={{ scale: 1.02, boxShadow: "0 0 20px rgba(0, 255, 157, 0.2)" }}
+            whileTap={{ scale: 0.98 }}
+            className="glass-panel-heavy p-8 rounded-xl border border-cyan-500/30 text-left"
+          >
+            <h2 className="text-2xl font-semibold mb-4 text-cyan-300">Network Topology</h2>
+            <p className="text-sm text-cyan-100/70">Global satellite and local node visualization.</p>
+          </motion.button>
+        </div>
+      </div>
     </motion.div>
   );
-}
+};
+
+export default LandingPage;
