@@ -12,8 +12,8 @@
 body {
   margin: 0;
   padding: 0;
-  background-color: #141313;
-  color: #e5e2e1;
+  background-color: #0e0d0c;
+  color: #e8e6e3;
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
@@ -29,16 +29,16 @@ body {
 
 /* Particle background overlay texture */
 .bg-particles {
-  background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-image: radial-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px);
   background-size: 24px 24px;
 }
 
-/* Grid background pattern for technical feel */
+/* Grid background pattern for natural technical feel */
 .bg-grid-pattern {
   background-size: 40px 40px;
   background-image: 
-    linear-gradient(to right, rgba(68, 71, 72, 0.1) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(68, 71, 72, 0.1) 1px, transparent 1px);
+    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
 }
 
 /* Monospace alignment utility */
@@ -50,8 +50,8 @@ body {
 @keyframes slideUpBlur {
   0% {
     opacity: 0;
-    transform: translateY(30px);
-    filter: blur(10px);
+    transform: translateY(20px);
+    filter: blur(8px);
   }
   100% {
     opacity: 1;
@@ -61,8 +61,8 @@ body {
 }
 
 @keyframes breathe {
-  0%, 100% { transform: scale(1); opacity: 0.8; }
-  50% { transform: scale(1.05); opacity: 1; }
+  0%, 100% { transform: scale(1); opacity: 0.85; }
+  50% { transform: scale(1.03); opacity: 1; }
 }
 
 @keyframes titleReveal {
@@ -70,15 +70,9 @@ body {
     opacity: 0;
     clip-path: inset(0 100% 0 0);
   }
-  50% {
-    opacity: 0.5;
-    clip-path: inset(0 50% 0 0);
-    text-shadow: 2px 0 red, -2px 0 cyan;
-  }
   100% {
     opacity: 1;
     clip-path: inset(0 0 0 0);
-    text-shadow: none;
   }
 }
 
@@ -88,7 +82,7 @@ body {
 }
 
 .animate-slide-up-blur {
-  animation: slideUpBlur 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: slideUpBlur 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 .animate-breathe {
@@ -96,7 +90,7 @@ body {
 }
 
 .animate-title-reveal {
-  animation: titleReveal 1.2s cubic-bezier(0.77, 0, 0.175, 1) forwards;
+  animation: titleReveal 1s cubic-bezier(0.77, 0, 0.175, 1) forwards;
 }
 
 .animate-scanline {
@@ -108,11 +102,11 @@ body {
 .delay-200 { animation-delay: 200ms; }
 .delay-300 { animation-delay: 300ms; }
 
-/* Glassmorphism base */
+/* Senior UI/UX Natural Glassmorphism base */
 .glass-panel {
-  background: rgba(20, 19, 19, 0.4);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
+  background: rgba(20, 19, 18, 0.6);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
@@ -127,7 +121,7 @@ input[type=range]::-webkit-slider-thumb {
   height: 16px;
   width: 8px;
   border-radius: 0;
-  background: #ffffff;
+  background: #e8e6e3;
   cursor: pointer;
   margin-top: -6px;
 }
@@ -135,7 +129,7 @@ input[type=range]::-webkit-slider-runnable-track {
   width: 100%;
   height: 4px;
   cursor: pointer;
-  background: #353434;
+  background: #2e2b28;
   border-radius: 0px;
 }
 input[type=range]:focus {
@@ -152,7 +146,7 @@ input[type=range]:focus {
   background: linear-gradient(
     to bottom,
     transparent 50%,
-    rgba(0, 0, 0, 0.25) 51%
+    rgba(0, 0, 0, 0.2) 51%
   );
   background-size: 100% 4px;
   pointer-events: none;
@@ -164,12 +158,12 @@ input[type=range]:focus {
   height: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: #0e0e0e; 
-  border-left: 1px solid #444748;
+  background: #0e0d0c; 
+  border-left: 1px solid #2e2b28;
 }
 ::-webkit-scrollbar-thumb {
-  background: #444748; 
+  background: #383532; 
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #8e9192; 
+  background: #54504b; 
 }

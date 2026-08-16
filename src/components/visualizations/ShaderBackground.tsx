@@ -7,7 +7,7 @@ export const ShaderBackground: React.FC = () => {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl') as WebGLRenderingContext | null;
+    const gl = (canvas.getContext('webgl') || canvas.getContext('experimental-webgl')) as WebGLRenderingContext | null;
     if (!gl) return;
 
     function syncSize() {
@@ -44,11 +44,11 @@ export const ShaderBackground: React.FC = () => {
 
       void main() {
           vec2 uv = v_texCoord;
-          float time = u_time * 0.2;
+          float time = u_time * 0.15;
           
-          // Create a deep obsidian/navy base
-          vec3 color1 = vec3(0.02, 0.03, 0.06);
-          vec3 color2 = vec3(0.05, 0.08, 0.12);
+          // Deep warm obsidian base (Zero blue/cyan)
+          vec3 color1 = vec3(0.04, 0.038, 0.035);
+          vec3 color2 = vec3(0.08, 0.075, 0.07);
           
           // Wave motion
           float wave = sin(uv.x * 3.0 + time) * cos(uv.y * 2.0 - time * 0.5);
@@ -56,10 +56,10 @@ export const ShaderBackground: React.FC = () => {
           
           vec3 finalColor = mix(color1, color2, wave * 0.5 + 0.5);
           
-          // Add some "acoustic frequency" noise lines
-          float noise = sin(uv.y * 100.0 + time * 10.0);
-          if (noise > 0.98) {
-              finalColor += vec3(0.1, 0.2, 0.15) * 0.3;
+          // Natural organic acoustic frequency noise lines
+          float noise = sin(uv.y * 110.0 + time * 8.0);
+          if (noise > 0.985) {
+              finalColor += vec3(0.12, 0.16, 0.11) * 0.4;
           }
           
           gl_FragColor = vec4(finalColor, 1.0);
@@ -141,7 +141,7 @@ export const ShaderBackground: React.FC = () => {
         ref={canvasRef}
         className="fixed inset-0 w-full h-full -z-20 pointer-events-none block"
       />
-      <div className="fixed inset-0 bg-particles pointer-events-none -z-10 mix-blend-overlay opacity-50" />
+      <div className="fixed inset-0 bg-particles pointer-events-none -z-10 mix-blend-overlay opacity-40" />
     </>
   );
 };

@@ -7,8 +7,8 @@ export const AttackLabPage: React.FC = () => {
   const [durSliderVal, setDurSliderVal] = useState(50); // 50 ms
   const [isTransmitting, setIsTransmitting] = useState(false);
   const [logs, setLogs] = useState<Array<{ time: string; level: string; msg: string; color: string }>>([
-    { time: '14:02:11.405', level: 'INFO', msg: 'System initialized. Terminal v2.4.0 active.', color: 'text-[#3b82f6]' },
-    { time: '14:02:11.450', level: 'INFO', msg: 'Audio interfaces enumerated. Selected virtual sink: V-AUDIO_SINK_01', color: 'text-[#3b82f6]' },
+    { time: '14:02:11.405', level: 'INFO', msg: 'System initialized. Terminal v2.4.0 active.', color: 'text-[#a39f97]' },
+    { time: '14:02:11.450', level: 'INFO', msg: 'Audio interfaces enumerated. Selected virtual sink: V-AUDIO_SINK_01', color: 'text-[#a39f97]' },
     { time: '14:02:11.902', level: 'OK', msg: 'Modulation engine ready. Standing by for payload.', color: 'text-[#10b981]' },
   ]);
 
@@ -64,13 +64,13 @@ export const AttackLabPage: React.FC = () => {
       }
 
       // Draw new line at top
-      ctx.fillStyle = '#0e0e0e';
+      ctx.fillStyle = '#080707';
       ctx.fillRect(0, 0, w, 1);
 
       // Background ambient noise
       for (let i = 0; i < w; i += 4) {
         if (Math.random() > 0.8) {
-          ctx.fillStyle = `rgba(30, 40, 50, ${Math.random() * 0.3})`;
+          ctx.fillStyle = `rgba(40, 38, 35, ${Math.random() * 0.3})`;
           ctx.fillRect(i, 0, 4, 1);
         }
       }
@@ -83,9 +83,9 @@ export const AttackLabPage: React.FC = () => {
 
         const gradient = ctx.createLinearGradient(centerPx - 20, 0, centerPx + 20, 0);
         gradient.addColorStop(0, 'rgba(16, 185, 129, 0)');
-        gradient.addColorStop(0.4, 'rgba(52, 211, 153, 0.8)');
-        gradient.addColorStop(0.5, 'rgba(255, 255, 255, 1)');
-        gradient.addColorStop(0.6, 'rgba(52, 211, 153, 0.8)');
+        gradient.addColorStop(0.4, 'rgba(16, 185, 129, 0.8)');
+        gradient.addColorStop(0.5, 'rgba(244, 243, 241, 1)');
+        gradient.addColorStop(0.6, 'rgba(16, 185, 129, 0.8)');
         gradient.addColorStop(1, 'rgba(16, 185, 129, 0)');
 
         ctx.fillStyle = gradient;
@@ -111,7 +111,7 @@ export const AttackLabPage: React.FC = () => {
     if (isTransmitting) return;
     setIsTransmitting(true);
 
-    addLog('EXEC', `Initializing FSK modulation. Target Freq: ${currentFreqKhz} kHz, Burst: ${durSliderVal} ms`, 'text-[#f59e0b]');
+    addLog('EXEC', `Initializing FSK modulation. Target Freq: ${currentFreqKhz} kHz, Burst: ${durSliderVal} ms`, 'text-[#d97706]');
     addLog('DATA', `Payload loaded: ${payload}`, 'text-outline');
 
     // Trigger state machine sequence
@@ -129,7 +129,7 @@ export const AttackLabPage: React.FC = () => {
   };
 
   return (
-    <div className="font-body-md text-body-md min-h-[calc(100vh-4rem)] flex flex-col p-margin-page gap-margin-page">
+    <div className="font-body-md text-body-md min-h-[calc(100vh-4rem)] flex flex-col p-margin-page gap-margin-page bg-[#0e0d0c]">
       {/* Header Area */}
       <header className="flex flex-col md:flex-row justify-between items-start md:items-end gap-4 border-b border-outline-variant pb-stack-gap">
         <div>

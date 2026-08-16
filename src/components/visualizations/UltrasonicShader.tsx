@@ -60,38 +60,34 @@ export const UltrasonicShader: React.FC = () => {
           vec2 centeredUv = uv * 2.0 - 1.0;
           centeredUv.x *= u_resolution.x / u_resolution.y;
           
-          float time = u_time * 0.5;
+          float time = u_time * 0.4;
           
-          // Deep obsidian base
-          vec3 color = vec3(0.02, 0.02, 0.04);
+          // Deep warm obsidian base (natural dark mode)
+          vec3 color = vec3(0.045, 0.04, 0.035);
           
-          // Ultrasonic Wave Pattern
+          // Natural Organic Wave Pattern (Emerald to warm golden amber - zero blue/cyan)
           for(float i = 1.0; i < 6.0; i++) {
-              float frequency = 15.0 + i * 5.0;
-              float amplitude = 0.05 / i;
-              float speed = time * (0.5 + i * 0.2);
+              float frequency = 14.0 + i * 4.5;
+              float amplitude = 0.045 / i;
+              float speed = time * (0.4 + i * 0.18);
               
               float wave = sin(centeredUv.x * frequency + speed) * amplitude;
               float dist = abs(centeredUv.y - wave);
               
-              // Intensity based on closeness to the wave line
-              float glow = exp(-dist * 40.0);
+              // Soft intensity glow
+              float glow = exp(-dist * 45.0);
               
-              // Semantic color shifts (green/blue for ultrasonic theme)
-              vec3 waveColor = mix(vec3(0.0, 0.8, 0.5), vec3(0.0, 0.4, 0.9), i / 5.0);
-              color += waveColor * glow * 0.4;
+              // Natural organic color gradient (Emerald green -> Warm Golden Amber)
+              vec3 waveColor = mix(vec3(0.06, 0.72, 0.48), vec3(0.78, 0.52, 0.15), i / 5.0);
+              color += waveColor * glow * 0.35;
           }
           
-          // Scanline / CRT effect
-          float scanline = sin(uv.y * 800.0) * 0.04;
-          color -= scanline;
+          // Soft organic noise for cinema texture
+          float n = noise(uv * 180.0 + time * 8.0);
+          color += n * 0.015;
           
-          // Noise for hacker texture
-          float n = noise(uv * 200.0 + time * 10.0);
-          color += n * 0.02;
-          
-          // Vignette
-          float vignette = 1.0 - length(centeredUv * 0.5);
+          // Cinematic Vignette
+          float vignette = 1.0 - length(centeredUv * 0.48);
           color *= vignette;
 
           gl_FragColor = vec4(color, 1.0);
@@ -168,7 +164,7 @@ export const UltrasonicShader: React.FC = () => {
   }, []);
 
   return (
-    <div className="fixed inset-0 z-0 opacity-60 mix-blend-screen pointer-events-none">
+    <div className="fixed inset-0 z-0 opacity-50 mix-blend-screen pointer-events-none">
       <canvas ref={canvasRef} className="absolute inset-0 w-full h-full block" />
     </div>
   );
