@@ -10,74 +10,62 @@ export const Navbar: React.FC = () => {
   const isAboutActive = location.pathname === '/about';
 
   return (
-    <nav className="glass-panel docked full-width top-0 border-b border-white/10 flex justify-between items-center px-margin-page h-16 w-full z-50 sticky">
+    <nav className="border-b border-[#1f1f1f] bg-[#080808]/90 backdrop-blur-md flex justify-between items-center px-8 h-16 w-full z-50 sticky top-0 font-mono text-xs">
       {/* Brand Logo */}
-      <Link to="/" className="flex items-center gap-stack-gap text-headline-md font-headline-md font-bold text-primary">
-        <span className="material-symbols-outlined text-white" style={{ fontVariationSettings: "'FILL' 1" }}>
-          security
-        </span>
-        <span className="animate-title-reveal text-white tracking-tight">Acoustic Shield</span>
+      <Link to="/" className="flex items-center gap-3 text-white font-bold tracking-[0.2em] uppercase hover:text-[#EF4444] transition-colors">
+        <span className="w-2.5 h-2.5 rounded-full bg-[#EF4444] animate-pulse" />
+        <span>THE SILENT DOG</span>
       </Link>
 
       {/* Navigation Links */}
-      <div className="hidden md:flex items-center gap-gutter h-full font-body-md text-body-md">
+      <div className="hidden md:flex items-center gap-8 h-full uppercase tracking-wider text-[#A3A3A3]">
         <Link
           to="/"
-          className={`flex items-center h-full transition-colors duration-200 cursor-pointer active:opacity-80 px-1 ${
-            isIntroActive
-              ? 'text-primary border-b-2 border-primary pb-1 font-semibold'
-              : 'text-on-surface-variant hover:text-primary'
+          className={`flex items-center h-full transition-colors ${
+            isIntroActive ? 'text-white border-b-2 border-[#EF4444] font-bold' : 'hover:text-white'
           }`}
         >
           Introduction
         </Link>
         <Link
           to="/monitoring"
-          className={`flex items-center h-full transition-colors duration-200 cursor-pointer active:opacity-80 px-1 ${
-            isSocActive
-              ? 'text-primary border-b-2 border-primary pb-1 font-semibold'
-              : 'text-on-surface-variant hover:text-primary'
+          className={`flex items-center h-full transition-colors ${
+            isSocActive ? 'text-white border-b-2 border-[#EF4444] font-bold' : 'hover:text-white'
           }`}
         >
-          SOC Monitoring
+          Command Center
         </Link>
         <Link
           to="/attack-lab"
-          className={`flex items-center h-full transition-colors duration-200 cursor-pointer active:opacity-80 px-1 ${
-            isAttackLabActive
-              ? 'text-primary border-b-2 border-primary pb-1 font-semibold'
-              : 'text-on-surface-variant hover:text-primary'
+          className={`flex items-center h-full transition-colors ${
+            isAttackLabActive ? 'text-white border-b-2 border-[#EF4444] font-bold' : 'hover:text-white'
           }`}
         >
-          Attack Lab
+          Transmitter Suite
         </Link>
         <Link
           to="/about"
-          className={`flex items-center h-full transition-colors duration-200 cursor-pointer active:opacity-80 px-1 ${
-            isAboutActive
-              ? 'text-primary border-b-2 border-primary pb-1 font-semibold'
-              : 'text-on-surface-variant hover:text-primary'
+          className={`flex items-center h-full transition-colors ${
+            isAboutActive ? 'text-white border-b-2 border-[#EF4444] font-bold' : 'hover:text-white'
           }`}
         >
-          Architecture
+          Intelligence
         </Link>
       </div>
 
       {/* Trailing Actions */}
-      <div className="flex items-center gap-stack-gap">
-        {/* System Status Pill */}
-        <div className="hidden sm:flex items-center gap-unit px-stack-gap py-unit bg-white/5 border border-white/10 rounded-full font-label-caps text-label-caps animate-breathe">
-          <div className="w-2 h-2 rounded-full bg-[#10B981] shadow-[0_0_8px_#10B981]" />
-          <span className="text-primary">SYS_OPT_01</span>
+      <div className="flex items-center gap-4">
+        <div className="hidden sm:flex items-center gap-2 px-3 py-1 bg-[#121212] border border-[#262626] rounded-full text-[10px] text-[#10B981] font-bold uppercase">
+          <span className="w-1.5 h-1.5 rounded-full bg-[#10B981] animate-pulse" />
+          SYS_NOMINAL
         </div>
 
-        {/* Login Button / Controller */}
         <Link
           to="/login"
-          className="text-on-surface-variant hover:text-primary transition-colors duration-200 cursor-pointer active:opacity-80 p-unit rounded-full hover:bg-white/10 flex items-center justify-center"
-          title="Terminal Login"
+          className="text-[#A3A3A3] hover:text-white transition-colors p-1.5 rounded-full hover:bg-white/10 flex items-center justify-center"
+          title="Command Center Auth"
         >
-          <span className="material-symbols-outlined">account_circle</span>
+          <span className="material-symbols-outlined text-[20px]">account_circle</span>
         </Link>
       </div>
     </nav>
