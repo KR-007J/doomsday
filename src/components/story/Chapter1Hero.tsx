@@ -1,0 +1,104 @@
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import { useThreatStore } from '../../features/threat-state-machine/useThreatStore';
+
+export const Chapter1Hero: React.FC = () => {
+  const currentState = useThreatStore((s) => s.currentState);
+
+  const scrollToChapter2 = () => {
+    const el = document.getElementById('chapter-2');
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  return (
+    <section className="relative w-full min-h-screen flex flex-col justify-center px-8 md:px-16 pt-20 pb-16 bg-[#0A0A0B] overflow-hidden">
+      {/* Background Radial Grid */}
+      <div className="absolute inset-0 bg-grid-pattern opacity-20 pointer-events-none" />
+
+      <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10">
+        {/* Left Headline & Content */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, staggerChildren: 0.15 }}
+          className="lg:col-span-7 flex flex-col items-start"
+        >
+          {/* Live Status Line */}
+          <div className="flex items-center gap-2 font-mono text-xs text-[#8A8D91] tracking-widest uppercase mb-2">
+            <span className={`w-2 h-2 rounded-full ${currentState === 'THREAT_LOGGED' ? 'bg-[#E83939] animate-pulse' : 'bg-[#3ECF8E] animate-pulse'}`} />
+            <span className={currentState === 'THREAT_LOGGED' ? 'text-[#E83939] font-bold' : 'text-[#3ECF8E] font-bold'}>
+              ACOUSTIC MONITORING · SYSTEM NOMINAL
+            </span>
+          </div>
+
+          {/* Breadcrumb Label */}
+          <div className="font-mono text-xs text-[#E83939] uppercase tracking-widest mb-6 font-bold">
+            ACOUSTIC SHIELD / THREAT DETECTION
+          </div>
+
+          {/* Headline Display Text */}
+          <h1 className="font-display text-[64px] sm:text-[96px] leading-[0.95] text-[#F5F5F5] font-extrabold tracking-tighter uppercase mb-8">
+            HEAR THE
+            <br />
+            THREAT
+            <br />
+            BEFORE IT
+            <br />
+            STRIKES.
+          </h1>
+
+          {/* Subtext Paragraph */}
+          <p className="font-sans text-base text-[#8A8D91] max-w-xl leading-relaxed mb-10">
+            Advanced near-ultrasonic covert channel detection. We monitor the imperceptible frequencies utilized by sophisticated threat actors to exfiltrate data and coordinate attacks within air-gapped environments.
+          </p>
+
+          {/* CTAs */}
+          <div className="flex flex-wrap items-center gap-6">
+            <Link to="/monitoring">
+              <button className="bg-transparent text-[#F5F5F5] font-mono text-xs font-bold uppercase tracking-[0.15em] px-8 py-4 border border-[#E83939] hover:bg-[#E83939] hover:text-white transition-all duration-300 flex items-center gap-3 cursor-pointer shadow-[0_0_20px_rgba(232,57,57,0.2)]">
+                <span>ENTER SOC DASHBOARD</span>
+                <span className="material-symbols-outlined text-[16px]">arrow_forward</span>
+              </button>
+            </Link>
+
+            <button
+              onClick={scrollToChapter2}
+              className="text-[#8A8D91] hover:text-[#F5F5F5] font-mono text-xs uppercase tracking-wider transition-colors cursor-pointer flex items-center gap-1"
+            >
+              <span>&gt; Explore the Detection Pipeline</span>
+            </button>
+          </div>
+        </motion.div>
+
+        {/* Right Restrained Sensor Node Illustration */}
+        <div className="lg:col-span-5 flex flex-col items-center justify-center relative">
+          <div className="w-full max-w-md bg-[#0e0e0f] border border-[#1A1A1A] rounded-lg p-8 relative shadow-2xl overflow-hidden flex flex-col items-center">
+            {/* SVG Sensor Node Shape */}
+            <div className="relative w-64 h-80 flex items-center justify-center">
+              <svg className="w-full h-full text-white/5" viewBox="0 0 200 260" fill="currentColor">
+                <polygon points="100,10 180,60 180,200 100,250 20,200 20,60" />
+              </svg>
+              {/* Glowing Sensor Lights */}
+              <div className="absolute top-1/4 left-1/3 w-2.5 h-2.5 rounded-full bg-[#F0A030] shadow-[0_0_10px_#F0A030]" />
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 w-3.5 h-3.5 rounded-full bg-[#E83939] shadow-[0_0_15px_#E83939] animate-pulse" />
+              <div className="absolute top-1/2 right-1/4 w-3 h-3 rounded-full bg-white/80 shadow-[0_0_12px_rgba(255,255,255,0.8)]" />
+              <div className="absolute bottom-1/4 right-1/3 w-2 h-2 rounded-full bg-[#E83939]" />
+            </div>
+
+            {/* Node Metadata Footer */}
+            <div className="w-full pt-4 border-t border-[#1A1A1A] font-mono text-[10px] text-[#8A8D91] flex justify-between items-center">
+              <div>
+                <span>NODE ID: AX-774-8</span>
+                <div className="text-[#F0A030] font-bold mt-0.5">CH STATUS: SCANNING</div>
+              </div>
+              <span className="text-right">ACTIVE SENSORS: 4,092</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};

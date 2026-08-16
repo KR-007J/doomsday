@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Navbar } from './components/layout/Navbar';
 import { BottomNavBar } from './components/layout/BottomNavBar';
+import { StoryPage } from './pages/StoryPage';
 import { LandingPage } from './pages/LandingPage';
 import { SOCMonitoringPage } from './pages/SOCMonitoringPage';
 import { IntelligenceLogsPage } from './pages/IntelligenceLogsPage';
@@ -23,7 +24,9 @@ export const App: React.FC = () => {
         {/* Main Content Area */}
         <main className="relative z-10 flex-1 flex flex-col w-full">
           <Routes>
-            <Route path="/" element={<LandingPage />} />
+            <Route path="/" element={<StoryPage />} />
+            <Route path="/story" element={<StoryPage />} />
+            <Route path="/matrix" element={<LandingPage />} />
             <Route path="/monitoring" element={<SOCMonitoringPage />} />
             <Route path="/logs" element={<IntelligenceLogsPage />} />
             <Route path="/network" element={<NetworkTopologyPage />} />
