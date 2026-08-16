@@ -3,21 +3,21 @@ import { Canvas, useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 import { useThreatStore } from '../../features/threat-state-machine/useThreatStore';
 
-const Top100OrganicAmbientField = () => {
+const Top10RefinedAmbientField = () => {
   const meshRef = useRef<THREE.Mesh>(null);
   const currentState = useThreatStore((s) => s.currentState);
   
-  // Custom WebGL shader inspired by Framer & Linear ambient mesh gradients
+  // Custom WebGL shader inspired by Stripe & Linear ambient mesh gradients
   const shaderMaterial = useMemo(() => {
     return new THREE.ShaderMaterial({
       uniforms: {
         uTime: { value: 0 },
         uThreatLevel: { value: 0.0 },
-        // Top 100 Palette: Deep Space, Royal Indigo, Emerald, Crimson
-        uColorBase: { value: new THREE.Color('#08090D') },        // Midnight Obsidian
-        uColorIndigo: { value: new THREE.Color('#6366F1') },      // Electric Royal Indigo
-        uColorEmerald: { value: new THREE.Color('#10B981') },     // Organic Emerald
-        uColorCrimson: { value: new THREE.Color('#F43F5E') }      // Rose Crimson
+        // Top 10 World-Class Palette: Midnight Slate, Electric Indigo, Organic Emerald, Rose Crimson
+        uColorBase: { value: new THREE.Color('#08090D') },        
+        uColorIndigo: { value: new THREE.Color('#6366F1') },      
+        uColorEmerald: { value: new THREE.Color('#10B981') },     
+        uColorRose: { value: new THREE.Color('#F43F5E') }        
       },
       vertexShader: `
         varying vec2 vUv;
@@ -32,7 +32,7 @@ const Top100OrganicAmbientField = () => {
         uniform vec3 uColorBase;
         uniform vec3 uColorIndigo;
         uniform vec3 uColorEmerald;
-        uniform vec3 uColorCrimson;
+        uniform vec3 uColorRose;
         varying vec2 vUv;
         
         float random(vec2 st) {
@@ -57,32 +57,32 @@ const Top100OrganicAmbientField = () => {
         }
 
         void main() {
-          vec2 st = vUv * 2.2;
-          float time = uTime * 0.06;
+          vec2 st = vUv * 2.0;
+          float time = uTime * 0.05;
           
           vec2 q = vec2(0.);
-          q.x = fbm( st + 0.04*time);
+          q.x = fbm( st + 0.03*time);
           q.y = fbm( st + vec2(1.0));
 
           vec2 r = vec2(0.);
-          r.x = fbm( st + 1.0*q + vec2(1.7,9.2)+ 0.12*time );
-          r.y = fbm( st + 1.0*q + vec2(8.3,2.8)+ 0.10*time);
+          r.x = fbm( st + 1.0*q + vec2(1.7,9.2)+ 0.10*time );
+          r.y = fbm( st + 1.0*q + vec2(8.3,2.8)+ 0.08*time);
 
           float f = fbm(st+r);
 
-          // Top 100 Ambient Integration:
+          // Top 10 Ambient Integration:
           // Default State: Deep indigo & emerald silk ambient flow
           // Threat State: Shift to Rose Crimson flow
-          vec3 safeFlow = mix(uColorBase, uColorIndigo * 0.22, f * f * 2.2);
-          safeFlow += uColorEmerald * 0.04 * f;
+          vec3 safeFlow = mix(uColorBase, uColorIndigo * 0.25, f * f * 2.2);
+          safeFlow += uColorEmerald * 0.05 * f;
           
-          vec3 threatFlow = mix(uColorBase, uColorCrimson * 0.28, f * f * 2.5);
+          vec3 threatFlow = mix(uColorBase, uColorRose * 0.30, f * f * 2.5);
           
           vec3 finalColor = mix(safeFlow, threatFlow, uThreatLevel);
           
-          // Subtle top radial spotlight
+          // Subtle top radial spotlight (Linear/Apple gradient backdrop)
           float topGlow = smoothstep(1.0, 0.0, distance(vUv, vec2(0.5, 1.0)));
-          finalColor += uColorIndigo * 0.08 * topGlow;
+          finalColor += uColorIndigo * 0.10 * topGlow;
           
           gl_FragColor = vec4(finalColor, 1.0);
         }
@@ -116,7 +116,7 @@ export const CinematicBackground: React.FC = () => {
         dpr={[1, 2]}
         gl={{ powerPreference: 'high-performance' }}
       >
-        <Top100OrganicAmbientField />
+        <Top10RefinedAmbientField />
       </Canvas>
     </div>
   );
