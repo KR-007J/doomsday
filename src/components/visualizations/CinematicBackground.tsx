@@ -1,164 +1,21 @@
 import React, { useRef, useMemo } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { useLocation } from 'react-router-dom';
 import * as THREE from 'three';
 import { useThreatStore } from '../../features/threat-state-machine/useThreatStore';
 
-// Common GLSL noise functions
-const noiseGLSL = `
-  float random(vec2 st) {
-      return fract(sin(dot(st.xy, vec2(12.9898,78.233))) * 43758.5453123);
-  }
-  float noise(vec2 st) {
-      vec2 i = floor(st);
-      vec2 f = fract(st);
-      vec2 u = f * f * (3.0 - 2.0 * f);
-      return mix( mix( random( i + vec2(0.0,0.0) ), random( i + vec2(1.0,0.0) ), u.x),
-                  mix( random( i + vec2(0.0,1.0) ), random( i + vec2(1.0,1.0) ), u.x), u.y);
-  }
-  float fbm(vec2 st) {
-      float value = 0.0;
-      float amplitude = .5;
-      for (int i = 0; i < 5; i++) {
-          value += amplitude * noise(st);
-          st *= 2.;
-          amplitude *= .5;
-      }
-      return value;
-  }
-`;
-
-// 3D Interactive Arc Reactor Assembly (Stark / Ultron MCU Professional Engine)
-const InteractiveArcReactor3D = () => {
-  const groupRef = useRef<THREE.Group>(null);
-  const outerRingRef = useRef<THREE.Mesh>(null);
-  const middleRingRef = useRef<THREE.Mesh>(null);
-  const innerRingRef = useRef<THREE.Mesh>(null);
-  const coreMeshRef = useRef<THREE.Mesh>(null);
-
-  const currentState = useThreatStore((s) => s.currentState);
-
-  // Materials with dynamic color shift
-  const [outerMat, middleMat, innerMat, coreMat] = useMemo(() => {
-    const starkBlue = new THREE.Color('#38BDF8');
-    const indigo = new THREE.Color('#6366F1');
-    const gold = new THREE.Color('#F59E0B');
-
-    const m1 = new THREE.MeshBasicMaterial({
-      color: starkBlue,
-      wireframe: true,
-      transparent: true,
-      opacity: 0.5,
-      blending: THREE.AdditiveBlending
-    });
-
-    const m2 = new THREE.MeshBasicMaterial({
-      color: indigo,
-      wireframe: true,
-      transparent: true,
-      opacity: 0.6,
-      blending: THREE.AdditiveBlending
-    });
-
-    const m3 = new THREE.MeshBasicMaterial({
-      color: gold,
-      transparent: true,
-      opacity: 0.7,
-      blending: THREE.AdditiveBlending
-    });
-
-    const m4 = new THREE.MeshBasicMaterial({
-      color: starkBlue,
-      transparent: true,
-      opacity: 0.8,
-      blending: THREE.AdditiveBlending
-    });
-
-    return [m1, m2, m3, m4];
-  }, []);
-
-  useFrame((state) => {
-    const t = state.clock.elapsedTime;
-    const isThreat = currentState === 'THREAT_LOGGED';
-    const speedMult = isThreat ? 2.5 : 1.0;
-
-    // Smooth 3D Perspective Tilt tracking mouse cursor
-    if (groupRef.current) {
-      const targetRotX = state.pointer.y * 0.4;
-      const targetRotY = state.pointer.x * 0.6;
-
-      groupRef.current.rotation.x += (targetRotX - groupRef.current.rotation.x) * 0.06;
-      groupRef.current.rotation.y += (targetRotY - groupRef.current.rotation.y) * 0.06;
-    }
-
-    // Counter-rotating concentric rings
-    if (outerRingRef.current) {
-      outerRingRef.current.rotation.z = t * 0.3 * speedMult;
-    }
-    if (middleRingRef.current) {
-      middleRingRef.current.rotation.z = -t * 0.5 * speedMult;
-    }
-    if (innerRingRef.current) {
-      innerRingRef.current.rotation.z = t * 0.8 * speedMult;
-      const scalePulse = 1.0 + Math.sin(t * 4.0) * 0.05;
-      innerRingRef.current.scale.set(scalePulse, scalePulse, scalePulse);
-    }
-    if (coreMeshRef.current) {
-      const corePulse = 1.0 + Math.sin(t * 6.0) * 0.08;
-      coreMeshRef.current.scale.set(corePulse, corePulse, corePulse);
-    }
-
-    // Color transition on threat trigger
-    const targetColor = isThreat ? new THREE.Color('#F43F5E') : new THREE.Color('#38BDF8');
-    outerMat.color.lerp(targetColor, 0.05);
-    coreMat.color.lerp(targetColor, 0.05);
-  });
-
-  return (
-    <group ref={groupRef} position={[0, 0, -1]}>
-      {/* Outer Ring 1 */}
-      <mesh ref={outerRingRef} material={outerMat}>
-        <torusGeometry args={[2.5, 0.04, 16, 100]} />
-      </mesh>
-
-      {/* Middle Ring 2 */}
-      <mesh ref={middleRingRef} material={middleMat}>
-        <torusGeometry args={[1.8, 0.05, 16, 80]} />
-      </mesh>
-
-      {/* Inner Ring 3 */}
-      <mesh ref={innerRingRef} material={innerMat}>
-        <torusGeometry args={[1.1, 0.06, 16, 60]} />
-      </mesh>
-
-      {/* Center Arc Energy Core */}
-      <mesh ref={coreMeshRef} material={coreMat}>
-        <sphereGeometry args={[0.45, 32, 32]} />
-      </mesh>
-
-      {/* 12 Radial Energy Node Spokes */}
-      {Array.from({ length: 12 }).map((_, i) => {
-        const angle = (i / 12) * Math.PI * 2;
-        return (
-          <mesh
-            key={i}
-            position={[Math.cos(angle) * 1.8, Math.sin(angle) * 1.8, 0]}
-            material={innerMat}
-          >
-            <sphereGeometry args={[0.06, 16, 16]} />
-          </mesh>
-        );
-      })}
-    </group>
-  );
-};
-
-// 3D Background Shader Plane for Page Depth
-const BackgroundShaderPlane = () => {
+// Marvel J.A.R.V.I.S 4K HDR 3D Arc Reactor WebGL Shader
+const MarvelJarvisArcReactorPlane = () => {
   const meshRef = useRef<THREE.Mesh>(null);
-  const location = useLocation();
-  const path = location.pathname;
   const currentState = useThreatStore((s) => s.currentState);
+
+  // Load generated 4K HDR Marvel J.A.R.V.I.S Arc Reactor Texture
+  const texture = useMemo(() => {
+    const loader = new THREE.TextureLoader();
+    const tex = loader.load('/jarvis_arc_reactor_bg.jpg');
+    tex.wrapS = THREE.RepeatWrapping;
+    tex.wrapT = THREE.RepeatWrapping;
+    return tex;
+  }, []);
 
   const shaderMaterial = useMemo(() => {
     return new THREE.ShaderMaterial({
@@ -166,68 +23,70 @@ const BackgroundShaderPlane = () => {
         uTime: { value: 0 },
         uMouse: { value: new THREE.Vector2(0, 0) },
         uThreatLevel: { value: 0.0 },
-        uPageMode: { value: 0 }, // 0: Story, 1: Matrix, 2: SOC, 3: Network, 4: Logs, 5: AttackLab
+        uTexture: { value: texture },
+        // Color grading tokens
         uColorBase: { value: new THREE.Color('#08090D') },
-        uColorBlue: { value: new THREE.Color('#38BDF8') },
-        uColorIndigo: { value: new THREE.Color('#6366F1') },
-        uColorEmerald: { value: new THREE.Color('#10B981') },
-        uColorAmber: { value: new THREE.Color('#F59E0B') },
-        uColorRose: { value: new THREE.Color('#F43F5E') }
+        uColorArcBlue: { value: new THREE.Color('#38BDF8') },
+        uColorGold: { value: new THREE.Color('#F59E0B') },
+        uColorUltronRed: { value: new THREE.Color('#F43F5E') }
       },
-      vertexShader: `varying vec2 vUv; void main() { vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }`,
+      vertexShader: `
+        varying vec2 vUv;
+        void main() {
+          vUv = uv;
+          gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+        }
+      `,
       fragmentShader: `
         uniform float uTime;
         uniform vec2 uMouse;
         uniform float uThreatLevel;
-        uniform int uPageMode;
+        uniform sampler2D uTexture;
         uniform vec3 uColorBase;
-        uniform vec3 uColorBlue;
-        uniform vec3 uColorIndigo;
-        uniform vec3 uColorEmerald;
-        uniform vec3 uColorAmber;
-        uniform vec3 uColorRose;
+        uniform vec3 uColorArcBlue;
+        uniform vec3 uColorGold;
+        uniform vec3 uColorUltronRed;
         varying vec2 vUv;
-        ${noiseGLSL}
 
         void main() {
-          vec2 st = vUv;
-          float time = uTime * 0.05;
+          // Dynamic UV perspective warping tracking mouse cursor
+          vec2 warpedUv = vUv;
+          float time = uTime * 0.04;
+          
+          // Subtle liquid energy pulse around center Arc Reactor
+          vec2 center = vec2(0.5) + uMouse * 0.05;
+          float dist = distance(vUv, center);
+          float energyPulse = sin(dist * 20.0 - time * 4.0) * 0.015;
 
-          vec2 q = vec2(fbm(st * 2.0 + time + uMouse * 0.05), fbm(st * 2.0 + vec2(1.0)));
-          vec2 r = vec2(fbm(st * 2.0 + 1.0*q + 0.1*time), fbm(st * 2.0 + 1.0*q + 0.08*time));
-          float f = fbm(st * 2.0 + r);
+          warpedUv.x += energyPulse + uMouse.x * 0.02;
+          warpedUv.y += energyPulse + uMouse.y * 0.02;
 
-          vec3 activeHue = uColorIndigo;
-          if (uPageMode == 1) activeHue = uColorEmerald; // Matrix Green
-          else if (uPageMode == 2) activeHue = uColorBlue; // SOC Blue
-          else if (uPageMode == 3) activeHue = uColorBlue; // Network Scope
-          else if (uPageMode == 4) activeHue = uColorIndigo; // Logs Stream
-          else if (uPageMode == 5) activeHue = uColorAmber; // TX Lab Amber
+          vec4 texColor = texture2D(uTexture, warpedUv);
 
-          vec3 normalFlow = mix(uColorBase, activeHue * 0.22, f * f * 2.2);
-          vec3 threatFlow = mix(uColorBase, uColorRose * 0.35, f * f * 2.5);
+          // Marvel MCU Color Grading Enhancement
+          vec3 graded = mix(texColor.rgb, uColorArcBlue * texColor.r * 1.6, 0.35);
+          graded += uColorGold * texColor.g * 0.20;
 
-          vec3 finalColor = mix(normalFlow, threatFlow, uThreatLevel);
+          // Threat State Ultron Red Shift
+          graded = mix(graded, uColorUltronRed * texColor.r * 2.2, uThreatLevel * 0.65);
 
           // Radial vignette
-          float dist = distance(vUv, vec2(0.5));
-          finalColor *= smoothstep(0.95, 0.25, dist);
+          float outerDist = distance(vUv, vec2(0.5));
+          graded *= smoothstep(0.98, 0.2, outerDist);
 
-          gl_FragColor = vec4(finalColor, 1.0);
+          gl_FragColor = vec4(mix(uColorBase, graded, 0.90), 1.0);
         }
       `
     });
-  }, []);
+  }, [texture]);
 
   useFrame((state) => {
     if (meshRef.current) {
       const mat = meshRef.current.material as THREE.ShaderMaterial;
       mat.uniforms.uTime.value = state.clock.elapsedTime;
-      mat.uniforms.uMouse.value.x += (state.pointer.x - mat.uniforms.uMouse.value.x) * 0.05;
-      mat.uniforms.uMouse.value.y += (state.pointer.y - mat.uniforms.uMouse.value.y) * 0.05;
-
-      const pageIdx = path === '/matrix' ? 1 : path === '/monitoring' ? 2 : path === '/network' ? 3 : path === '/logs' ? 4 : path === '/attack-lab' ? 5 : 0;
-      mat.uniforms.uPageMode.value = pageIdx;
+      
+      mat.uniforms.uMouse.value.x += (state.pointer.x - mat.uniforms.uMouse.value.x) * 0.06;
+      mat.uniforms.uMouse.value.y += (state.pointer.y - mat.uniforms.uMouse.value.y) * 0.06;
 
       const targetThreat = currentState === 'THREAT_LOGGED' ? 1.0 : (currentState === 'ANALYZING' ? 0.3 : 0.0);
       mat.uniforms.uThreatLevel.value += (targetThreat - mat.uniforms.uThreatLevel.value) * 0.03;
@@ -235,17 +94,17 @@ const BackgroundShaderPlane = () => {
   });
 
   return (
-    <mesh ref={meshRef} position={[0, 0, -2]}>
-      <planeGeometry args={[14, 8]} />
+    <mesh ref={meshRef}>
+      <planeGeometry args={[13, 7.5]} />
       <primitive object={shaderMaterial} attach="material" />
     </mesh>
   );
 };
 
-// 3D Particle Dispersion Field
-const ParticlesLayer = () => {
+// Interactive 3D Particle Field with Cursor Repulsion
+const InteractiveParticleField = () => {
   const pointsRef = useRef<THREE.Points>(null);
-  const count = 800;
+  const count = 850;
 
   const [positions, initialPositions, colors] = useMemo(() => {
     const pos = new Float32Array(count * 3);
@@ -253,11 +112,10 @@ const ParticlesLayer = () => {
     const col = new Float32Array(count * 3);
 
     const palette = [
-      new THREE.Color('#38BDF8'),
-      new THREE.Color('#6366F1'),
-      new THREE.Color('#10B981'),
-      new THREE.Color('#F59E0B'),
-      new THREE.Color('#F8FAFC')
+      new THREE.Color('#38BDF8'), // Arc Blue
+      new THREE.Color('#F59E0B'), // Gold
+      new THREE.Color('#10B981'), // Emerald
+      new THREE.Color('#F8FAFC')  // White Star
     ];
 
     for (let i = 0; i < count; i++) {
@@ -344,9 +202,8 @@ export const CinematicBackground: React.FC = () => {
         dpr={[1, 2]}
         gl={{ powerPreference: 'high-performance', antialias: true }}
       >
-        <BackgroundShaderPlane />
-        <InteractiveArcReactor3D />
-        <ParticlesLayer />
+        <MarvelJarvisArcReactorPlane />
+        <InteractiveParticleField />
       </Canvas>
     </div>
   );
