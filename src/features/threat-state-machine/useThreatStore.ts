@@ -1,15 +1,20 @@
 import { create } from 'zustand';
 import { SystemThreatState, ThreatEvent } from '../../types/threat';
 
+export type Background3DMode = 'ARC_REACTOR' | 'BEAMFORMER' | 'SATELLITE_GLOBE' | 'CRYSTAL_LATTICE';
+
 interface ThreatStoreState {
   currentState: SystemThreatState;
   confidence: number;
   patternType: string;
   isLoggedIn: boolean;
   history: ThreatEvent[];
+  bgMode: Background3DMode;
   setThreatState: (state: SystemThreatState) => void;
+  setBgMode: (mode: Background3DMode) => void;
   triggerSimulatedAttack: (opts?: { frequencyMin?: number; frequencyMax?: number; duration?: number; payload?: string }) => void;
   resetToSafe: () => void;
+  resetThreatState: () => void;
   loginMock: (email: string) => void;
 }
 
@@ -18,6 +23,7 @@ export const useThreatStore = create<ThreatStoreState>((set, get) => ({
   confidence: 98.0,
   patternType: 'ENVIRONMENTAL_BASELINE',
   isLoggedIn: true,
+  bgMode: 'ARC_REACTOR',
   history: [
     {
       id: 'EVT-1001',
@@ -30,6 +36,8 @@ export const useThreatStore = create<ThreatStoreState>((set, get) => ({
       pattern: 'BASELINE_ALPHA',
     },
   ],
+
+  setBgMode: (mode) => set({ bgMode: mode }),
 
   setThreatState: (newState) => {
     let conf = 98.0;
@@ -94,6 +102,10 @@ export const useThreatStore = create<ThreatStoreState>((set, get) => ({
   },
 
   resetToSafe: () => {
+    set({ currentState: 'SAFE', confidence: 98.0, patternType: 'ENVIRONMENTAL_BASELINE' });
+  },
+
+  resetThreatState: () => {
     set({ currentState: 'SAFE', confidence: 98.0, patternType: 'ENVIRONMENTAL_BASELINE' });
   },
 

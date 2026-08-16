@@ -3,19 +3,34 @@ import { Canvas, useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 import { useThreatStore } from '../../features/threat-state-machine/useThreatStore';
 
-// Marvel J.A.R.V.I.S 4K HDR 3D Arc Reactor WebGL Shader
-const MarvelJarvisArcReactorPlane = () => {
+// WebGL Plane with Dynamic 3D Texture Selection based on bgMode
+const Dynamic3DModeTexturePlane = () => {
   const meshRef = useRef<THREE.Mesh>(null);
   const currentState = useThreatStore((s) => s.currentState);
+  const bgMode = useThreatStore((s) => s.bgMode);
 
-  // Load generated 4K HDR Marvel J.A.R.V.I.S Arc Reactor Texture
-  const texture = useMemo(() => {
+  // Pre-load all 4 3D background textures
+  const textures = useMemo(() => {
     const loader = new THREE.TextureLoader();
-    const tex = loader.load('/jarvis_arc_reactor_bg.jpg');
-    tex.wrapS = THREE.RepeatWrapping;
-    tex.wrapT = THREE.RepeatWrapping;
-    return tex;
+    const tArc = loader.load('/jarvis_arc_reactor_bg.jpg');
+    const tBeam = loader.load('/ultrasonic_beamformer_bg.jpg');
+    const tGlobe = loader.load('/satellite_globe_bg.jpg');
+    const tCrystal = loader.load('/crystal_lattice_bg.jpg');
+
+    [tArc, tBeam, tGlobe, tCrystal].forEach(t => {
+      t.wrapS = THREE.RepeatWrapping;
+      t.wrapT = THREE.RepeatWrapping;
+    });
+
+    return {
+      ARC_REACTOR: tArc,
+      BEAMFORMER: tBeam,
+      SATELLITE_GLOBE: tGlobe,
+      CRYSTAL_LATTICE: tCrystal
+    };
   }, []);
+
+  const activeTex = textures[bgMode] || textures.ARC_REACTOR;
 
   const shaderMaterial = useMemo(() => {
     return new THREE.ShaderMaterial({
@@ -23,12 +38,11 @@ const MarvelJarvisArcReactorPlane = () => {
         uTime: { value: 0 },
         uMouse: { value: new THREE.Vector2(0, 0) },
         uThreatLevel: { value: 0.0 },
-        uTexture: { value: texture },
-        // Color grading tokens
+        uTexture: { value: activeTex },
         uColorBase: { value: new THREE.Color('#08090D') },
-        uColorArcBlue: { value: new THREE.Color('#38BDF8') },
-        uColorGold: { value: new THREE.Color('#F59E0B') },
-        uColorUltronRed: { value: new THREE.Color('#F43F5E') }
+        uColorBlue: { value: new THREE.Color('#38BDF8') },
+        uColorEmerald: { value: new THREE.Color('#10B981') },
+        uColorRose: { value: new THREE.Color('#F43F5E') }
       },
       vertexShader: `
         varying vec2 vUv;
@@ -43,34 +57,30 @@ const MarvelJarvisArcReactorPlane = () => {
         uniform float uThreatLevel;
         uniform sampler2D uTexture;
         uniform vec3 uColorBase;
-        uniform vec3 uColorArcBlue;
-        uniform vec3 uColorGold;
-        uniform vec3 uColorUltronRed;
+        uniform vec3 uColorBlue;
+        uniform vec3 uColorEmerald;
+        uniform vec3 uColorRose;
         varying vec2 vUv;
 
         void main() {
-          // Dynamic UV perspective warping tracking mouse cursor
           vec2 warpedUv = vUv;
           float time = uTime * 0.04;
           
-          // Subtle liquid energy pulse around center Arc Reactor
           vec2 center = vec2(0.5) + uMouse * 0.05;
           float dist = distance(vUv, center);
-          float energyPulse = sin(dist * 20.0 - time * 4.0) * 0.015;
+          float energyPulse = sin(dist * 18.0 - time * 3.5) * 0.012;
 
           warpedUv.x += energyPulse + uMouse.x * 0.02;
           warpedUv.y += energyPulse + uMouse.y * 0.02;
 
           vec4 texColor = texture2D(uTexture, warpedUv);
 
-          // Marvel MCU Color Grading Enhancement
-          vec3 graded = mix(texColor.rgb, uColorArcBlue * texColor.r * 1.6, 0.35);
-          graded += uColorGold * texColor.g * 0.20;
+          vec3 graded = mix(texColor.rgb, uColorBlue * texColor.r * 1.5, 0.30);
+          graded += uColorEmerald * texColor.g * 0.20;
 
-          // Threat State Ultron Red Shift
-          graded = mix(graded, uColorUltronRed * texColor.r * 2.2, uThreatLevel * 0.65);
+          // Threat State alert shift
+          graded = mix(graded, uColorRose * texColor.r * 2.0, uThreatLevel * 0.60);
 
-          // Radial vignette
           float outerDist = distance(vUv, vec2(0.5));
           graded *= smoothstep(0.98, 0.2, outerDist);
 
@@ -78,13 +88,14 @@ const MarvelJarvisArcReactorPlane = () => {
         }
       `
     });
-  }, [texture]);
+  }, [activeTex]);
 
   useFrame((state) => {
     if (meshRef.current) {
       const mat = meshRef.current.material as THREE.ShaderMaterial;
       mat.uniforms.uTime.value = state.clock.elapsedTime;
-      
+      mat.uniforms.uTexture.value = activeTex;
+
       mat.uniforms.uMouse.value.x += (state.pointer.x - mat.uniforms.uMouse.value.x) * 0.06;
       mat.uniforms.uMouse.value.y += (state.pointer.y - mat.uniforms.uMouse.value.y) * 0.06;
 
@@ -101,7 +112,7 @@ const MarvelJarvisArcReactorPlane = () => {
   );
 };
 
-// Interactive 3D Particle Field with Cursor Repulsion
+// 3D Interactive Particle Field
 const InteractiveParticleField = () => {
   const pointsRef = useRef<THREE.Points>(null);
   const count = 850;
@@ -112,10 +123,10 @@ const InteractiveParticleField = () => {
     const col = new Float32Array(count * 3);
 
     const palette = [
-      new THREE.Color('#38BDF8'), // Arc Blue
-      new THREE.Color('#F59E0B'), // Gold
-      new THREE.Color('#10B981'), // Emerald
-      new THREE.Color('#F8FAFC')  // White Star
+      new THREE.Color('#38BDF8'),
+      new THREE.Color('#6366F1'),
+      new THREE.Color('#10B981'),
+      new THREE.Color('#F8FAFC')
     ];
 
     for (let i = 0; i < count; i++) {
@@ -202,7 +213,7 @@ export const CinematicBackground: React.FC = () => {
         dpr={[1, 2]}
         gl={{ powerPreference: 'high-performance', antialias: true }}
       >
-        <MarvelJarvisArcReactorPlane />
+        <Dynamic3DModeTexturePlane />
         <InteractiveParticleField />
       </Canvas>
     </div>
