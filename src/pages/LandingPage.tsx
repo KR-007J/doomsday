@@ -1,206 +1,188 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { RadarSweepCanvas } from '../components/visualizations/RadarSweepCanvas';
 import { useThreatStore } from '../features/threat-state-machine/useThreatStore';
-import { THREAT_STATE_CONFIGS } from '../features/threat-state-machine/stateMachine';
-import { ThreatStateType } from '../types/threat';
 
 export const LandingPage: React.FC = () => {
   const currentState = useThreatStore((s) => s.currentState);
-  const confidence = useThreatStore((s) => s.confidence);
-  const patternType = useThreatStore((s) => s.patternType);
-  const setThreatState = useThreatStore((s) => s.setThreatState);
-  const triggerSimulatedAttack = useThreatStore((s) => s.triggerSimulatedAttack);
-
-  const config = THREAT_STATE_CONFIGS[currentState];
-
-  const states: ThreatStateType[] = [
-    'SAFE',
-    'SIGNAL_DETECTED',
-    'ANALYZING',
-    'POTENTIAL_COVERT_COMMUNICATION',
-    'THREAT_LOGGED',
-  ];
 
   return (
-    <div className="flex-grow flex flex-col items-center justify-center relative z-10 px-margin-page py-12 w-full max-w-7xl mx-auto">
-      {/* Hero Section */}
-      <div className="flex flex-col items-center text-center max-w-3xl w-full mb-16">
-        {/* Supertitle Pill */}
-        <div className="mb-stack-gap px-3 py-1 glass-panel rounded-full inline-block animate-slide-up-blur">
-          <span className="font-label-caps text-label-caps text-primary/80 tracking-widest uppercase">
-            ACOUSTIC AIR-GAP THREAT ENGINE (16kHz-24kHz)
-          </span>
+    <div className="flex-1 flex flex-col md:flex-row gap-4 p-4 max-w-7xl mx-auto w-full font-mono text-xs">
+      {/* Left Column: Uplink Telemetry & Peripheral Nodes */}
+      <aside className="hidden md:flex flex-col gap-4 w-64 shrink-0">
+        {/* Telemetry Panel */}
+        <div className="card-panel p-4 flex flex-col gap-3 relative overflow-hidden">
+          <div className="absolute top-0 left-0 w-full h-0.5 bg-accent-safe opacity-60" />
+          <h2 className="text-secondary-ui uppercase tracking-wider text-[11px] border-b border-hairline pb-1 border-dashed font-bold">
+            UPLINK TELEMETRY
+          </h2>
+          <div className="grid grid-cols-2 gap-2 text-xs">
+            <div className="flex flex-col">
+              <span className="text-tertiary-ui text-[10px] uppercase">Status</span>
+              <span className="text-accent-safe font-bold flex items-center gap-1">
+                <span className="w-1.5 h-1.5 rounded-full bg-accent-safe" /> 100.0%
+              </span>
+            </div>
+            <div className="flex flex-col">
+              <span className="text-tertiary-ui text-[10px] uppercase">Packet Loss</span>
+              <span className="text-accent-safe font-bold flex items-center gap-1">
+                <span className="w-1.5 h-1.5 rounded-full bg-accent-safe" /> 0.00%
+              </span>
+            </div>
+            <div className="col-span-2 flex flex-col mt-1">
+              <span className="text-tertiary-ui text-[10px] uppercase">Active Coordinates</span>
+              <span className="text-primary-ui font-mono">LAT: 38.8951° N</span>
+              <span className="text-primary-ui font-mono">LNG: 77.0364° W</span>
+            </div>
+            <div className="col-span-2 flex flex-col mt-1">
+              <span className="text-tertiary-ui text-[10px] uppercase">Crypto State</span>
+              <span className="text-accent-warn font-mono">AES-256-GCM [SYNC]</span>
+            </div>
+          </div>
         </div>
 
-        {/* Main Headline */}
-        <h1 className="font-display-lg-mobile md:font-display-lg text-display-lg-mobile md:text-display-lg text-primary mb-stack-gap tracking-tight animate-slide-up-blur delay-100 uppercase">
-          ACOUSTICSHIELD
-        </h1>
+        {/* Peripheral Nodes List */}
+        <div className="flex-1 card-panel p-4 flex flex-col gap-3">
+          <h2 className="text-secondary-ui uppercase tracking-wider text-[11px] border-b border-hairline pb-1 border-dashed font-bold">
+            PERIPHERAL NODES
+          </h2>
+          <div className="flex flex-col gap-2 overflow-y-auto pr-1">
+            {/* Node A1 */}
+            <div className="p-2 border border-hairline rounded-sm bg-surface-2/60 relative">
+              <div className="flex justify-between items-center mb-1">
+                <span className="text-primary-ui font-bold">NODE 0X-A1</span>
+                <span className="text-accent-warn">CONF: 24.0%</span>
+              </div>
+              <div className="w-full bg-surface-1 h-1 rounded-full overflow-hidden">
+                <div className="bg-accent-warn h-full w-[24%]" />
+              </div>
+            </div>
 
-        {/* Subtitle */}
-        <p className="font-body-md text-body-md text-primary/70 max-w-2xl mb-8 animate-slide-up-blur delay-200 text-base md:text-lg">
-          Enterprise-grade acoustic monitoring terminal detecting ultrasonic exfiltration attempts and unauthorized high-frequency payloads in secure environments.
-        </p>
+            {/* Node B7 */}
+            <div className="p-2 border border-hairline rounded-sm bg-surface-2/60 relative">
+              <div className="flex justify-between items-center mb-1">
+                <span className="text-primary-ui font-bold">NODE 0X-B7</span>
+                <span className="text-accent-warn">CONF: 58.0%</span>
+              </div>
+              <div className="w-full bg-surface-1 h-1 rounded-full overflow-hidden">
+                <div className="bg-accent-warn h-full w-[58%]" />
+              </div>
+            </div>
 
-        {/* CTAs */}
-        <div className="flex flex-col sm:flex-row gap-gutter w-full sm:w-auto items-center justify-center animate-slide-up-blur delay-300">
-          <Link to="/monitoring" className="w-full sm:w-auto">
-            <button className="w-full sm:w-auto bg-primary/90 text-[#07080A] font-body-md text-body-md px-6 py-3 rounded hover:bg-primary transition-all duration-200 cursor-pointer shadow-[0_0_15px_rgba(255,255,255,0.2)] font-semibold uppercase tracking-wider">
-              Open SOC Monitoring
+            {/* Node C2 */}
+            <div className="p-2 border border-hairline rounded-sm bg-surface-2/60 relative">
+              <div className="flex justify-between items-center mb-1">
+                <span className="text-secondary-ui font-bold">NODE 0X-C2</span>
+                <span className="text-tertiary-ui">CONF: 12.0%</span>
+              </div>
+              <div className="w-full bg-surface-1 h-1 rounded-full overflow-hidden">
+                <div className="bg-surface-2 h-full w-[12%]" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      {/* Center Column: Neural Intercept Core Radar Canvas */}
+      <section className="flex-1 card-panel relative flex flex-col overflow-hidden min-h-[500px]">
+        {/* Micro Telemetry Corners */}
+        <span className="absolute top-3 left-4 text-tertiary-ui text-[10px]">[LAT: 38.8951]</span>
+        <span className="absolute top-3 right-4 text-tertiary-ui text-[10px]">[LNG: -77.0364]</span>
+        <span className="absolute bottom-3 left-4 text-tertiary-ui text-[10px]">[SYS_TIME: 14:02:45Z]</span>
+        <span className="absolute bottom-3 right-4 text-tertiary-ui text-[10px]">[NET: SECURE]</span>
+
+        {/* Status Chips */}
+        <div className="relative z-10 p-4 flex justify-between items-start pointer-events-none mt-2">
+          <div className="flex flex-col gap-2">
+            <div className="bg-surface-2/90 border border-hairline px-3 py-1 rounded-card flex items-center gap-2 shadow-elevation-1">
+              <span className="w-1.5 h-1.5 rounded-full bg-accent-warn" />
+              <span className="text-primary-ui text-[11px]">Gravity active</span>
+            </div>
+            <div className="bg-surface-2/90 border border-hairline px-3 py-1 rounded-card flex items-center gap-2 shadow-elevation-1">
+              <span className="w-1.5 h-1.5 rounded-full bg-accent-safe" />
+              <span className="text-primary-ui text-[11px]">Packet flow omnidirectional</span>
+            </div>
+          </div>
+
+          <div className="bg-surface-2/90 border border-accent-safe/40 px-3 py-1.5 rounded-card flex items-center gap-2 shadow-elevation-2">
+            <span className="w-2 h-2 rounded-full bg-accent-safe animate-pulse" />
+            <span className="text-accent-safe font-bold uppercase text-[11px]">Scanning Sector 7G...</span>
+          </div>
+        </div>
+
+        {/* Central Radar Target Canvas */}
+        <div className="flex-1 flex items-center justify-center relative py-4">
+          <RadarSweepCanvas size={300} />
+
+          {/* Compact Telemetry Strip */}
+          <div className="absolute left-4 top-1/2 -translate-y-1/2 flex flex-col gap-2 z-10">
+            <div className="bg-surface-2/90 border border-hairline p-2 rounded-sm text-center">
+              <span className="text-tertiary-ui text-[9px] block mb-0.5">RNG</span>
+              <span className="text-primary-ui font-bold">12.4km</span>
+            </div>
+            <div className="bg-surface-2/90 border border-hairline p-2 rounded-sm text-center">
+              <span className="text-tertiary-ui text-[9px] block mb-0.5">BRG</span>
+              <span className="text-accent-warn font-bold">045°</span>
+            </div>
+            <div className="bg-surface-2/90 border border-hairline p-2 rounded-sm text-center">
+              <span className="text-tertiary-ui text-[9px] block mb-0.5">SWP</span>
+              <span className="text-accent-safe font-bold">4.0s</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Floating Action CTA Button */}
+        <div className="relative z-20 pb-6 flex justify-center">
+          <Link to="/monitoring">
+            <button className="bg-accent-neutral text-canvas font-mono font-bold px-8 py-3.5 rounded-card uppercase tracking-[0.2em] hover:bg-white transition-all flex items-center gap-3 shadow-elevation-3 active:scale-95 cursor-pointer">
+              <span className="material-symbols-outlined text-[20px]">pause_circle</span>
+              <span>STANDBY [ALT+S]</span>
             </button>
           </Link>
-
-          <Link to="/attack-lab" className="w-full sm:w-auto">
-            <button className="w-full sm:w-auto bg-transparent text-primary border border-white/20 font-body-md text-body-md px-6 py-3 rounded hover:bg-white/10 backdrop-blur-md transition-all duration-200 cursor-pointer uppercase tracking-wider">
-              Launch Attack Lab
-            </button>
-          </Link>
         </div>
-      </div>
+      </section>
 
-      {/* Live Engine State Card */}
-      <div className="w-full max-w-lg glass-panel rounded-xl p-card-padding mb-16 shadow-[0_8px_32px_rgba(0,0,0,0.5)] hover:-translate-y-1 hover:shadow-[0_12px_40px_rgba(255,255,255,0.05)] hover:border-white/20 transition-all duration-300 animate-slide-up-blur">
-        <div className="flex justify-between items-center mb-stack-gap border-b border-white/10 pb-stack-gap">
-          <h2 className="font-headline-md text-headline-md text-primary font-bold">Live Engine State</h2>
-          <div
-            className="flex items-center gap-unit px-2 py-1 rounded border transition-colors duration-300"
-            style={{
-              backgroundColor: `${config.colorHex}20`,
-              borderColor: `${config.colorHex}40`,
-            }}
-          >
-            <span
-              className="w-1.5 h-1.5 rounded-full animate-pulse"
-              style={{
-                backgroundColor: config.colorHex,
-                boxShadow: `0 0 8px ${config.colorHex}`,
-              }}
-            />
-            <span
-              className="font-label-caps text-label-caps uppercase tracking-wider font-bold"
-              style={{ color: config.colorHex }}
-            >
-              {config.label}
-            </span>
+      {/* Right Column: Active Hemorrhage Log Stream */}
+      <aside className="hidden lg:flex flex-col w-72 shrink-0 card-panel overflow-hidden">
+        <header className="p-3 border-b border-hairline bg-surface-2 flex justify-between items-center">
+          <div className="flex items-center gap-2">
+            <span className="material-symbols-outlined text-[16px] text-secondary-ui">terminal</span>
+            <span className="text-secondary-ui uppercase tracking-wider text-[11px] font-bold">Active Log</span>
           </div>
-        </div>
+          <div className="flex items-center gap-1">
+            <span className="w-1.5 h-1.5 rounded-full bg-accent-safe animate-pulse" />
+            <span className="text-accent-safe text-[10px] font-bold">LIVE</span>
+          </div>
+        </header>
 
-        <div className="grid grid-cols-2 gap-gutter mb-4">
-          <div className="flex flex-col">
-            <span className="font-label-caps text-label-caps text-primary/60 mb-unit uppercase">Confidence Interval</span>
-            <span className="font-data-mono text-data-mono text-primary data-value text-lg font-bold" style={{ color: config.colorHex }}>
-              {confidence.toFixed(3)}%
-            </span>
+        <div className="flex-1 p-3 font-mono text-[11px] flex flex-col gap-2 overflow-y-auto">
+          <div className="text-secondary-ui">
+            <span className="text-tertiary-ui">[T-00:01]</span> &gt; DECRYPT_KEY_REQ: 0x4F2A... <span className="text-accent-warn">PENDING</span>
           </div>
-          <div className="flex flex-col">
-            <span className="font-label-caps text-label-caps text-primary/60 mb-unit uppercase">Current Risk Level</span>
-            <span className="font-data-mono text-data-mono text-primary data-value text-lg">
-              {config.risk === 'LOW' ? 'Lvl 0 - Nominal' : config.risk === 'MEDIUM' ? 'Lvl 1 - Advisory' : 'Lvl 2 - Critical'}
-            </span>
+          <div className="text-secondary-ui">
+            <span className="text-tertiary-ui">[T-00:03]</span> &gt; PORT_SCAN DETECTED @ 192.168.1.104
           </div>
-          <div className="flex flex-col col-span-2 mt-unit">
-            <span className="font-label-caps text-label-caps text-primary/60 mb-unit uppercase">Last Scan Signature</span>
-            <span className="font-data-mono text-data-mono text-primary/80 data-value truncate">
-              0x9F2A...E4B1 [{patternType.toUpperCase()}]
-            </span>
+          {currentState === 'THREAT_LOGGED' && (
+            <div className="p-2 border-l-2 border-accent-critical bg-accent-critical/10 text-accent-critical rounded-r flex flex-col gap-1">
+              <span className="text-tertiary-ui">[T-00:04]</span>
+              <span className="font-bold bg-accent-critical text-white px-1.5 py-0.5 rounded text-[9px] w-fit">ACTIVE HEMORRHAGE</span>
+              <span>UNAUTHORIZED ACCESS ATTEMPT // COORD 34.0522°N.</span>
+            </div>
+          )}
+          <div className="text-secondary-ui">
+            <span className="text-tertiary-ui">[T-00:05]</span> &gt; INITIATING TRACE_ROUTE...
+          </div>
+          <div className="text-accent-safe">
+            <span className="text-tertiary-ui">[T-00:08]</span> &gt; TRACE SUCCESS: HOP_7_VERIFIED
+          </div>
+          <div className="text-secondary-ui">
+            <span className="text-tertiary-ui">[T-00:11]</span> &gt; PACKET_DUMP [SIZE: 4.2MB]
+          </div>
+          <div className="text-accent-warn">
+            <span className="text-tertiary-ui">[T-00:15]</span> &gt; ANOMALY: UNKNOWN_PROTOCOL
           </div>
         </div>
-
-        {/* State Machine Controller Jumper Buttons */}
-        <div className="pt-3 border-t border-white/10">
-          <div className="flex justify-between items-center mb-2">
-            <span className="font-label-caps text-label-caps text-primary/60 uppercase tracking-widest text-[10px]">
-              THREAT STATE SIMULATOR CONTROLLER
-            </span>
-            <button
-              onClick={() => triggerSimulatedAttack({ frequencyMin: 20000, frequencyMax: 22000, duration: 4 })}
-              className="text-[10px] font-mono text-primary/80 hover:text-primary underline flex items-center gap-1"
-            >
-              <span className="material-symbols-outlined text-[12px]">bolt</span> AUTO ATTACK
-            </button>
-          </div>
-          <div className="grid grid-cols-5 gap-1.5">
-            {states.map((st) => {
-              const stateConf = THREAT_STATE_CONFIGS[st];
-              const isActive = currentState === st;
-              return (
-                <button
-                  key={st}
-                  onClick={() => setThreatState(st)}
-                  className={`p-1.5 rounded text-center font-mono text-[10px] transition-all ${
-                    isActive
-                      ? 'bg-white/15 border border-white/40 font-bold text-white shadow-sm'
-                      : 'bg-white/5 border border-white/5 text-primary/60 hover:text-primary hover:bg-white/10'
-                  }`}
-                >
-                  <div
-                    className="w-1.5 h-1.5 rounded-full mx-auto mb-1"
-                    style={{ backgroundColor: stateConf.colorHex }}
-                  />
-                  <div className="truncate text-[9px]">{stateConf.state.split('_')[0]}</div>
-                </button>
-              );
-            })}
-          </div>
-        </div>
-      </div>
-
-      {/* Feature Grid (Bento Style) */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-gutter w-full">
-        {/* Feature 1 */}
-        <div className="glass-panel rounded-xl p-card-padding flex flex-col h-full hover:border-white/20 hover:-translate-y-1 hover:shadow-[0_8px_24px_rgba(255,255,255,0.03)] transition-all duration-300 animate-slide-up-blur">
-          <div className="mb-4 text-primary/80">
-            <span className="material-symbols-outlined text-2xl" style={{ fontVariationSettings: "'FILL' 1" }}>
-              graphic_eq
-            </span>
-          </div>
-          <h3 className="font-headline-md text-headline-md text-primary mb-stack-gap text-lg font-bold">
-            Real-Time Spectrogram
-          </h3>
-          <p className="font-body-md text-body-md text-primary/70 flex-grow leading-relaxed">
-            Visualize acoustic environments with millisecond precision. Identify hidden ultrasonic frequencies used in data exfiltration attempts before they breach the air-gap.
-          </p>
-          <div className="mt-stack-gap pt-stack-gap border-t border-white/10">
-            <span className="font-data-mono text-data-mono text-primary/50 text-[10px]">FREQ_RANGE: 16kHz - 24kHz</span>
-          </div>
-        </div>
-
-        {/* Feature 2 */}
-        <div className="glass-panel rounded-xl p-card-padding flex flex-col h-full hover:border-white/20 hover:-translate-y-1 hover:shadow-[0_8px_24px_rgba(255,255,255,0.03)] transition-all duration-300 animate-slide-up-blur delay-100">
-          <div className="mb-4 text-primary/80">
-            <span className="material-symbols-outlined text-2xl" style={{ fontVariationSettings: "'FILL' 1" }}>
-              security
-            </span>
-          </div>
-          <h3 className="font-headline-md text-headline-md text-primary mb-stack-gap text-lg font-bold">
-            5-State Threat Engine
-          </h3>
-          <p className="font-body-md text-body-md text-primary/70 flex-grow leading-relaxed">
-            Machine learning driven classification model categorizing acoustic anomalies into five distinct threat states, minimizing false positives in noisy server rooms.
-          </p>
-          <div className="mt-stack-gap pt-stack-gap border-t border-white/10">
-            <span className="font-data-mono text-data-mono text-primary/50 text-[10px]">MODEL_V: SEC_ACST_v4.2</span>
-          </div>
-        </div>
-
-        {/* Feature 3 */}
-        <div className="glass-panel rounded-xl p-card-padding flex flex-col h-full hover:border-white/20 hover:-translate-y-1 hover:shadow-[0_8px_24px_rgba(255,255,255,0.03)] transition-all duration-300 animate-slide-up-blur delay-200">
-          <div className="mb-4 text-primary/80">
-            <span className="material-symbols-outlined text-2xl" style={{ fontVariationSettings: "'FILL' 1" }}>
-              science
-            </span>
-          </div>
-          <h3 className="font-headline-md text-headline-md text-primary mb-stack-gap text-lg font-bold">
-            Attack Lab Simulator
-          </h3>
-          <p className="font-body-md text-body-md text-primary/70 flex-grow leading-relaxed">
-            Safely simulate advanced acoustic malware vectors against your infrastructure. Test detection capabilities without deploying actual malicious payloads.
-          </p>
-          <div className="mt-stack-gap pt-stack-gap border-t border-white/10">
-            <span className="font-data-mono text-data-mono text-primary/50 text-[10px]">ENV: ISOLATED_SANDBOX</span>
-          </div>
-        </div>
-      </div>
+      </aside>
     </div>
   );
 };

@@ -1,52 +1,42 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Navbar } from './components/layout/Navbar';
-import { Footer } from './components/layout/Footer';
-import { CustomCursor } from './components/shared/CustomCursor';
-import { useLenis } from './hooks/useLenis';
-import { useThreatStore } from './features/threat-state-machine/useThreatStore';
-
-import { IntroPage } from './pages/IntroPage';
-import { LoginPage } from './pages/LoginPage';
-import { MonitoringDashboard } from './pages/MonitoringDashboard';
+import { BottomNavBar } from './components/layout/BottomNavBar';
+import { LandingPage } from './pages/LandingPage';
+import { SOCMonitoringPage } from './pages/SOCMonitoringPage';
+import { IntelligenceLogsPage } from './pages/IntelligenceLogsPage';
+import { NetworkTopologyPage } from './pages/NetworkTopologyPage';
 import { AttackLabPage } from './pages/AttackLabPage';
-import { AboutPage } from './pages/AboutPage';
-import { DevStateMachinePage } from './pages/DevStateMachinePage';
+import { DevStatePanel } from './components/common/DevStatePanel';
+import { CursorTrail } from './components/common/CursorTrail';
 
 export const App: React.FC = () => {
-  useLenis();
-  const isAuthenticated = useThreatStore((s) => s.isAuthenticated);
-
   return (
     <Router>
-      <div className="relative min-h-screen bg-[#141313] text-[#e5e2e1] flex flex-col font-sans selection:bg-white/20 selection:text-white">
-        {/* Custom Cursor */}
-        <CustomCursor />
+      <div className="min-h-screen bg-canvas text-primary-ui flex flex-col pt-14 pb-16 md:pb-0 relative selection:bg-accent-safe/30 selection:text-accent-safe">
+        {/* Background Grid Pattern Overlay */}
+        <div className="fixed inset-0 bg-grid-pattern opacity-40 pointer-events-none z-0" />
 
-        {/* Global Navbar */}
+        {/* Top Navbar */}
         <Navbar />
 
         {/* Main Content Area */}
-        <main className="flex-1 relative z-10 flex flex-col">
+        <main className="relative z-10 flex-1 flex flex-col w-full">
           <Routes>
-            <Route path="/" element={<IntroPage />} />
-            <Route path="/login" element={<LoginPage />} />
-            <Route
-              path="/monitoring"
-              element={isAuthenticated ? <MonitoringDashboard /> : <Navigate to="/login" replace />}
-            />
-            <Route
-              path="/attack-lab"
-              element={isAuthenticated ? <AttackLabPage /> : <Navigate to="/login" replace />}
-            />
-            <Route path="/about" element={<AboutPage />} />
-            <Route path="/dev/state-machine" element={<DevStateMachinePage />} />
-            <Route path="*" element={<Navigate to="/" replace />} />
+            <Route path="/" element={<LandingPage />} />
+            <Route path="/monitoring" element={<SOCMonitoringPage />} />
+            <Route path="/logs" element={<IntelligenceLogsPage />} />
+            <Route path="/network" element={<NetworkTopologyPage />} />
+            <Route path="/attack-lab" element={<AttackLabPage />} />
           </Routes>
         </main>
 
-        {/* Global Footer */}
-        <Footer />
+        {/* Bottom Navigation for Mobile Devices */}
+        <BottomNavBar />
+
+        {/* Dev State Override Panel & Cursor Trail */}
+        <DevStatePanel />
+        <CursorTrail />
       </div>
     </Router>
   );
